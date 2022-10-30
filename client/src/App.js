@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import HomePage from './pages/HomePage'
@@ -7,32 +7,35 @@ import LandingPage from './pages/LandingPage'
 import Template from './pages/Template'
 import Login from './components/Login'
 import Signup from './components/Signup'
-import UserProfile from './pages/UserProfile'
+import UserProfile from './features/user/UserProfile'
+import UserEditForm from './features/user/UserEditForm'
 
 const selectUser = state => state.user
 
 function App () {
-   const user = useSelector(selectUser)
-   console.log(user)
+   const [loggedIn, setLoggedIn] = useState(false)
 
-   const dispatch = useDispatch()
    useEffect(() => {
       fetch('/auth').then(r=>{
-         if (r.ok) r.json().then(user => dispatch({type: 'user/userLoggedIn', payload: user}))
+         if (r.ok) r.json().then(() => setLoggedIn(true))
+         else setLoggedIn(false)
       })
-   }, [dispatch])
+   }, [])
 
    return (
       <Router>
          <Routes>
-            <Route path='/' element={!!user.id ? <Navigate to='/home' /> : <Navigate to='/welcome' />} />
-            <Route path='/welcome' element={!!user.id ? <Navigate to='/home' /> : <HomePage />}>
+            <Route path='/' element={loggedIn ? <Navigate to='/home' /> : <Navigate to='/welcome' />} />
+            <Route path='/welcome' element={loggedIn ? <Navigate to='/home' /> : <HomePage />}>
                <Route path='login' element={<Login />} />
                <Route path='signup' element={<Signup />} />
             </Route>
-            <Route path='/home' element={!!user.id ? <Template /> : <Navigate to='/welcome' />}>
+            <Route path='/home' element={<Template />}>
                <Route index element={<LandingPage />} />
-               <Route path=':username' element={<UserProfile />} />
+               <Route path=':username'>
+                  <Route index element={<UserProfile />} />
+                  <Route path='edit' element={<UserEditForm />} />
+               </Route>
             </Route>
          </Routes>
       </Router>

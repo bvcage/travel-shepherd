@@ -11,6 +11,8 @@ export default function userReducer(state = initialState, action) {
          return {...action.payload}
       case 'user/userLoggedOut':
          return {}
+      case 'user/userUpdated':
+         return {...action.payload}
       default:
          return state
    }

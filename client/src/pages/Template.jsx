@@ -1,9 +1,14 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
+const selectUser = state => state.user
+
 function Template (props) {
+   const user = useSelector(selectUser)
+   if (!user.id) return <Navigate to='/welcome' />
    return (
       <div>
          <Header />

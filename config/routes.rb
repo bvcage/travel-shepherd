@@ -7,7 +7,7 @@ Rails.application.routes.draw do
    get '/username_exist', to: 'users#exist'
 
    resources :logins, only: [:index]
-   resources :users, only: [:show, :create]
+   resources :users, only: [:show, :create, :update]
 
    get '*path',
       to: 'fallback#index',
