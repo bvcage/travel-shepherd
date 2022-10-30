@@ -23,7 +23,10 @@ function Login (props) {
          },
          body: JSON.stringify({...login})
       }).then(r=>{
-         if (r.ok) r.json().then(user => dispatch({type: 'user/userLoggedIn', payload: user}))
+         if (r.ok) r.json().then(user => {
+            dispatch({type: 'user/userLoggedIn', payload: user})
+            localStorage.setItem('user', JSON.stringify(user))
+         })
          else console.log(r)
       })
    }
@@ -41,7 +44,7 @@ function Login (props) {
                onChange={handleChange} />
 
             <input name='password'
-               type='text'
+               type='password'
                placeholder='password'
                value={login.password}
                onChange={handleChange} />

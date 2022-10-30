@@ -1,6 +1,7 @@
 let initialState = {}
 
 const persistedState = localStorage.getItem('user')
+console.log(persistedState)
 if (!!persistedState) {
    initialState = JSON.parse(persistedState)
 }
