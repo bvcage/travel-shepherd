@@ -1,7 +1,6 @@
 let initialState = {}
 
 const persistedState = localStorage.getItem('user')
-console.log(persistedState)
 if (!!persistedState) {
    initialState = JSON.parse(persistedState)
 }
@@ -11,7 +10,7 @@ export default function userReducer(state = initialState, action) {
       case 'user/userLoggedIn':
          return {...action.payload}
       case 'user/userLoggedOut':
-         return initialState
+         return {}
       default:
          return state
    }
