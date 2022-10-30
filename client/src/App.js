@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage'
 import Template from './pages/Template'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import UserProfile from './pages/UserProfile'
 
 const selectUser = state => state.user
 
@@ -31,6 +32,7 @@ function App () {
             </Route>
             <Route path='/home' element={!!user.id ? <Template /> : <Navigate to='/welcome' />}>
                <Route index element={<LandingPage />} />
+               <Route path=':username' element={<UserProfile />} />
             </Route>
          </Routes>
       </Router>
