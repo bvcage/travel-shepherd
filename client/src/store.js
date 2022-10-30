@@ -4,10 +4,12 @@ import rootReducer from './reducer'
 
 let preloadedState
 const persistedTripsString = localStorage.getItem('trips')
+const persistedUserString = localStorage.getItem('user')
 
 if (persistedTripsString) {
    preloadedState = {
-      trips: JSON.parse(persistedTripsString)
+      trips: JSON.parse(persistedTripsString),
+      user: JSON.parse(persistedUserString)
    }
 }
 

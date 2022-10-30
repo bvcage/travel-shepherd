@@ -5,6 +5,7 @@ import App from './App'
 import store from './store'
 
 import reportWebVitals from './reportWebVitals'
+import { Provider } from 'react-redux'
 
 console.log('Initial state: ', store.getState())
 
@@ -21,7 +22,11 @@ unsubscribe()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-   <App />
+   <React.StrictMode>
+      <Provider store={store}>
+         <App />
+      </Provider>
+   </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
