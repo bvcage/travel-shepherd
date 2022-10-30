@@ -11,7 +11,7 @@ function UserProfile (props) {
    const user = useSelector(selectUser)
 
    useEffect(() => {
-      if (!!location.state.user.id) {
+      if (!!location.state && !!location.state.user) {
          dispatch({type: 'user/userUpdated', payload: {...location.state.user}})
       } 
    }, [location, dispatch])
