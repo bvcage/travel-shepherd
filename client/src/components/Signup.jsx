@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Signup (props) {
    const dispatch = useDispatch()
+   const location = useLocation()
    const navigate = useNavigate()
    const [user, setUser] = useState({
-      username: "",
+      username: !!location.state.username ? location.state.username : "",
       email: "",
       firstName: "",
       lastName: "",
       dob: "",
-      password1: "",
+      password1: !!location.state.password ? location.state.password : "",
       password2: "",
       photoUrl: ""
    })

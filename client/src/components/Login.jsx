@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Login (props) {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [login, setLogin] = useState({
       username: "",
       password: ""
    })
+   const [userExists, setUserExists] = useState(true)
+
+   function checkUsername () {
+      fetch(`/username_exist?username=${login.username}`).then(r=>{
+         if (r.ok) setUserExists(true)
+         else if (r.status === 404) setUserExists(false)
+         else console.log(r)
+      })
+   }
 
    function handleChange (e) {
       setLogin({...login,
@@ -16,6 +27,7 @@ function Login (props) {
 
    function handleSubmit (e) {
       e.preventDefault()
+      if (!userExists) return navigate('../signup', {state: {'username': login.username, 'password': login.password}})
       fetch('/login', {
          method: 'POST',
          headers: {
@@ -41,6 +53,7 @@ function Login (props) {
                type='text'
                placeholder='username'
                value={login.username}
+               onBlur={checkUsername}
                onChange={handleChange} />
 
             <input name='password'
@@ -49,7 +62,7 @@ function Login (props) {
                value={login.password}
                onChange={handleChange} />
 
-            <button type='submit'>login</button>
+            <button type='submit'>{!!userExists ? 'login' : 'sign up'}</button>
          </form>
       </div>
    )

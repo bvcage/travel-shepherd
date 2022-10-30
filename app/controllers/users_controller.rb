@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+   skip_before_action :authorize, only: [:create, :exist]
+
    def create
       user = User.create!(user_params)
       if (user && params[:password])
@@ -9,6 +11,11 @@ class UsersController < ApplicationController
          )
       end
       render json: user, status: :created
+   end
+
+   def exist
+      user = User.find_by!(username: params[:username])
+      render json: user
    end
 
    def show
