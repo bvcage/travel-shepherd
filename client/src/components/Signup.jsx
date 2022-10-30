@@ -39,9 +39,23 @@ function Signup (props) {
             'password': user.password1
          })
       }).then(r=>{
-         if (r.ok) r.json().then(user => {
-            dispatch({type: 'user/userLoggedIn', payload: user})
-            navigate('/')
+         if (r.ok) r.json().then(newUser => {
+            fetch('/login', {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({
+                  'username': newUser.username,
+                  'password': user.password1
+               })
+            }).then(r=>{
+               if (r.ok) r.json().then(user => {
+                  dispatch({type: 'user/userLoggedIn', payload: user})
+                  navigate('/')
+               })
+               else console.log(r)
+            })
          })
          else r.json().then(console.log)
       })
