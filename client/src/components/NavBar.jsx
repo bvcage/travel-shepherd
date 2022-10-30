@@ -10,8 +10,8 @@ function NavBar (props) {
    const username = useSelector(selectUsername)
    return (
       <nav>
-         <button onClick={() => navigate('/home')}>home</button>
-         <button onClick={() => navigate(`/home/${username}`)}>profile</button>
+         <button onClick={() => navigate('/' + username)}>home</button>
+         <button onClick={() => navigate('profile')}>profile</button>
          <LogoutBtn />
       </nav>
    )

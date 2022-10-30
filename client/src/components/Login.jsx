@@ -38,6 +38,7 @@ function Login (props) {
          if (r.ok) r.json().then(user => {
             dispatch({type: 'user/userLoggedIn', payload: user})
             localStorage.setItem('user', JSON.stringify(user))
+            navigate('/home')
          })
          else console.log(r)
       })

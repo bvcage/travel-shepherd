@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const selectUser = state => state.user
 
 function UserEditForm (props) {
-   const dispatch = useDispatch()
    const navigate = useNavigate()
 
    const user = useSelector(selectUser)
@@ -28,7 +27,7 @@ function UserEditForm (props) {
       }).then(r=>{
          if (r.ok) r.json().then(user => {
             localStorage.setItem('user', JSON.stringify(user))
-            navigate('/home/' + user.username, {state: {user: user}})
+            navigate('/' + user.username, {state: {user: user}})
          })
          else console.log(r)
       })

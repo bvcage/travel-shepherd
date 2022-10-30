@@ -19,7 +19,7 @@ function UserProfile (props) {
    return (
       <div>
          <h2>{user.username}'s Profile</h2>
-         <button onClick={() => navigate('edit')}>edit</button>
+         <button onClick={() => navigate('../edit')}>edit</button>
          {!!user.photo_url ? <img src={user.photo_url} alt={`${user.username} avatar`} /> : null}
          <p>
             {user.first_name} {user.last_name}

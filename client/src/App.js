@@ -25,17 +25,15 @@ function App () {
    return (
       <Router>
          <Routes>
-            <Route path='/' element={loggedIn ? <Navigate to='/home' /> : <Navigate to='/welcome' />} />
+            <Route path='/' element={loggedIn ? <Navigate to='/:username' /> : <Navigate to='/welcome' />} />
             <Route path='/welcome' element={loggedIn ? <Navigate to='/home' /> : <HomePage />}>
                <Route path='login' element={<Login />} />
                <Route path='signup' element={<Signup />} />
             </Route>
-            <Route path='/home' element={<Template />}>
+            <Route path='/:username' element={loggedIn ? <Template /> : <Navigate to='/welcome' />}>
                <Route index element={<LandingPage />} />
-               <Route path=':username'>
-                  <Route index element={<UserProfile />} />
-                  <Route path='edit' element={<UserEditForm />} />
-               </Route>
+               <Route path='profile' element={<UserProfile />} />
+               <Route path='edit' element={<UserEditForm />} />
             </Route>
          </Routes>
       </Router>
