@@ -1,4 +1,9 @@
-const initialState = {}
+let initialState = {}
+
+const persistedState = localStorage.getItem('user')
+if (!!persistedState) {
+   initialState = JSON.parse(persistedState)
+}
 
 export default function userReducer(state = initialState, action) {
    switch (action.type) {
