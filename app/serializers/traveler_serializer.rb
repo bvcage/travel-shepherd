@@ -1,3 +1,3 @@
 class TravelerSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :trip_id
+   attributes :id, :user
 end
