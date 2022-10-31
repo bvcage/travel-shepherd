@@ -15,7 +15,7 @@ function TripsContainer (props) {
 
    return (
       <div>
-         <h2>trips</h2>
+         <h6>trips container</h6>
          {cards}
       </div>
    )

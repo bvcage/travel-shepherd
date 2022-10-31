@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import BackBtn from '../../components/buttons/BackBtn'
-import UsersContainer from '../../components/containers/UsersContainer'
+import BackBtn from '../components/buttons/BackBtn'
+import UsersContainer from '../components/containers/UsersContainer'
+import TripSummary from '../components/summaries/TripSummary'
 
-function TripSummary (props) {
+function TripSummaryPage (props) {
    const location = useLocation()
    const trip = location.state.trip
    
@@ -19,10 +20,11 @@ function TripSummary (props) {
    return (
       <div>
          <h3>Trip Summary</h3>
+         <TripSummary trip={trip} />
          <UsersContainer users={travelers} />
          <BackBtn />
       </div>
    )
 }
 
-export default TripSummary
+export default TripSummaryPage

@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 const selectUser = state => state.user
 const selectTrips = state => state.trips
 
-function TripsPage (props) {
+function UserTripsPage (props) {
    const user = useSelector(selectUser)
    const trips = useSelector(selectTrips)
 
@@ -28,4 +28,4 @@ function TripsPage (props) {
    )
 }
 
-export default TripsPage
+export default UserTripsPage
