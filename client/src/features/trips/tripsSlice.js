@@ -12,10 +12,7 @@ export default function tripsReducer(state = initialState, action) {
       case 'trips/tripAdded':
          return [
             ...state,
-            {
-               id: nextTripId(state),
-               name: action.payload
-            }
+            {...action.payload}
          ]
       case 'trips/tripRenamed':
          return state.map(trip => {

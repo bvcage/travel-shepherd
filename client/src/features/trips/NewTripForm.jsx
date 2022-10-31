@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function NewTripForm (props) {
+   const dispatch = useDispatch()
    const navigate = useNavigate()
    const [trip, setTrip] = useState({
       name: "",
@@ -30,7 +32,10 @@ function NewTripForm (props) {
             'voting_type': trip.votingType
          })
       }).then(r=>{
-         if (r.ok) r.json().then(trip => navigate('invite', {state: {trip: trip}}))
+         if (r.ok) r.json().then(trip => {
+            dispatch({type: 'trips/tripAdded', payload: trip})
+            navigate('invite', {state: {trip: trip}})
+         })
          else console.log(r)
       })
    }

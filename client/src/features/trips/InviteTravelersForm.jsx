@@ -28,12 +28,12 @@ function InviteTravelersForm (props) {
          <div key={'invite' + i}>
             <input name='name'
                type='text'
-               disabled='true'
+               disabled={true}
                value={invite.name} />
 
             <input name='email'
                type='text'
-               disabled='true'
+               disabled={true}
                value={invite.email} />
 
             <button disabled type='button'>sent</button>
