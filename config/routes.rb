@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
-   resources :trips, only: [:index, :create] do
+   resources :trips, only: [:index, :show, :create] do
       resources :users, only: [:index]
    end
    resources :users, only: [:show, :create, :update] do
