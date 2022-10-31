@@ -7,19 +7,6 @@ import store from './store'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 
-console.log('Initial state: ', store.getState())
-
-const unsubscribe = store.subscribe(() => {
-   console.log('State after dispatch: ', store.getState())
-})
-
-store.dispatch({ type: 'trips/tripAdded', payload: 'trip 1'})
-store.dispatch({ type: 'trips/tripAdded', payload: 'trip 2'})
-
-store.dispatch({ type: 'trips/tripRenamed', payload: {id: 0, name: 'trip 0'}})
-
-unsubscribe()
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
    <React.StrictMode>

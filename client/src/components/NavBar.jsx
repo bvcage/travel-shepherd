@@ -3,15 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import LogoutBtn from './buttons/LogoutBtn'
 
-const selectUsername = state => state.user.username
+const selectUser = state => state.user
 
 function NavBar (props) {
    const navigate = useNavigate()
-   const username = useSelector(selectUsername)
+   const user = useSelector(selectUser)
    return (
       <nav>
-         <button onClick={() => navigate('/' + username)}>home</button>
-         <button onClick={() => navigate('profile')}>profile</button>
+         <button onClick={() => navigate('home')}>home</button>
+         <button onClick={() => navigate(user.username + '/trips', {state: {user: user}})}>trips</button>
+         <button onClick={() => navigate(user.username + '/trips/new')}>new trip</button>
+         <button onClick={() => navigate(user.username + '/profile')}>profile</button>
          <LogoutBtn />
       </nav>
    )
