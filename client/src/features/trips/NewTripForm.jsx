@@ -34,7 +34,7 @@ function NewTripForm (props) {
       }).then(r=>{
          if (r.ok) r.json().then(trip => {
             dispatch({type: 'trips/tripAdded', payload: trip})
-            navigate('invite', {state: {trip: trip}})
+            navigate(`/trips/${trip.id}/invite`, {state: {trip: trip}})
          })
          else console.log(r)
       })

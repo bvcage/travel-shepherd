@@ -5,19 +5,18 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import Template from './pages/Template'
 import LandingPage from './pages/LandingPage'
+import RedirectPage from './pages/RedirectPage'
 import TripSummaryPage from './pages/TripSummaryPage'
 import UserTripsPage from './pages/UserTripsPage'
 
 // components
-import InviteTravelersForm from './features/trips/InviteTravelersForm'
+import InviteForm from './components/forms/InviteForm'
 import Login from './components/Login'
 import NewTripForm from './features/trips/NewTripForm'
 import Signup from './components/Signup'
 import TripsContainer from './components/containers/TripsContainer'
 import UserEditForm from './features/user/UserEditForm'
 import UserProfile from './features/user/UserProfile'
-import RedirectPage from './pages/RedirectPage'
-import InviteForm from './components/forms/InviteForm'
 
 function App () {
    return (

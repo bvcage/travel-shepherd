@@ -6,7 +6,7 @@ function TripCard (props) {
    const { id, name, num_days } = trip
    const navigate = useNavigate()
    return (
-      <div className='card' onClick={() => navigate(`${id}`, {state: {trip: trip}})}>
+      <div className='card' onClick={() => navigate('/trips/' + id, {state: {trip: trip}})}>
          <div>{name}</div>
          <p>{num_days} day{num_days > 1 ? 's' : null}</p>
       </div>
