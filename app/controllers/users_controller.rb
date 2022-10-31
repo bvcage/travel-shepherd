@@ -2,6 +2,11 @@ class UsersController < ApplicationController
 
    skip_before_action :authorize, only: [:create, :exist]
 
+   def auth
+      user = User.find(session[:user_id])
+      render json: user
+   end
+
    def create
       user = User.create!(user_params)
       if (user && params[:password])
@@ -18,8 +23,18 @@ class UsersController < ApplicationController
       render json: user
    end
 
+   def index
+      if (params[:trip_id])
+         trip = Trip.find(params[:trip_id])
+         users = trip.users
+      else
+         users = User.all
+      end
+      render json: users
+   end
+
    def show
-      user = User.find(session[:user_id])
+      user = User.find(params[:id])
       render json: user
    end
 

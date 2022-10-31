@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-   get '/auth', to: 'users#show'
+   get '/auth', to: 'users#auth'
    post '/login', to: 'sessions#create'
    delete '/logout', to: 'sessions#destroy'
    post '/signup', to: 'users#create'
@@ -8,7 +8,9 @@ Rails.application.routes.draw do
 
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
-   resources :trips, only: [:index, :create]
+   resources :trips, only: [:index, :create] do
+      resources :users, only: [:index]
+   end
    resources :users, only: [:show, :create, :update] do
       resources :trips, only: [:index]
    end
