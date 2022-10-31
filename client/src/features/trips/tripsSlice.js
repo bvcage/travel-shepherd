@@ -7,6 +7,8 @@ function nextTripId(trips) {
 
 export default function tripsReducer(state = initialState, action) {
    switch (action.type) {
+      case 'trips/tripsLoaded':
+         return [...action.payload]
       case 'trips/tripAdded':
          return [
             ...state,
