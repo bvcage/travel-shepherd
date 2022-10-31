@@ -27,7 +27,7 @@ function UserEditForm (props) {
       }).then(r=>{
          if (r.ok) r.json().then(user => {
             localStorage.setItem('user', JSON.stringify(user))
-            navigate('/' + user.username, {state: {user: user}})
+            navigate('/' + user.username + '/profile', {state: {user: user}})
          })
          else console.log(r)
       })
