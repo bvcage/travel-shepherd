@@ -10,13 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_30_034136) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_30_224233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "logins", force: :cascade do |t|
     t.integer "user_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "travelers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.integer "num_days"
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
+    t.datetime "voting_deadline", precision: nil
+    t.boolean "allow_proposals"
+    t.integer "voting_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
