@@ -14,7 +14,10 @@ function TripsPage (props) {
 
    useEffect(() => {
       if (!!user) fetch(`/users/${user.id}/trips`).then(r=>{
-         if (r.ok) r.json().then(trips => dispatch({type: 'trips/tripsLoaded', payload: trips}))
+         if (r.ok) r.json().then(trips => {
+            console.log(trips)
+            dispatch({type: 'trips/tripsLoaded', payload: trips})
+         })
       })
    }, [user, dispatch])
 
