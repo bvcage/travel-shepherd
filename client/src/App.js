@@ -16,6 +16,8 @@ import Signup from './components/Signup'
 import TripsContainer from './components/containers/TripsContainer'
 import UserEditForm from './features/user/UserEditForm'
 import UserProfile from './features/user/UserProfile'
+import RedirectPage from './pages/RedirectPage'
+import InviteForm from './components/forms/InviteForm'
 
 function App () {
    return (
@@ -28,11 +30,14 @@ function App () {
                   <Route path='edit' element={<UserEditForm />} />
                   <Route path='trips' element={<UserTripsPage />}>
                      <Route index element={<TripsContainer />} />
-                     <Route path='new'>
-                        <Route index element={<NewTripForm />} />
-                        <Route path='invite' element={<InviteTravelersForm />} />
-                     </Route>
-                     <Route path=':id' element={<TripSummaryPage />} />
+                  </Route>
+               </Route>
+               <Route path='trips'>
+                  <Route index element={<RedirectPage path='/:username/trips' />} />
+                  <Route path='new' element={<NewTripForm />} />
+                  <Route path=':id'>
+                     <Route index element={<TripSummaryPage />} />
+                     <Route path='invite' element={<InviteForm />} />
                   </Route>
                </Route>
             </Route>

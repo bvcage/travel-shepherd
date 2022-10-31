@@ -12,7 +12,7 @@ function NavBar (props) {
       <nav>
          <button onClick={() => navigate('home')}>home</button>
          <button onClick={() => navigate(user.username + '/trips', {state: {user: user}})}>trips</button>
-         <button onClick={() => navigate(user.username + '/trips/new')}>new trip</button>
+         <button onClick={() => navigate('/trips/new')}>new trip</button>
          <button onClick={() => navigate(user.username + '/profile')}>profile</button>
          <LogoutBtn />
       </nav>
