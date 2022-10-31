@@ -1,5 +1,4 @@
 import './App.css'
-import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import Template from './pages/Template'
@@ -9,21 +8,12 @@ import InviteTravelersForm from './features/trips/InviteTravelersForm'
 import Login from './components/Login'
 import NewTripForm from './features/trips/NewTripForm'
 import Signup from './components/Signup'
-import TripsContainer from './features/trips/TripsContainer'
+import TripsContainer from './components/containers/TripsContainer'
 import TripSummary from './features/trips/TripSummary'
 import UserEditForm from './features/user/UserEditForm'
 import UserProfile from './features/user/UserProfile'
 
 function App () {
-   // const [loggedIn, setLoggedIn] = useState(false)
-
-   // useEffect(() => {
-   //    fetch('/auth').then(r=>{
-   //       if (r.ok) r.json().then(() => setLoggedIn(true))
-   //       else setLoggedIn(false)
-   //    })
-   // }, [])
-
    return (
       <Router>
          <Routes>
