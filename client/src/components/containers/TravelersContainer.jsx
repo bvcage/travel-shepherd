@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import InvitesContainer from './InvitesContainer'
+import TripInvitesContainer from './TripInvitesContainer'
 import UsersContainer from './UsersContainer'
 
 function TravelersContainer (props) {
@@ -27,7 +27,7 @@ function TravelersContainer (props) {
       <div>
          <h4>Travelers Container</h4>
          <UsersContainer users={users} />
-         <InvitesContainer invites={invites} mayInvite={mayInvite} />
+         <TripInvitesContainer invites={invites} mayInvite={mayInvite} />
       </div>
    )
 }

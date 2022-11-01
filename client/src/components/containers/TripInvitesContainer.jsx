@@ -1,11 +1,21 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import InviteCard from '../cards/InviteCard'
 
-function InvitesContainer (props) {
-   const { invites, mayInvite } = props
-
+function TripInvitesContainer (props) {
+   const { mayInvite } = props
    const navigate = useNavigate()
+   const user = useSelector(state => state.user)
+   const [invites, setInvites] = useState([])
+
+   useEffect(() => {
+      if (!!props.invites) setInvites(props.invites)
+      else if (!!user.id) fetch(`/users/${user.id}/invites`).then(r=>{
+         if (r.ok) r.json().then(invites => setInvites(invites))
+      })
+   }, [props, user])
 
    const cards = !!invites ? invites.map(invite => {
       return (
@@ -24,4 +34,4 @@ function InvitesContainer (props) {
    )
 }
 
-export default InvitesContainer
+export default TripInvitesContainer

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 function InviteForm (props) {
@@ -8,11 +8,16 @@ function InviteForm (props) {
    const location = useLocation()
    const navigate = useNavigate()
    const params = useParams()
+   const user = useSelector(state => state.user)
 
-   const [invite, setInvite] = useState({
+   const initialInvite = {
       name: "",
-      email: ""
-   })
+      email: "",
+      sender_user_id: user.id,
+      invite_status_id: 1  // pending
+   }
+
+   const [invite, setInvite] = useState(initialInvite)
    const [inviteList, setInviteList] = useState([])
    const [invites, setInvites] = useState([])
    const [statusList, setStatusList] = useState([])
@@ -33,7 +38,7 @@ function InviteForm (props) {
       })
       // get invite info
       if (!!props.invites) setInvites(props.invites)
-      else if (!!location.state && !!location.state.invites) setInvites(location.state.invites)
+      // else if (!!location.state && !!location.state.invites) setInvites(location.state.invites)
       else if (!!params.id) fetch(`/trips/${params.id}/invites`).then(r=>{
          if (r.ok) r.json().then(setInvites)
          else console.log(r)
@@ -75,15 +80,14 @@ function InviteForm (props) {
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({
+         body: JSON.stringify({...invite,
             'trip_id': trip.id,
-            'user_email': invite.email,
-            'invite_status_id': 1   // pending         
+            'user_email': invite.email      
          })
       }).then(r=>{
          if (r.ok) r.json().then(dbInv => {
             setInviteList([...inviteList, invite])
-            setInvite({name: "", email: ""})
+            setInvite(initialInvite)
          })
          else r.json().then(console.log)
       })
@@ -91,7 +95,8 @@ function InviteForm (props) {
    }
 
    const invitesDisplay = inviteList.map((invite, i) => {
-      const status = !!statusList[0] ? statusList[invite.status-1].name : 'sent'
+      let status = statusList.find(status => status.id === invite.status)
+      status = !!status && !!status.name ? status.name : 'sent'
       return (
          <div key={'invite' + i}>
             <input name='name'

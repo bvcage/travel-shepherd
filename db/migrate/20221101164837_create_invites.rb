@@ -4,6 +4,8 @@ class CreateInvites < ActiveRecord::Migration[7.0]
       t.integer :trip_id
       t.integer :user_id
       t.integer :invite_status_id
+      t.integer :sender_user_id
+      t.integer :traveler_id
 
       t.timestamps
     end

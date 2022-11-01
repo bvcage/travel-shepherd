@@ -7,7 +7,7 @@ Rails.application.routes.draw do
    get '/username_exist', to: 'users#exist'
 
    resources :invite_statuses, only: [:index]
-   resources :invites, only: [:create]
+   resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create] do
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :travelers, only: [:index]
    end
    resources :users, only: [:show, :create, :update] do
+      resources :invites, only: [:index]
       resources :trips, only: [:index]
    end
 

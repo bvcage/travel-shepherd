@@ -4,6 +4,7 @@ class User < ApplicationRecord
    has_one :login
    has_many :travelers
    has_many :trips, through: :travelers
+   has_many :invites
 
    def full_name
       "#{self.first_name} #{self.last_name}"
