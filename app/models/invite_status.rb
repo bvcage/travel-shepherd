@@ -1,3 +1,3 @@
 class InviteStatus < ApplicationRecord
-   has_many :invite_statuses
+   has_many :invites
 end

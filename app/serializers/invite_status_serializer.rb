@@ -1,3 +1,3 @@
 class InviteStatusSerializer < ActiveModel::Serializer
-  attributes :id, :name
+   attributes :id, :name
 end

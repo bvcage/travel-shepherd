@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_164859) do
   create_table "invites", force: :cascade do |t|
     t.integer "trip_id"
     t.integer "user_id"
-    t.integer "status_id"
+    t.integer "invite_status_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

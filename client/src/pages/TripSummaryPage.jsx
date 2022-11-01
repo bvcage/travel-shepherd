@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
-import UsersContainer from '../components/containers/UsersContainer'
+import TravelersContainer from '../components/containers/TravelersContainer'
 import TripSummary from '../components/summaries/TripSummary'
 
 function TripSummaryPage (props) {
@@ -15,13 +15,11 @@ function TripSummaryPage (props) {
       })
    }, [id])
 
-   const users = !!trip.travelers ? trip.travelers.map(traveler=>traveler.user) : null
-
    return (
       <div>
          <h3>Trip Summary</h3>
          <TripSummary trip={trip} />
-         <UsersContainer users={users} mayInvite={true} trip={trip} />
+         <TravelersContainer trip={trip} mayInvite={true} />
          <BackBtn />
       </div>
    )

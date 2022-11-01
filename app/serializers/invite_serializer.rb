@@ -1,3 +1,5 @@
 class InviteSerializer < ActiveModel::Serializer
-  attributes :id, :trip_id, :user_id, :status_id
+   attributes :id, :trip_id
+   has_one :invite_status
+   has_one :user
 end

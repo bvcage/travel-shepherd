@@ -1,10 +1,5 @@
 const initialState = []
 
-function nextTripId(trips) {
-   const maxId = trips.reduce((maxId, trip) => Math.max(trip.id, maxId), -1)
-   return maxId + 1
-}
-
 export default function tripsReducer(state = initialState, action) {
    switch (action.type) {
       case 'trips/tripsLoaded':
@@ -24,7 +19,17 @@ export default function tripsReducer(state = initialState, action) {
                name: action.payload.name
             }
          })
+      case 'trips/invitesLoaded':
+         return state.map(trip => {
+            if (trip.id !== action.payload.id) {
+               return trip
+            }
+            return {
+               ...trip,
+               invites: [...action.payload.invites]
+            }
+         })
       default:
          return state
    }
- }
+}

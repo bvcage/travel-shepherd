@@ -1,30 +1,67 @@
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 function InviteForm (props) {
    const dispatch = useDispatch()
    const location = useLocation()
    const navigate = useNavigate()
+   const params = useParams()
 
-   const trip = !!props.trip ? props.trip : (
-      !!location.state && !!location.state.trip ? location.state.trip : ""
-   )
-   const users = !!props.users ? props.users : (
-      !!location.state.users ? location.state.users : []
-   )
-
-   const initialInviteList = !!users ? users.map(user => {
-      return {
-         name: `${user.first_name} ${user.last_name}`,
-         email: user.email
-      }
-   }) : []
-   const [inviteList, setInviteList] = useState(initialInviteList)
    const [invite, setInvite] = useState({
       name: "",
       email: ""
    })
+   const [inviteList, setInviteList] = useState([])
+   const [invites, setInvites] = useState([])
+   const [statusList, setStatusList] = useState([])
+   const [trip, setTrip] = useState({})
+
+   useEffect(() => {
+      // get invite status list
+      fetch('/invite_statuses').then(r=>{
+         if (r.ok) r.json().then(setStatusList)
+         else console.log(r)
+      })
+      // get trip info
+      if (!!props.trip) setTrip(props.trip)
+      else if (!!location.state && !!location.state.trip) setTrip(location.state.trip)
+      else if (!!params.id) fetch(`/trips/${params.id}`).then(r=>{
+         if (r.ok) r.json().then(setTrip)
+         else console.log(r)
+      })
+      // get invite info
+      if (!!props.invites) setInvites(props.invites)
+      else if (!!location.state && !!location.state.invites) setInvites(location.state.invites)
+      else if (!!params.id) fetch(`/trips/${params.id}/invites`).then(r=>{
+         if (r.ok) r.json().then(setInvites)
+         else console.log(r)
+      })
+   }, [props, location, params])
+
+   useEffect(() => {
+      const users = !!trip.travelers ? trip.travelers.map(traveler => traveler.user) : null
+
+      const initialInviteList = !!users ? users.map(user => {
+         return {
+            name: `${user.first_name} ${user.last_name}`,
+            email: user.email,
+            status: 2   // confirmed
+         }
+      }) : []
+   
+      if (!!invites[0]) initialInviteList.push(...invites.map(invite => {
+         return {
+            name: invite.user.full_name,
+            email: invite.user.email,
+            status: invite.invite_status.id
+         }
+      }))
+
+      setInviteList(initialInviteList)
+
+   }, [trip.travelers, invites])
 
    function handleChange (e) {
       setInvite({...invite,
@@ -33,12 +70,28 @@ function InviteForm (props) {
    }
 
    function handleSubmit (e) {
+      fetch('/invites', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            'trip_id': trip.id,
+            'user_email': invite.email,
+            'invite_status_id': 1   // pending         
+         })
+      }).then(r=>{
+         if (r.ok) r.json().then(dbInv => {
+            setInviteList([...inviteList, invite])
+            setInvite({name: "", email: ""})
+         })
+         else r.json().then(console.log)
+      })
       e.preventDefault()
-      setInviteList([...inviteList, invite])
-      setInvite({name: "", email: ""})
    }
 
    const invitesDisplay = inviteList.map((invite, i) => {
+      const status = !!statusList[0] ? statusList[invite.status-1].name : 'sent'
       return (
          <div key={'invite' + i}>
             <input name='name'
@@ -51,7 +104,7 @@ function InviteForm (props) {
                disabled={true}
                value={invite.email} />
 
-            <button>invited</button>
+            <button type='button' disabled={true}>{status}</button>
          </div>
       )
    })

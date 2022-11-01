@@ -6,10 +6,13 @@ Rails.application.routes.draw do
    post '/signup', to: 'users#create'
    get '/username_exist', to: 'users#exist'
 
+   resources :invite_statuses, only: [:index]
+   resources :invites, only: [:create]
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create] do
-      resources :users, only: [:index]
+      resources :invites, only: [:index]
+      resources :travelers, only: [:index]
    end
    resources :users, only: [:show, :create, :update] do
       resources :trips, only: [:index]
