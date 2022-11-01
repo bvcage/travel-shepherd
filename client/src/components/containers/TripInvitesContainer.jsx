@@ -17,7 +17,7 @@ function TripInvitesContainer (props) {
       })
    }, [props, user])
 
-   const cards = !!invites ? invites.map(invite => {
+   const cards = !!invites ? invites.filter(invite => invite.invite_status.id === 1).map(invite => {
       return (
          <InviteCard key={invite.id} invite={invite} />
       )

@@ -11,6 +11,7 @@ function LogoutBtn (props) {
       }).then(r=>{
          if (r.ok) {
             dispatch({type: 'user/userLoggedOut', payload: {}})
+            dispatch({type: 'trips/userLoggedOut', payload: {}})
             localStorage.removeItem('user')
             navigate('/welcome')
          }

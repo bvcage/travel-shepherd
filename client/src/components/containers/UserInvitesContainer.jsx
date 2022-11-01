@@ -17,9 +17,13 @@ function UserInvitesContainer (props) {
       })
    }, [props, user])
 
+   function handleResponse (res) {
+      setInvites([...invites.filter(invite => invite.id !== res.id)])
+   }
+
    const alerts = !!invites[0] ? invites.filter(invite => pendingOnly ? invite.invite_status.id === 1 : invite).map(invite => {
       return (
-         <InviteAlert key={invite.id} invite={invite} />
+         <InviteAlert key={invite.id} invite={invite} onResponse={handleResponse} />
       )
    }) : null
 

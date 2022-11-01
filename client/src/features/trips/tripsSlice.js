@@ -29,6 +29,8 @@ export default function tripsReducer(state = initialState, action) {
                invites: [...action.payload.invites]
             }
          })
+      case 'trips/userLoggedOut':
+         return {}
       default:
          return state
    }

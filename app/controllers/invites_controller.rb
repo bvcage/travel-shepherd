@@ -48,10 +48,8 @@ class InvitesController < ApplicationController
             trip_id: invite.trip_id
          })
          invite.update({traveler_id: traveler.id})
-         render json: traveler, status: :created
-      else
-         render json: invite, status: :accepted
       end
+      render json: invite, status: :accepted
    end
 
    private
