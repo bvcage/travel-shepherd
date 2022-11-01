@@ -6,6 +6,15 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+puts "seeding categories..."
+
+puts "seeding invite statuses..."
+
+INVITE_STATUSES = ['pending', 'accepted', 'rejected']
+INVITE_STATUSES.each do |status|
+   InviteStatus.create(name: status)
+end
+
 puts "seeding data..."
 
 num_users = 10
