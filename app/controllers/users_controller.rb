@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-   skip_before_action :authorize, only: [:create, :exist]
+   skip_before_action :auth, only: [:create, :exist]
 
    def auth
       user = User.find(session[:user_id])

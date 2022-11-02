@@ -5,7 +5,7 @@ Rails.application.routes.draw do
    post '/login', to: 'sessions#create'
    delete '/logout', to: 'sessions#destroy'
    post '/signup', to: 'users#create'
-   get '/username_exist', to: 'users#exist'
+   get '/users/exist', to: 'users#exist'
 
    resources :invite_statuses, only: [:index]
    resources :invites, only: [:create, :update]

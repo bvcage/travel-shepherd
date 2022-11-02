@@ -1,16 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function NewTripForm (props) {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const user = useSelector(state => state.user)
    const [trip, setTrip] = useState({
       name: "",
       numDays: "",
       allowProposals: "",
-      votingType: ""
+      votingType: "",
+      owner_id: user.id
    })
 
    function handleChange (e) {

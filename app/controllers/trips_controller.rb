@@ -21,13 +21,14 @@ class TripsController < ApplicationController
    end
 
    def update
-      trip = Trip.find(params[:id])
-      trip.update!(trip_params)
+      @trip = Trip.find(params[:id])
+      authorize @trip
+      @trip.update!(trip_params)
       if params[:voting_type]
          voting_type = VotingType.find_by!(name: params[:voting_type]['name'], value: params[:voting_type]['value'])
-         trip.update!(voting_type_id: voting_type.id)
+         @trip.update!(voting_type_id: voting_type.id)
       end
-      render json: trip
+      render json: @trip, status: :accepted
    end
 
    private

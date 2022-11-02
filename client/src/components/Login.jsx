@@ -12,7 +12,7 @@ function Login (props) {
    const [userExists, setUserExists] = useState(true)
 
    function checkUsername () {
-      fetch(`/username_exist?username=${login.username}`).then(r=>{
+      fetch(`/users/exist?username=${login.username}`).then(r=>{
          if (r.ok) setUserExists(true)
          else if (r.status === 404) setUserExists(false)
          else console.log(r)

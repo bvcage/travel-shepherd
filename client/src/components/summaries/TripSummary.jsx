@@ -1,10 +1,12 @@
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function TripSummary (props) {
    const { trip } = props
    const { id, name, num_days, start_date, end_date, voting_deadline } = trip
-
+   
    const navigate = useNavigate()
+   const user = useSelector(state => state.user)
    
    return (
       <div>
@@ -16,7 +18,7 @@ function TripSummary (props) {
             <li>depart: {start_date}</li>
             <li>return: {end_date}</li>
          </ul>
-         <button type='button' onClick={() => {navigate('edit')}}>edit</button>
+         {trip.owner_id === user.id ? <button type='button' onClick={() => {navigate('edit')}}>edit</button> : null}
       </div>
    )
 }

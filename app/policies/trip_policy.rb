@@ -1,7 +1,7 @@
 class TripPolicy < ApplicationPolicy
 
    def update?
-      
+      @user.id == @record.owner_id
    end
 
    class Scope < Scope
