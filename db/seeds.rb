@@ -88,4 +88,10 @@ Trip.all.each do |trip|
    end
 end
 
+puts "seeding trip owners..."
+Trip.all.each do |trip|
+   user = trip.users.sample
+   trip.update(owner_id: user.id)
+end
+
 puts "done seeding data"

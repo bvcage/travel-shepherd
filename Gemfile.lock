@@ -119,6 +119,8 @@ GEM
     pg (1.4.4)
     puma (5.6.5)
       nio4r (~> 2.0)
+    pundit (2.2.0)
+      activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.4)
     rack-test (2.0.2)
@@ -173,6 +175,7 @@ DEPENDENCIES
   faker (~> 2.23)
   pg (~> 1.1)
   puma (~> 5.0)
+  pundit (~> 2.2)
   rails (~> 7.0.4)
   tzinfo-data
 
