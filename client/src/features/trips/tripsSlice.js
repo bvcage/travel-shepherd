@@ -19,6 +19,8 @@ export default function tripsReducer(state = initialState, action) {
                name: action.payload.name
             }
          })
+      case 'trips/tripRemoved':
+         return [...state.filter(trip => trip.id !== action.payload.id)]
       case 'trips/invitesLoaded':
          return state.map(trip => {
             if (trip.id !== action.payload.id) {

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
-   resources :trips, only: [:index, :show, :create, :update] do
+   resources :trips, only: [:index, :show, :create, :update, :destroy] do
       resources :invites, only: [:index]
       resources :travelers, only: [:index]
    end

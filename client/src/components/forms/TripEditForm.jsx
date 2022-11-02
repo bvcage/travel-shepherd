@@ -1,9 +1,13 @@
+import './forms.css'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import BackBtn from '../buttons/BackBtn'
+import DeleteModal from '../modals/DeleteModal'
 
 function TripEditForm (props) {
 
+   const dispatch = useDispatch()
    const location = useLocation()
    const navigate = useNavigate()
    const params = useParams()
@@ -92,6 +96,16 @@ function TripEditForm (props) {
       }
    }
 
+   function handleDelete () {
+      if (parseInt(params.id) !== parseInt(trip.id)) return console.log('error: url & trip id do not match')
+      fetch(`/trips/${params.id}`, {
+         method: 'DELETE'
+      }).then(() => {
+         dispatch({type: 'trips/tripRemoved', payload: trip})
+         navigate('/trips')
+      })
+   }
+
    function handleSubmit (e) {
       e.preventDefault()
       // prepare patch object
@@ -129,7 +143,15 @@ function TripEditForm (props) {
       })
    }
 
-   console.log(trip)
+   const DeleteBtn = () => {
+      return (
+         <button type='button'
+            className='btn'
+            data-bs-toggle='modal'
+            data-bs-target='#deleteModal'
+            >delete</button>
+      )
+   }
 
    return (
       <form onSubmit={handleSubmit}>
@@ -220,7 +242,9 @@ function TripEditForm (props) {
          <br />
 
          <button type='submit'>save</button>
+         <DeleteBtn />
          <BackBtn />
+         <DeleteModal record={trip} recordType={'trip'} onConfirm={handleDelete} />
       </form>
    )
 }

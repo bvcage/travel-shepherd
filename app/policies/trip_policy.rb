@@ -1,5 +1,9 @@
 class TripPolicy < ApplicationPolicy
 
+   def destroy?
+      @user.id == @record.owner_id
+   end
+
    def update?
       @user.id == @record.owner_id
    end

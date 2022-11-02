@@ -5,6 +5,13 @@ class TripsController < ApplicationController
       render json: trip, status: :created
    end
 
+   def destroy
+      @trip = Trip.find(params[:id])
+      authorize @trip
+      @trip.destroy
+      head :no_content
+   end
+
    def index
       if (params[:user_id])
          user = User.find(params[:user_id])

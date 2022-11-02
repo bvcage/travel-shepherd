@@ -3,6 +3,7 @@ class Traveler < ApplicationRecord
    validates :user_id, {
       uniqueness: {scope: :trip_id, message: 'cannot duplicate entry'}
    }
-   belongs_to :user
-   belongs_to :trip
+   
+   belongs_to :user, dependent: :destroy
+   belongs_to :trip, dependent: :destroy
 end
