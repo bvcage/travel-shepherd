@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer (props) {
    return (
-      <div>Footer</div>
+      <div id='footer'>@bvcage</div>
    )
 }
 

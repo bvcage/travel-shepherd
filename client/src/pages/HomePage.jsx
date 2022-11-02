@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import LoginBtn from '../components/buttons/LoginBtn'
 
+
 function HomePage (props) {
    const location = useLocation()
    const path = location.pathname.split('/')
@@ -11,9 +12,9 @@ function HomePage (props) {
    if (!!username) return (<Navigate to='/home' />)
    
    return (
-      <div>
-         {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null}
+      <div className='container'>
          <h1>Travel Shepherd</h1>
+         {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null}
          <Outlet />
       </div>
    )

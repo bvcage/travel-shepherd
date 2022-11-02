@@ -133,7 +133,7 @@ function TripEditForm (props) {
          },
          body: JSON.stringify(patch)
       }).then(r=>{
-         if (r.ok) r.json().then(patchedTrip => {
+         if (r.ok) r.json().then(() => {
             const path = location.pathname.split('/')
             path.pop()
             const back = path.join('/')
@@ -221,7 +221,7 @@ function TripEditForm (props) {
          <input name='voting_type'
             checked={(!!trip.voting_type &&
                trip.voting_type.name === 'pick' &&
-               trip.voting_type.value == 1) ||
+               parseInt(trip.voting_type.value) === 1) ||
                trip.voting_type === 'pick 1'}
             type='radio'
             value='pick 1'
@@ -231,7 +231,7 @@ function TripEditForm (props) {
          <input name='voting_type'
             checked={(!!trip.voting_type &&
                trip.voting_type.name === 'rank' &&
-               trip.voting_type.value == 3) ||
+               parseInt(trip.voting_type.value) === 3) ||
                trip.voting_type === 'rank 3'}
             type='radio'
             value='rank 3'

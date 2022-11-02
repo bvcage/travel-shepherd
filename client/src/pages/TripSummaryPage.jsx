@@ -16,7 +16,7 @@ function TripSummaryPage (props) {
    }, [id])
 
    return (
-      <div>
+      <div className='container'>
          <h3>Trip Summary</h3>
          <TripSummary trip={trip} />
          <TravelersContainer trip={trip} mayInvite={true} />

@@ -21,7 +21,7 @@ function UserTripsPage (props) {
    }, [user, dispatch])
 
    return (
-      <div>
+      <div className='container'>
          <Outlet />
       </div>
    )

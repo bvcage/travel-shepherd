@@ -17,7 +17,7 @@ function UserProfile (props) {
    }, [location, dispatch])
 
    return (
-      <div>
+      <div className='container'>
          <h2>{user.username}'s Profile</h2>
          <button onClick={() => navigate('edit')}>edit</button>
          <br />

@@ -10,9 +10,9 @@ function Template (props) {
    const user = useSelector(selectUser)
    if (!user.id) return <Navigate to='/welcome' />
    return (
-      <div>
+      <div className='container'>
          <Header />
-         <div id='main-content'>
+         <div id='main-content' className='container'>
             <Outlet />
          </div>
          <Footer />

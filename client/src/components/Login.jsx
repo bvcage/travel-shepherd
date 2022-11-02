@@ -13,7 +13,8 @@ function Login (props) {
 
    function checkUsername () {
       fetch(`/users/exist?username=${login.username}`).then(r=>{
-         if (r.ok) setUserExists(true)
+         if (login.username === "") setUserExists(true)
+         else if (r.ok) setUserExists(true)
          else if (r.status === 404) setUserExists(false)
          else console.log(r)
       })
@@ -45,25 +46,33 @@ function Login (props) {
    }
 
    return (
-      <div>
+      <div className='container'>
          <form onSubmit={handleSubmit}>
 
             <h2>login</h2>
 
-            <input name='username'
-               type='text'
-               placeholder='username'
-               value={login.username}
-               onBlur={checkUsername}
-               onChange={handleChange} />
+            <div className='form-floating'>
+               <input name='username'
+                  type='text'
+                  className='form-control'
+                  placeholder='username'
+                  value={login.username}
+                  onBlur={checkUsername}
+                  onChange={handleChange} />
+               <label>username</label>
+            </div>
 
-            <input name='password'
-               type='password'
-               placeholder='password'
-               value={login.password}
-               onChange={handleChange} />
+            <div className='form-floating'>
+               <input name='password'
+                  type='password'
+                  className='form-control'
+                  placeholder='password'
+                  value={login.password}
+                  onChange={handleChange} />
+               <label>password</label>
+            </div>
 
-            <button type='submit'>{!!userExists ? 'login' : 'sign up'}</button>
+            <button type='submit' className='btn btn-primary'>{!!userExists ? 'login' : 'sign up'}</button>
          </form>
       </div>
    )

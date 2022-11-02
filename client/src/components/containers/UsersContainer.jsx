@@ -1,7 +1,7 @@
 import UserCard from '../cards/UserCard'
 
 function UsersContainer (props) {
-   const { users, trip } = props
+   const { users } = props
 
    const cards = !!users ? users.map(user => {
       return (
