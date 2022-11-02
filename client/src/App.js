@@ -17,6 +17,7 @@ import Signup from './components/Signup'
 import TripsContainer from './components/containers/TripsContainer'
 import UserEditForm from './features/user/UserEditForm'
 import UserProfile from './features/user/UserProfile'
+import TripEditForm from './components/forms/TripEditForm'
 
 function App () {
    return (
@@ -36,6 +37,7 @@ function App () {
                   <Route path='new' element={<NewTripForm />} />
                   <Route path=':id'>
                      <Route index element={<TripSummaryPage />} />
+                     <Route path='edit' element={<TripEditForm />} />
                      <Route path='invite' element={<InviteForm />} />
                   </Route>
                </Route>

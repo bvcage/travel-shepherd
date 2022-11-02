@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_143936) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_02_164558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_143936) do
     t.datetime "end_date", precision: nil
     t.datetime "voting_deadline", precision: nil
     t.boolean "allow_proposals"
-    t.integer "voting_type"
+    t.integer "voting_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
@@ -65,6 +65,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_143936) do
     t.string "last_name"
     t.date "date_of_birth"
     t.string "photo_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "voting_types", force: :cascade do |t|
+    t.string "name"
+    t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

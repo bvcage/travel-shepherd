@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :voting_types
 
    get '/auth', to: 'users#auth'
    post '/login', to: 'sessions#create'
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
    # resources :travelers, only: [:index]
-   resources :trips, only: [:index, :show, :create] do
+   resources :trips, only: [:index, :show, :create, :update] do
       resources :invites, only: [:index]
       resources :travelers, only: [:index]
    end

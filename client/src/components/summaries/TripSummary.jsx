@@ -1,8 +1,10 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function TripSummary (props) {
    const { trip } = props
    const { id, name, num_days, start_date, end_date, voting_deadline } = trip
+
+   const navigate = useNavigate()
    
    return (
       <div>
@@ -14,6 +16,7 @@ function TripSummary (props) {
             <li>depart: {start_date}</li>
             <li>return: {end_date}</li>
          </ul>
+         <button type='button' onClick={() => {navigate('edit')}}>edit</button>
       </div>
    )
 }
