@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :voting_types
 
    get '/auth', to: 'users#auth'
    post '/login', to: 'sessions#create'
@@ -7,9 +6,11 @@ Rails.application.routes.draw do
    post '/signup', to: 'users#create'
    get '/users/exist', to: 'users#exist'
 
+   resources :destinations, only: [:index]
    resources :invite_statuses, only: [:index]
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
+   # resources :proposals, only: [:index]
    # resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
       resources :invites, only: [:index]

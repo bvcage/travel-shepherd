@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_164558) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_000634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "destinations", force: :cascade do |t|
+    t.string "town_or_city"
+    t.string "district"
+    t.string "postal_area"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "invite_statuses", force: :cascade do |t|
     t.string "name"
@@ -33,6 +42,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_164558) do
   create_table "logins", force: :cascade do |t|
     t.integer "user_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "proposals", force: :cascade do |t|
+    t.integer "traveler_id"
+    t.integer "destination_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

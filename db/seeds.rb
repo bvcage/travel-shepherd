@@ -111,4 +111,13 @@ puts " 🌱 seeding travelers (joins)..."
       end
    end
 
+puts " 🌱 seeding destinations..."
+
+DATA = HTTP.get("https://countriesnow.space/api/v0.1/countries").parse
+DATA["data"].each do |country|
+   country["cities"].each do |city|
+      Destination.create(town_or_city: city, country: country["country"])
+   end
+end
+
 puts "🌳🌳 done seeding"
