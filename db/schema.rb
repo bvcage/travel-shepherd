@@ -10,15 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_000634) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_210343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.string "iso2", limit: 2
+    t.string "iso3", limit: 3
+    t.string "flag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "destinations", force: :cascade do |t|
-    t.string "town_or_city"
-    t.string "district"
+    t.string "municipality"
+    t.string "region"
     t.string "postal_area"
-    t.string "country"
+    t.integer "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

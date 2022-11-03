@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // pages
 import HomePage from './pages/HomePage'
 import Template from './pages/Template'
+import DestinationsPage from './pages/DestinationsPage'
 import LandingPage from './pages/LandingPage'
 import RedirectPage from './pages/RedirectPage'
 import TripSummaryPage from './pages/TripSummaryPage'
@@ -31,6 +32,9 @@ function App () {
                   <Route path='trips' element={<UserTripsPage />}>
                      <Route index element={<TripsContainer />} />
                   </Route>
+               </Route>
+               <Route path='destinations'>
+                  <Route index element={<DestinationsPage />} />
                </Route>
                <Route path='trips'>
                   <Route index element={<RedirectPage path='/:username/trips' />} />

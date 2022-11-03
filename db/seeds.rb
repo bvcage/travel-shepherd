@@ -6,11 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+require_relative '../config/.amadeus_keys.rb'
+
 puts "🚜...seeding CATEGORIES:"
 
 puts " 🌱 seeding invite statuses..."
 
-   INVITE_STATUSES = ['pending', 'accepted', 'rejected']
+   INVITE_STATUSES = ["pending", "accepted", "rejected"]
    INVITE_STATUSES.each do |status|
       InviteStatus.create(name: status)
    end
@@ -18,8 +20,8 @@ puts " 🌱 seeding invite statuses..."
 puts " 🌱 seeding voting types..."
 
    VOTING_TYPES = {
-      'pick': [1],
-      'rank': [3]
+      "pick": [1],
+      "rank": [3]
    }
    VOTING_TYPES.each do |name, values|
       values.each do |value|
@@ -32,6 +34,7 @@ puts "🚜...seeding DATA:"
    num_users = 10
    num_trips = 10
    num_joins = 30
+   num_countries = 40
 
 puts " 🌱 seeding users..."
 
@@ -111,12 +114,47 @@ puts " 🌱 seeding travelers (joins)..."
       end
    end
 
+puts " 🌱 seeding countries..."
+
+# aggregate "country" codes
+AGG_CODES = %W(WLD IBT LMY MIC IBD EAR LMC UMC EAS LTE EAP TEA TSA SAS IDA OED HIC PST IDX TSS SSF SSA LDC PRE ECS HPC FCS LIC LCN TLA LAC IDB TEC MEA EUU ARB ECA MNA TMN NAC EMU CEB SST)
+
+url = "https://countriesnow.space/api/v0.1/countries/population/filter/q?"
+url += "&order=asc"
+url += "&orderBy=populationCounts"
+countries = HTTP.get(url).parse["data"]
+count = 0
+while count < num_countries do
+   country = countries.pop
+   next if AGG_CODES.include? country["code"]   # skip if not real country
+   # correct for name mismatches
+   country = country["country"].split(",")[0]
+   case country
+   when "Russian Federation"
+      country = "Russia"
+   when "Korea"
+      country = "South Korea"
+   end
+   country = HTTP.get("https://countriesnow.space/api/v0.1/countries/flag/unicode/q?country=" + country.gsub(" ", "%20")).parse["data"]
+   Country.create(name: country["name"], iso2: country["iso2"], iso3: country["iso3"], flag: country["unicodeFlag"])
+   count += 1
+end
+
 puts " 🌱 seeding destinations..."
 
-DATA = HTTP.get("https://countriesnow.space/api/v0.1/countries").parse
-DATA["data"].each do |country|
-   country["cities"].each do |city|
-      Destination.create(town_or_city: city, country: country["country"])
+Country.all.each do |country|
+   url = "https://countriesnow.space/api/v0.1/countries/population/cities/filter/q?"
+   url += "country=" + country["name"].gsub(" ", "%20")
+   url += "&limit=3"
+   url += "&order=dsc"
+   url += "&orderBy=populationCounts"
+   cities = HTTP.get(url).parse["data"]
+   if cities.kind_of? Array
+      cities.each do |city|
+         Destination.create(municipality: city["city"], country_id: country.id)
+      end
+   else
+      Destination.create(country_id: country.id)
    end
 end
 
