@@ -19,6 +19,18 @@ class ProposalsController < ApplicationController
       render json: proposals
    end
 
+   def show
+      proposal = Proposal.find(params[:id])
+      render json: proposal
+   end
+
+   def update
+      @proposal = Proposal.find(params[:id])
+      authorize @proposal
+      @proposal.update!(proposal_params)
+      render json: @proposal, status: :accepted
+   end
+
    private
 
    def proposal_params

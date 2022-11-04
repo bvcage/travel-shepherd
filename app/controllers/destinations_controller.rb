@@ -4,7 +4,7 @@ class DestinationsController < ApplicationController
       destinations = []
       if params[:country_id]
          country = Country.find(params[:country_id])
-         destinations = country.destinations
+         destinations = country.destinations.order(:municipality)
       elsif params.keys.length > 0
          params.each do |key, value|
             case (key)
@@ -13,7 +13,6 @@ class DestinationsController < ApplicationController
             end
          end
       end
-      destinations = destinations.order(:municipality)
       render json: destinations
    end
 
@@ -21,5 +20,5 @@ class DestinationsController < ApplicationController
       destination = Destination.find(params[:id])
       render json: destination
    end
-   
+
 end

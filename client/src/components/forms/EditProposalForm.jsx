@@ -1,0 +1,134 @@
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import BackBtn from '../buttons/BackBtn'
+
+function EditProposalForm (props) {
+   const location = useLocation()
+   const navigate = useNavigate()
+   const params = useParams()
+   const countries = useSelector(state => state.countries)
+   const [destinations, setDestinations] = useState([])
+   const [proposal, setProposal] = useState({
+      id: '',
+      country_id: '',
+      destination_id: '',
+      trip_id: '',
+      user_id: ''
+   })
+
+   useEffect(() => {
+      if (!!location.state && !!location.state.proposal) {
+         let temp = location.state.proposal
+         setProposal({
+            id: temp.id,
+            country_id: temp.destination.country.id,
+            destination_id: temp.destination.id,
+            trip_id: temp.trip.id,
+            user_id: temp.user.id
+         })
+      } else {
+         fetch('/proposals/' + params.id).then(r=>{
+            if (r.ok) r.json().then(temp => {
+               setProposal({
+                  id: temp.id,
+                  country_id: temp.destination.country.id,
+                  destination_id: temp.destination.id,
+                  trip_id: temp.trip.id,
+                  user_id: temp.user.id
+               })
+            })
+            else console.log(r)
+         })
+      }
+   }, [location, params])
+
+   useEffect(() => {
+      if (!!proposal.country_id) {
+         fetch(`/countries/${proposal.country_id}/destinations`).then(r=>{
+            if (r.ok) r.json().then(setDestinations)
+            else console.log(r)
+         })
+      }
+   }, [proposal.country_id])
+
+   function handleChange (e) {
+      setProposal({...proposal,
+         [e.target.name]: e.target.value
+      })
+      if (e.target.name === 'country_id') fetch(`/countries/${proposal.country_id}/destinations`).then(r=>{
+         if (r.ok) r.json().then(setDestinations)
+         else console.log(r)
+      })
+   }
+
+   function handleSubmit (e) {
+      e.preventDefault()
+      fetch('/proposals/' + proposal.id, {
+         method: 'PATCH',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(proposal)
+      }).then(r=>{
+         if (r.ok) r.json().then(() => {
+            const path = location.pathname.split('/')
+            path.pop()
+            navigate(path.join('/'))
+         })
+         else console.log(r)
+      })
+   }
+
+   const countryOptions = !!countries ? countries.map(country => {
+      return (
+         <option key={country.id}
+            value={country.id}
+            >{country.name}</option>
+      )
+   }) : null
+
+   const destinationOptions = !!destinations ? destinations.map(destination => {
+      console.log(destination)
+      return (
+         <option key={destination.id}
+            value={destination.id}
+            >{destination.municipality}</option>
+      )
+   }) : null
+
+   if (!proposal) return <></>
+   return (
+      <div>
+         <form onSubmit={handleSubmit}>
+            <h2>edit proposal</h2>
+            
+            <label>country</label>
+            <select name='country_id'
+               value={proposal.country_id}
+               onChange={handleChange}>
+                  <option value='country'></option>
+                  {countryOptions}
+            </select>
+
+            <br />
+
+            <label>destination</label>
+            <select name='destination_id'
+               value={proposal.destination_id}
+               onChange={handleChange}>
+                  <option value='destination'></option>
+                  {destinationOptions}
+            </select>
+
+            <br />
+
+            <button type='submit' className='btn'>save</button>
+            <BackBtn />
+         </form>
+      </div>
+   )
+}
+
+export default EditProposalForm

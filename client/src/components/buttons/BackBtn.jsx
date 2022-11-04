@@ -10,7 +10,10 @@ function BackBtn (props) {
    const back = path.join('/')
    
    return (
-      <button type='button' onClick={() => navigate(back)}>back</button>
+      <button type='button'
+         className='btn'
+         onClick={() => navigate(back)}
+         >back</button>
    )
 }
 

@@ -21,6 +21,8 @@ import UserEditForm from './components/forms/UserEditForm'
 import UserProfile from './reducers/user/UserProfile'
 import TripEditForm from './components/forms/TripEditForm'
 import ProposalForm from './components/forms/ProposalForm'
+import ProposalSummaryPage from './pages/ProposalSummaryPage'
+import EditProposalForm from './components/forms/EditProposalForm'
 
 function App () {
    return (
@@ -48,7 +50,14 @@ function App () {
                      <Route index element={<TripSummaryPage />} />
                      <Route path='edit' element={<TripEditForm />} />
                      <Route path='invite' element={<InviteForm />} />
-                     <Route path='proposal' element={<ProposalForm />} />
+                     <Route path='proposals'>
+                        <Route index element={<RedirectPage path='/trips/:trip_id' />} />
+                        <Route path='new' element={<ProposalForm />} />
+                        <Route path=':id'>
+                           <Route index element={<ProposalSummaryPage />} />
+                           <Route path='edit' element={<EditProposalForm />} />
+                        </Route>
+                     </Route>
                   </Route>
                </Route>
             </Route>

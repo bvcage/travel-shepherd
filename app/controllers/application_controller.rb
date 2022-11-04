@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
    end
 
    def user_unauthorized_message err
-      render json: {error: 'user cannot perfom this action'}, status: :rejected
+      render json: {error: 'user cannot perfom this action'}, status: :forbidden
    end
 
    private

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import DestinationCard from '../cards/DestinationCard'
+import ProposalCard from '../cards/ProposalCard'
 
 function ProposalsContainer (props) {
    const { trip } = props
@@ -17,12 +17,12 @@ function ProposalsContainer (props) {
    }, [trip])
 
    function handleClick (goToId) {
-      console.log(goToId)
+      navigate('proposals/' + goToId)
    }
 
    const cards = !!proposals ? proposals.map(proposal => {
       return (
-         <DestinationCard key={proposal.id} destination={proposal.destination} onClick={handleClick} />
+         <ProposalCard key={proposal.id} proposal={proposal} onClick={handleClick} />
       )
    }) : null
 

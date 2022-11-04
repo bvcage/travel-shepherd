@@ -1,6 +1,17 @@
 class Destination < ApplicationRecord
+   # validations
+   validates_presence_of :country_id
+   # relations
    belongs_to :country
    has_many :proposals
+
+   def name
+      name = ""
+      if not self.municipality.nil? then name += "#{self.municipality}, " end
+      if not self.region.nil? then name += "#{self.region}, " end
+      name += self.country.name
+      name.titleize
+   end
 
    def self.explore_sample value
       explore_sample = []
