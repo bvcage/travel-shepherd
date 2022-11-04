@@ -1,13 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
-const selectUser = state => state.user
-
 function Template (props) {
-   const user = useSelector(selectUser)
+   const dispatch = useDispatch()
+   const user = useSelector(state => state.user)
+   
+   useEffect(() => {
+      fetch('/countries').then(r=>{
+         if (r.ok) r.json().then(countries => dispatch({type: 'countries/countriesLoaded', payload: countries}))
+         else console.log(r)
+      })
+   }, [dispatch])
+   
    if (!user.id) return <Navigate to='/welcome' />
    return (
       <div className='container'>

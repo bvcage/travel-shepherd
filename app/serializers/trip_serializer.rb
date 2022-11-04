@@ -3,4 +3,5 @@ class TripSerializer < ActiveModel::Serializer
   belongs_to :voting_type
   has_many :travelers
   has_many :invites
+  has_many :proposals
 end

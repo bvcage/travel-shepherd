@@ -6,7 +6,7 @@ function DestinationsPage (props) {
    const [destinations, setDestinations] = useState([])
 
    useEffect(() => {
-      fetch('/destinations?sample=10').then(r=>{
+      fetch('/destinations?sample=9').then(r=>{
          if (r.ok) r.json().then(setDestinations)
          else console.log(r)
       })

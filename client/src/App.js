@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import Template from './pages/Template'
 import DestinationsPage from './pages/DestinationsPage'
+import DestinationSummaryPage from './pages/DestinationSummaryPage'
 import LandingPage from './pages/LandingPage'
 import RedirectPage from './pages/RedirectPage'
 import TripSummaryPage from './pages/TripSummaryPage'
@@ -13,12 +14,13 @@ import UserTripsPage from './pages/UserTripsPage'
 // components
 import InviteForm from './components/forms/InviteForm'
 import Login from './components/Login'
-import NewTripForm from './features/trips/NewTripForm'
+import NewTripForm from './components/forms/NewTripForm'
 import Signup from './components/Signup'
 import TripsContainer from './components/containers/TripsContainer'
-import UserEditForm from './features/user/UserEditForm'
-import UserProfile from './features/user/UserProfile'
+import UserEditForm from './components/forms/UserEditForm'
+import UserProfile from './reducers/user/UserProfile'
 import TripEditForm from './components/forms/TripEditForm'
+import ProposalForm from './components/forms/ProposalForm'
 
 function App () {
    return (
@@ -35,6 +37,9 @@ function App () {
                </Route>
                <Route path='destinations'>
                   <Route index element={<DestinationsPage />} />
+                  <Route path=':id'>
+                     <Route index element={<DestinationSummaryPage />} />
+                  </Route>
                </Route>
                <Route path='trips'>
                   <Route index element={<RedirectPage path='/:username/trips' />} />
@@ -43,6 +48,7 @@ function App () {
                      <Route index element={<TripSummaryPage />} />
                      <Route path='edit' element={<TripEditForm />} />
                      <Route path='invite' element={<InviteForm />} />
+                     <Route path='proposal' element={<ProposalForm />} />
                   </Route>
                </Route>
             </Route>

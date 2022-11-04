@@ -158,4 +158,18 @@ Country.all.each do |country|
    end
 end
 
+puts " 🌱 seeding proposals..."
+
+num_destinations = Destination.all.count
+Trip.all.each do |trip|
+   travelers = trip.travelers
+   travelers.each do |traveler|
+      Proposal.create(
+         traveler_id: traveler.id,
+         trip_id: trip.id,
+         destination_id: rand(1..num_destinations)
+      )
+   end
+end
+
 puts "🌳🌳 done seeding"

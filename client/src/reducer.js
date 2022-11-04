@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
-import invitesReducer from './features/invites/invitesSlice'
-import tripsReducer from './features/trips/tripsSlice'
-import userReducer from './features/user/userSlice'
+import invitesReducer from './reducers/invitesSlice'
+import tripsReducer from './reducers/tripsSlice'
+import userReducer from './reducers/userSlice'
+import countriesReducer from './reducers/countriesSlice'
 
 const rootReducer = combineReducers({
+   countries: countriesReducer,
    invites: invitesReducer,
    trips: tripsReducer,
    user: userReducer

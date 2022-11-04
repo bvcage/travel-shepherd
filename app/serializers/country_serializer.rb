@@ -1,3 +1,3 @@
 class CountrySerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name, :iso2, :iso3, :flag
 end
