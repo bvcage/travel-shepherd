@@ -176,7 +176,7 @@ puts " 🌱 seeding votes..."
 
 Traveler.all.each do |traveler|
    trip = Trip.find(traveler.trip_id)
-   proposals = trip.proposals
+   proposals = [*trip.proposals]
    voting_type = VotingType.find_by(id: trip.voting_type_id)
    if voting_type.nil? then voting_type = VotingType.all.sample end
    points = voting_type.value
