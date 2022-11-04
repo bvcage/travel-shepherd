@@ -16,7 +16,7 @@ function DeleteModal (props) {
                </div>
                <div className='modal-body'>
                   <p>
-                     Are you sure that you want to permanently delete your {recordType}?
+                     Are you sure you want to permanently delete your {recordType}?
                      <br />
                      You cannot undo this later.
                   </p>

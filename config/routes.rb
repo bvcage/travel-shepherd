@@ -13,7 +13,7 @@ Rails.application.routes.draw do
    resources :invite_statuses, only: [:index]
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
-   resources :proposals, only: [:show, :create, :update]
+   resources :proposals, only: [:show, :create, :update, :destroy]
    # resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
       resources :invites, only: [:index]

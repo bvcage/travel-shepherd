@@ -1,8 +1,8 @@
 class ProposalPolicy < ApplicationPolicy
 
-   # def destroy?
-   #    @user.id == @record.owner_id
-   # end
+   def destroy?
+      @user.id == @record.user.id
+   end
 
    def update?
       @user.id == @record.user.id

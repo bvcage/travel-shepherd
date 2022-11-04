@@ -3,10 +3,9 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import BackBtn from '../buttons/BackBtn'
+import DeleteModal from '../modals/DeleteModal'
 
 function EditProposalForm (props) {
-   const location = useLocation()
-   const navigate = useNavigate()
    const params = useParams()
    const countries = useSelector(state => state.countries)
    const [destinations, setDestinations] = useState([])
@@ -17,6 +16,16 @@ function EditProposalForm (props) {
       trip_id: '',
       user_id: ''
    })
+   
+   // navigation
+   const location = useLocation()
+   const navigate = useNavigate()
+   let proposalPath = location.pathname.split('/')
+   proposalPath.pop()
+   proposalPath = proposalPath.join('/')
+   let tripPath = location.pathname.split('/')
+   let index = tripPath.indexOf('proposals')
+   tripPath = tripPath.slice(0, index).join('/')
 
    useEffect(() => {
       if (!!location.state && !!location.state.proposal) {
@@ -63,6 +72,24 @@ function EditProposalForm (props) {
       })
    }
 
+   function handleDelete () {
+      if (parseInt(params.id) !== parseInt(proposal.id)) return console.log('error: url & proposal id do not match')
+      fetch(`/proposals/${proposal.id}`, {
+         method: 'DELETE'
+      }).then(r=>{
+         if (r.ok) navigate(tripPath)
+         else {
+            switch (r.status) {
+               case 404:
+                  navigate(tripPath)
+                  break
+               default:
+                  console.log(r)
+            }
+         }
+      })
+   }
+
    function handleSubmit (e) {
       e.preventDefault()
       fetch('/proposals/' + proposal.id, {
@@ -72,11 +99,7 @@ function EditProposalForm (props) {
          },
          body: JSON.stringify(proposal)
       }).then(r=>{
-         if (r.ok) r.json().then(() => {
-            const path = location.pathname.split('/')
-            path.pop()
-            navigate(path.join('/'))
-         })
+         if (r.ok) navigate(proposalPath)
          else console.log(r)
       })
    }
@@ -97,6 +120,16 @@ function EditProposalForm (props) {
             >{destination.municipality}</option>
       )
    }) : null
+
+   const DeleteBtn = () => {
+      return (
+         <button type='button'
+            className='btn btn-outline-danger'
+            data-bs-toggle='modal'
+            data-bs-target='#deleteModal'
+            >delete</button>
+      )
+   }
 
    if (!proposal) return <></>
    return (
@@ -124,8 +157,13 @@ function EditProposalForm (props) {
 
             <br />
 
-            <button type='submit' className='btn'>save</button>
+            <button type='submit' className='btn btn-primary'>save</button>
             <BackBtn />
+
+            <br />
+
+            <DeleteBtn />
+            <DeleteModal record={proposal} recordType={'proposal'} onConfirm={handleDelete} />
          </form>
       </div>
    )

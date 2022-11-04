@@ -122,7 +122,6 @@ function TripEditForm (props) {
          ),
          'voting_deadline': !!trip.voting_deadline ? (new Date(trip.voting_deadline)).toUTCString() : null
       }
-      console.log(patch)
       delete patch['invites']
       delete patch['travelers']
       // update trip

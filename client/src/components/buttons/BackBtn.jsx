@@ -11,7 +11,7 @@ function BackBtn (props) {
    
    return (
       <button type='button'
-         className='btn'
+         className='btn btn-secondary'
          onClick={() => navigate(back)}
          >back</button>
    )

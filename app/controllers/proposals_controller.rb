@@ -9,6 +9,13 @@ class ProposalsController < ApplicationController
       render json: proposal, status: :created
    end
 
+   def destroy
+      @proposal = Proposal.find(params[:id])
+      authorize @proposal
+      @proposal.destroy
+      head :no_content
+   end
+
    def index
       if params[:trip_id]
          trip = Trip.find(params[:trip_id])
