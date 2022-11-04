@@ -172,4 +172,26 @@ Trip.all.each do |trip|
    end
 end
 
+puts " 🌱 seeding votes..."
+
+Traveler.all.each do |traveler|
+   trip = Trip.find(traveler.trip_id)
+   proposals = trip.proposals
+   voting_type = VotingType.find_by(id: trip.voting_type_id)
+   if voting_type.nil? then voting_type = VotingType.all.sample end
+   points = voting_type.value
+   voting_type.value.times do
+      next if !proposals.any?
+      proposal = proposals.sample
+      Vote.create(
+         proposal_id: proposal.id,
+         traveler_id: traveler.id,
+         trip_id: trip.id,
+         points: points
+      )
+      proposals.delete(proposal)
+      points -= 1 unless voting_type.name == 'pick'
+   end
+end
+
 puts "🌳🌳 done seeding"

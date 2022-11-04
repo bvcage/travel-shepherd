@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :invites, only: [:index]
       resources :trips, only: [:index]
    end
+   # resouces :votes
 
    get '*path',
       to: 'fallback#index',
