@@ -157,7 +157,12 @@ puts " 🌱 seeding destinations..."
       cities = HTTP.get(url).parse["data"]
       if cities.kind_of? Array
          cities.each do |city|
-            Destination.create(municipality: city["city"], country_id: country.id)
+            Destination.create(
+               municipality: city["city"],
+               country_id: country.id,
+               description: Faker::Lorem.paragraphs(number: 3),
+               summary: Faker::Lorem.sentences(number: 3)
+            )
          end
       else
          Destination.create(country_id: country.id)
