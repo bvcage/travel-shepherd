@@ -14,7 +14,7 @@ Rails.application.routes.draw do
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
    resources :proposals, only: [:show, :create, :update, :destroy]
-   # resources :travelers, only: [:index]
+   resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
       get 'calc_results', to: 'calc_results'
       resources :invites, only: [:index]
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       resources :invites, only: [:index]
       resources :trips, only: [:index]
    end
-   # resouces :votes
+   resources :votes, only: [:create]
 
    get '*path',
       to: 'fallback#index',

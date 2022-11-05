@@ -67,11 +67,13 @@ puts " 🌱 seeding users..."
 
 puts " 🌱 seeding trips..."
 
+   num_voting_type = VotingType.all.count
    num_trips.times do
       Trip.create(
          name: Faker::Lorem.word.titleize + ' Group Trip',
          num_days: rand(2..7),
-         owner_id: rand(1..num_users)
+         owner_id: rand(1..num_users),
+         voting_type_id: rand(1..num_voting_type)
       )
    end
 
@@ -120,84 +122,84 @@ puts " 🌱 seeding travelers (joins)..."
 
 puts " 🌱 seeding countries..."
 
-# aggregate "country" codes
-AGG_CODES = %W(WLD IBT LMY MIC IBD EAR LMC UMC EAS LTE EAP TEA TSA SAS IDA OED HIC PST IDX TSS SSF SSA LDC PRE ECS HPC FCS LIC LCN TLA LAC IDB TEC MEA EUU ARB ECA MNA TMN NAC EMU CEB SST)
+   # aggregate "country" codes
+   AGG_CODES = %W(WLD IBT LMY MIC IBD EAR LMC UMC EAS LTE EAP TEA TSA SAS IDA OED HIC PST IDX TSS SSF SSA LDC PRE ECS HPC FCS LIC LCN TLA LAC IDB TEC MEA EUU ARB ECA MNA TMN NAC EMU CEB SST)
 
-url = "https://countriesnow.space/api/v0.1/countries/population/filter/q?"
-url += "&order=asc"
-url += "&orderBy=populationCounts"
-countries = HTTP.get(url).parse["data"]
-count = 0
-while count < num_countries do
-   country = countries.pop
-   next if AGG_CODES.include? country["code"]   # skip if not real country
-   # correct for name mismatches
-   country = country["country"].split(",")[0]
-   case country
-   when "Russian Federation"
-      country = "Russia"
-   when "Korea"
-      country = "South Korea"
+   url = "https://countriesnow.space/api/v0.1/countries/population/filter/q?"
+   url += "&order=asc"
+   url += "&orderBy=populationCounts"
+   countries = HTTP.get(url).parse["data"]
+   count = 0
+   while count < num_countries do
+      country = countries.pop
+      next if AGG_CODES.include? country["code"]   # skip if not real country
+      # correct for name mismatches
+      country = country["country"].split(",")[0]
+      case country
+      when "Russian Federation"
+         country = "Russia"
+      when "Korea"
+         country = "South Korea"
+      end
+      country = HTTP.get("https://countriesnow.space/api/v0.1/countries/flag/unicode/q?country=" + country.gsub(" ", "%20")).parse["data"]
+      Country.create(name: country["name"], iso2: country["iso2"], iso3: country["iso3"], flag: country["unicodeFlag"])
+      count += 1
    end
-   country = HTTP.get("https://countriesnow.space/api/v0.1/countries/flag/unicode/q?country=" + country.gsub(" ", "%20")).parse["data"]
-   Country.create(name: country["name"], iso2: country["iso2"], iso3: country["iso3"], flag: country["unicodeFlag"])
-   count += 1
-end
 
 puts " 🌱 seeding destinations..."
 
-Country.all.each do |country|
-   url = "https://countriesnow.space/api/v0.1/countries/population/cities/filter/q?"
-   url += "country=" + country["name"].gsub(" ", "%20")
-   url += "&limit=3"
-   url += "&order=dsc"
-   url += "&orderBy=populationCounts"
-   cities = HTTP.get(url).parse["data"]
-   if cities.kind_of? Array
-      cities.each do |city|
-         Destination.create(municipality: city["city"], country_id: country.id)
+   Country.all.each do |country|
+      url = "https://countriesnow.space/api/v0.1/countries/population/cities/filter/q?"
+      url += "country=" + country["name"].gsub(" ", "%20")
+      url += "&limit=3"
+      url += "&order=dsc"
+      url += "&orderBy=populationCounts"
+      cities = HTTP.get(url).parse["data"]
+      if cities.kind_of? Array
+         cities.each do |city|
+            Destination.create(municipality: city["city"], country_id: country.id)
+         end
+      else
+         Destination.create(country_id: country.id)
       end
-   else
-      Destination.create(country_id: country.id)
    end
-end
 
 puts " 🌱 seeding proposals..."
 
-num_destinations = Destination.all.count
-Trip.all.each do |trip|
-   travelers = trip.travelers
-   travelers.each do |traveler|
-      Proposal.create(
-         traveler_id: traveler.id,
-         trip_id: trip.id,
-         destination_id: rand(1..num_destinations)
-      )
+   num_destinations = Destination.all.count
+   Trip.all.each do |trip|
+      travelers = trip.travelers
+      travelers.each do |traveler|
+         Proposal.create(
+            traveler_id: traveler.id,
+            trip_id: trip.id,
+            destination_id: rand(1..num_destinations)
+         )
+      end
    end
-end
 
 puts " 🌱 seeding votes..."
 
-Traveler.all.each do |traveler|
-   next if rand(1..3) == 1
-   trip = Trip.find(traveler.trip_id)
-   proposals = [*trip.proposals]
-   voting_type = VotingType.find_by(id: trip.voting_type_id)
-   if voting_type.nil? then voting_type = VotingType.all.sample end
-   points = voting_type.value
-   voting_type.value.times do
-      next if !proposals.any?
-      proposal = proposals.sample
-      Vote.create(
-         proposal_id: proposal.id,
-         traveler_id: traveler.id,
-         trip_id: trip.id,
-         points: points
-      )
-      traveler.update(has_voted: true)
-      proposals.delete(proposal)
-      points -= 1 unless voting_type.name == 'pick'
+   Traveler.all.each do |traveler|
+      next if rand(1..3) == 1
+      trip = Trip.find(traveler.trip_id)
+      proposals = [*trip.proposals]
+      voting_type = VotingType.find_by(id: trip.voting_type_id)
+      if voting_type.nil? then voting_type = VotingType.all.sample end
+      points = voting_type.value
+      voting_type.value.times do
+         next if !proposals.any?
+         proposal = proposals.sample
+         Vote.create(
+            proposal_id: proposal.id,
+            traveler_id: traveler.id,
+            trip_id: trip.id,
+            points: points
+         )
+         traveler.update(has_voted: true)
+         proposals.delete(proposal)
+         points -= 1 unless voting_type.name == 'pick'
+      end
    end
-end
 
 puts "🌳🌳 done seeding"

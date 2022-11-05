@@ -20,7 +20,7 @@ class ProposalsController < ApplicationController
       if params[:trip_id]
          trip = Trip.find(params[:trip_id])
          proposals = trip.proposals
-         proposals = proposals.sort{ |a,b| a.point_total <=> b.point_total }.reverse
+         # proposals = proposals.sort{ |a,b| a.point_total <=> b.point_total }.reverse
       else
          proposals = Proposal.all
       end

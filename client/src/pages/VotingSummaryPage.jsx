@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import BackBtn from '../components/buttons/BackBtn'
+import ReleaseResultsBtn from '../components/buttons/ReleaseResultsBtn'
 import VotingSummary from '../components/summaries/VotingSummary'
 
 function VotingSummaryPage (props) {
@@ -8,7 +10,6 @@ function VotingSummaryPage (props) {
    const params = useParams()
    const trip = useSelector(state => state.trip)
    const [proposals, setProposals] = useState([])
-   const [votes, setVotes] = useState([])
 
    useEffect(() => {
       if (!!trip.id) {
@@ -23,14 +24,14 @@ function VotingSummaryPage (props) {
       }
    }, [params, trip, dispatch])
 
-
-   console.log(proposals)
    if (!trip ||
        !proposals ) return <></>
    return (
       <div>
          <h2>voting summary for {trip.name}</h2>
          <VotingSummary proposals={proposals}/>
+         {!!trip.winning_proposal_id ? null: <ReleaseResultsBtn trip={trip} />}
+         <BackBtn />
       </div>
    )
 }

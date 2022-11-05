@@ -1,3 +1,24 @@
 .modal-body {
    text-align: center;
 }
+
+.spring-list {
+   margin: 12vh auto;
+}
+.spring-item div {
+   width: 280px;
+   padding: 24px;
+   margin: 4px;
+   text-align: center;
+   background: rgba(255, 255, 255, 0.96);
+   border-radius: 4px;
+   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+   cursor: all-scroll;
+   user-select: none;
+   transition: 0.2s;
+}
+.spring-item[data-active='true'] div {
+   background: rgba(255, 255, 255, 0.88);
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+   transform: scale(1.05);
+}

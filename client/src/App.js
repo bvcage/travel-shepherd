@@ -24,6 +24,7 @@ import ProposalForm from './components/forms/ProposalForm'
 import ProposalSummaryPage from './pages/ProposalSummaryPage'
 import EditProposalForm from './components/forms/EditProposalForm'
 import VotingSummaryPage from './pages/VotingSummaryPage'
+import VotingPage from './pages/VotingPage'
 
 function App () {
    return (
@@ -59,6 +60,7 @@ function App () {
                            <Route path='edit' element={<EditProposalForm />} />
                         </Route>
                      </Route>
+                     <Route path='vote' element={<VotingPage />} />
                      <Route path='votes' element={<VotingSummaryPage />} />
                   </Route>
                </Route>

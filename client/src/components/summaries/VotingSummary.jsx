@@ -1,5 +1,4 @@
 import React from 'react'
-import ReleaseResultsBtn from '../buttons/ReleaseResultsBtn'
 import ProposalVotesTable from '../tables/ProposalVotesTable'
 
 function VotingSummary (props) {
@@ -9,7 +8,6 @@ function VotingSummary (props) {
    return (
       <div className='container'>
          <ProposalVotesTable proposals={proposals} />
-         <ReleaseResultsBtn />
       </div>
    )
 }
