@@ -1,8 +1,7 @@
-import React from 'react'
+import './HomePage.css'
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import LoginBtn from '../components/buttons/LoginBtn'
-
 
 function HomePage (props) {
    const location = useLocation()
@@ -12,10 +11,16 @@ function HomePage (props) {
    if (!!username) return (<Navigate to='/home' />)
    
    return (
-      <div className='container'>
-         <h1>Travel Shepherd</h1>
-         {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null}
-         <Outlet />
+      <div className='container-fluid'>
+         <div className='row'>
+            <div className='col col-md-7 col-lg-8'>
+               <h1>Travel Shepherd</h1>
+            </div>
+            <div id='login' className='col col-md-5 col-lg-4'>
+               {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null}
+               <Outlet />
+            </div>
+         </div>
       </div>
    )
 }

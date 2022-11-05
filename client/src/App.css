@@ -1,5 +1,36 @@
+:root {
+   --primary-bg-color: #214E34;
+   --primary-color: #377350;
+   --secondary-color: #6a9a7f;
+   --accent-color: #CD7027;
+}
+
 html, body {
-   background-color: rgb(154, 154, 154);
+   background-color: var(--primary-bg-color);
+   text-align: center;
+}
+
+#root {
+   height: 100vh;
+   overflow: hidden;
+}
+
+#root button.btn-primary,
+#root button.btn-primary:active {
+   background-color: var(--primary-color);
+   border-color: var(--primary-color);
+}
+
+#root button.btn-primary:hover,
+#root button.btn-primary:focus-within,
+#root button.btn-primary:focus-visible {
+   background-color: var(--secondary-color);
+   border-color: var(--secondary-color);
+}
+
+#root button.btn-primary:focus-within,
+#root button.btn-primary:focus-visible {
+   box-shadow: 0 0 0 0.25rem var(--primary-color);
 }
 
 #footer {

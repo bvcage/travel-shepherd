@@ -46,35 +46,30 @@ function Login (props) {
    }
 
    return (
-      <div className='container'>
-         <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+         <div className='form-floating mb-3'>
+            <input name='username'
+               type='text'
+               className='form-control'
+               placeholder='username'
+               value={login.username}
+               onBlur={checkUsername}
+               onChange={handleChange} />
+            <label>username</label>
+         </div>
 
-            <h2>login</h2>
+         <div className='form-floating mb-3'>
+            <input name='password'
+               type='password'
+               className='form-control'
+               placeholder='password'
+               value={login.password}
+               onChange={handleChange} />
+            <label>password</label>
+         </div>
 
-            <div className='form-floating'>
-               <input name='username'
-                  type='text'
-                  className='form-control'
-                  placeholder='username'
-                  value={login.username}
-                  onBlur={checkUsername}
-                  onChange={handleChange} />
-               <label>username</label>
-            </div>
-
-            <div className='form-floating'>
-               <input name='password'
-                  type='password'
-                  className='form-control'
-                  placeholder='password'
-                  value={login.password}
-                  onChange={handleChange} />
-               <label>password</label>
-            </div>
-
-            <button type='submit' className='btn btn-primary'>{!!userExists ? 'login' : 'sign up'}</button>
-         </form>
-      </div>
+         <button type='submit' className='btn btn-primary'>{!!userExists ? 'login' : 'sign up'}</button>
+      </form>
    )
 }
 

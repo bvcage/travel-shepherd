@@ -6,8 +6,8 @@ function TripCard (props) {
    const { trip } = props
    const { id, name, num_days, owner } = trip
    const user = useSelector(state => state.user)
-   console.log(trip)
    const navigate = useNavigate()
+   
    return (
       <div className='card' onClick={() => navigate('/trips/' + id, {state: {trip: trip}})}>
          <div className='card-content'>
