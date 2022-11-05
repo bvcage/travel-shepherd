@@ -1,5 +1,12 @@
 class TripsController < ApplicationController
 
+   def calc_results
+      @trip = Trip.find(params[:trip_id])
+      authorize @trip, :update?
+      winning_proposal = @trip.calc_voting_results
+      render json: winning_proposal
+   end
+
    def create
       trip = Trip.create!(trip_params)
       render json: trip, status: :created
@@ -41,7 +48,16 @@ class TripsController < ApplicationController
    private
 
    def trip_params
-      params.permit(:name, :start_date, :end_date, :voting_deadline, :num_days, :allow_proposals, :voting_type_id)
+      params.permit(
+         :name,
+         :start_date,
+         :end_date,
+         :voting_opens_at,
+         :voting_closes_at,
+         :voting_is_open,
+         :num_days,
+         :allow_proposals,
+         :voting_type_id)
    end
 
 end

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import ProposalCard from '../cards/ProposalCard'
 
 function ProposalsContainer (props) {
-   const { trip } = props
+   const trip = useSelector(state => state.trip)
    const navigate = useNavigate()
    const [proposals, setProposals] = useState([])
-   
+
    useEffect(() => {
       if (!!trip.id) {
          fetch(`/trips/${trip.id}/proposals`).then(r=>{

@@ -19,7 +19,7 @@ function TripEditForm (props) {
             if (r.ok) r.json().then(trip => setTrip({...trip,
                'start_date': !!trip.start_date ? formatDate(new Date(trip.start_date)) : null,
                'end_date': !!trip.end_date ? formatDate(new Date(trip.end_date)) : null,
-               'voting_deadline': !!trip.voting_deadline ? formatDate(new Date(trip.voting_deadline).toLocaleString('en-US'), true) : null
+               'voting_closes_at': !!trip.voting_closes_at ? formatDate(new Date(trip.voting_closes_at).toLocaleString('en-US'), true) : null
             }))
             else console.log(r)
          })
@@ -120,7 +120,7 @@ function TripEditForm (props) {
                value: trip.voting_type.value
             } : null
          ),
-         'voting_deadline': !!trip.voting_deadline ? (new Date(trip.voting_deadline)).toUTCString() : null
+         'voting_closes_at': !!trip.voting_closes_at ? (new Date(trip.voting_closes_at)).toUTCString() : null
       }
       delete patch['invites']
       delete patch['travelers']
@@ -190,10 +190,10 @@ function TripEditForm (props) {
          <br />
 
          <label>voting deadline</label>
-         <input name='voting_deadline'
+         <input name='voting_closes_at'
             type='datetime-local'
             max={trip.start_date}
-            value={trip.voting_deadline}
+            value={trip.voting_closes_at}
             onChange={handleChange} />
 
          <br />

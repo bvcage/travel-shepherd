@@ -1,3 +1,3 @@
 class VoteSerializer < ActiveModel::Serializer
-  attributes :id, :proposal_id, :traveler_id, :trip_id, :points
+   attributes :id, :proposal, :traveler_id, :trip_id, :points, :user
 end

@@ -16,9 +16,11 @@ Rails.application.routes.draw do
    resources :proposals, only: [:show, :create, :update, :destroy]
    # resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
+      get 'calc_results', to: 'calc_results'
       resources :invites, only: [:index]
       resources :proposals, only: [:index]
       resources :travelers, only: [:index]
+      resources :votes, only: [:index]
    end
    resources :users, only: [:show, :create, :update] do
       resources :invites, only: [:index]

@@ -39,14 +39,14 @@ puts "🚜...seeding DATA:"
 puts " 🌱 seeding users..."
 
    user1 = User.create(
-      username: "a",
-      email: "a",
-      first_name: "a",
-      last_name: "a"
+      username: "test",
+      email: "test",
+      first_name: "test",
+      last_name: "test"
    )
    Login.create(
       user_id: user1.id,
-      password: "a"
+      password: "test"
    )
 
    num_users.times do
@@ -69,7 +69,7 @@ puts " 🌱 seeding trips..."
 
    num_trips.times do
       Trip.create(
-         name: Faker::Address.country,
+         name: Faker::Lorem.word.titleize + ' Group Trip',
          num_days: rand(2..7),
          owner_id: rand(1..num_users)
       )
@@ -80,7 +80,8 @@ puts " 🌱 seeding travelers (joins)..."
    num_joins.times do
       Traveler.create(
          user_id: rand(1..num_users),
-         trip_id: rand(1..num_trips)
+         trip_id: rand(1..num_trips),
+         has_voted: false
       )
    end
 
@@ -89,7 +90,8 @@ puts " 🌱 seeding travelers (joins)..."
       if not trip.travelers.include? trip.owner_id
          Traveler.create(
             user_id: trip.owner_id,
-            trip_id: trip.id
+            trip_id: trip.id,
+            has_voted: false
          )
       end
    end
@@ -99,7 +101,8 @@ puts " 🌱 seeding travelers (joins)..."
       if user.trips.length == 0
          Traveler.create(
             user_id: user.id,
-            trip_id: rand(1..num_trips)
+            trip_id: rand(1..num_trips),
+            has_voted: false
          )
       end
    end
@@ -109,7 +112,8 @@ puts " 🌱 seeding travelers (joins)..."
       if trip.users.length == 0
          Traveler.create(
             user_id: rand(1..num_users),
-            trip_id: trip.id
+            trip_id: trip.id,
+            has_voted: false
          )
       end
    end
@@ -175,6 +179,7 @@ end
 puts " 🌱 seeding votes..."
 
 Traveler.all.each do |traveler|
+   next if rand(1..3) == 1
    trip = Trip.find(traveler.trip_id)
    proposals = [*trip.proposals]
    voting_type = VotingType.find_by(id: trip.voting_type_id)
@@ -189,6 +194,7 @@ Traveler.all.each do |traveler|
          trip_id: trip.id,
          points: points
       )
+      traveler.update(has_voted: true)
       proposals.delete(proposal)
       points -= 1 unless voting_type.name == 'pick'
    end

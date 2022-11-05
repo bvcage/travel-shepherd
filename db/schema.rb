@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_04_181822) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_04_211422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_181822) do
     t.integer "trip_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "has_voted"
   end
 
   create_table "trips", force: :cascade do |t|
@@ -75,12 +76,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_181822) do
     t.integer "num_days"
     t.datetime "start_date", precision: nil
     t.datetime "end_date", precision: nil
-    t.datetime "voting_deadline", precision: nil
+    t.datetime "voting_closes_at", precision: nil
     t.boolean "allow_proposals"
     t.integer "voting_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
+    t.datetime "voting_opens_at"
+    t.boolean "voting_is_open"
+    t.integer "winning_proposal_id"
     t.index ["owner_id"], name: "index_trips_on_owner_id"
   end
 

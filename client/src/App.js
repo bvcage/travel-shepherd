@@ -23,6 +23,7 @@ import TripEditForm from './components/forms/TripEditForm'
 import ProposalForm from './components/forms/ProposalForm'
 import ProposalSummaryPage from './pages/ProposalSummaryPage'
 import EditProposalForm from './components/forms/EditProposalForm'
+import VotingSummaryPage from './pages/VotingSummaryPage'
 
 function App () {
    return (
@@ -58,6 +59,7 @@ function App () {
                            <Route path='edit' element={<EditProposalForm />} />
                         </Route>
                      </Route>
+                     <Route path='votes' element={<VotingSummaryPage />} />
                   </Route>
                </Route>
             </Route>

@@ -27,7 +27,7 @@ function TravelersContainer (props) {
       <div>
          <h4>Travelers Container</h4>
          <UsersContainer users={users} />
-         <TripInvitesContainer invites={invites} mayInvite={mayInvite} />
+         {!!trip.winning_proposal_id ? null : <TripInvitesContainer invites={invites} mayInvite={mayInvite} />}
       </div>
    )
 }

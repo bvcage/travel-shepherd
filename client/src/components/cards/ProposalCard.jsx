@@ -8,6 +8,7 @@ function ProposalCard (props) {
       onClick(proposal.id)
    }
 
+   if (!proposal) return <></>
    return (
       <div className='card' onClick={handleClick}>
          <div className='card-body'>
