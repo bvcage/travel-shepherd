@@ -1,0 +1,21 @@
+div.card {
+   border-width: 2px;
+   max-width: 500px;
+}
+
+div.card:hover {
+   border-color: var(--accent-color);
+}
+
+div.card > ul.list-group {
+   border-width: 1px;
+   border-color: rgba(0, 0, 0, 0.125);
+}
+
+div.card > ul.list-group > li.list-group-item {
+   text-align: right;
+}
+
+.rounded-pill {
+   background-color: var(--secondary-color);
+}

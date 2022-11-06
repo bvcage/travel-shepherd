@@ -20,7 +20,6 @@ function LandingPage (props) {
    if (!user.id) return (<Navigate to='/welcome' />)
    return (
       <div className='container'>
-         <h2>landing page</h2>
          <UserInvitesContainer pendingOnly={true} />
          <TripsContainer />
       </div>

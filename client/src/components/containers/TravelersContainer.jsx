@@ -24,8 +24,8 @@ function TravelersContainer (props) {
    const users = !!travelers ? travelers.map(traveler => traveler.user) : null
 
    return (
-      <div>
-         <h4>Travelers Container</h4>
+      <div className='container'>
+         <h3>Companions</h3>
          <UsersContainer users={users} />
          {!!trip.winning_proposal_id ? null : <TripInvitesContainer invites={invites} mayInvite={mayInvite} />}
       </div>

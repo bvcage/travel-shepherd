@@ -14,8 +14,11 @@ function DestinationsPage (props) {
    
    return (
       <div className='container'>
-         <h2>DestinationsPage</h2>
-         <DestinationsContainer destinations={destinations} />
+         <h2 className='page-title'>explore destinations</h2>
+         <div className='page-content'>
+            <DestinationsContainer destinations={destinations} />
+            <h6 className='fin'>fin</h6>
+         </div>
       </div>
    )
 }

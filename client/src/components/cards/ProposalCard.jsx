@@ -1,4 +1,4 @@
-import React from 'react'
+import './cards.css'
 
 function ProposalCard (props) {
    const { proposal, onClick } = props

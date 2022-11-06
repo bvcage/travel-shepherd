@@ -23,11 +23,15 @@ function TripInvitesContainer (props) {
       )
    }) : null
 
-   const inviteToggle = (<button type='button' onClick={() => navigate('invite', {state: {invites: invites}})}>+ invite</button>)
+   const inviteToggle = (
+      <button type='button'
+         className='btn btn-primary'
+         onClick={() => navigate('invite', {state: {invites: invites}})}
+         >+ send invite</button>
+   )
 
    return (
-      <div>
-         <h5>invites container</h5>
+      <div className='container'>
          {cards}
          {mayInvite ? inviteToggle : null}
       </div>

@@ -20,7 +20,7 @@ function LogoutBtn (props) {
    }
 
    return (
-      <button className='btn' onClick={handleLogout}>logout</button>
+      <div onClick={handleLogout}>logout</div>
    )
 }
 

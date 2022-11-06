@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
+import ProposalCard from '../components/cards/ProposalCard'
 import ProposalsContainer from '../components/containers/ProposalsContainer'
 import TravelersContainer from '../components/containers/TravelersContainer'
 import VotingContainer from '../components/containers/VotingContainer'
@@ -21,12 +22,28 @@ function TripSummaryPage (props) {
 
    return (
       <div className='container'>
-         <h3>Trip Summary</h3>
-         <TripSummary trip={trip} />
-         {!!trip.winning_proposal_id ? null : <VotingContainer />}
-         <TravelersContainer trip={trip} mayInvite={true} />
-         {!!trip.winning_proposal_id ? null : <ProposalsContainer trip={trip} />}
-         <BackBtn />
+         <h2 className='page-header'>{trip.name}</h2>
+         <div className='page-content'>
+            <div className='row mb-3'>
+               <TripSummary trip={trip} />
+            </div>
+            <div className='row mb-3'>
+               <div className='col col-12 col-md-6'>
+                  <TravelersContainer trip={trip} mayInvite={true} />
+               </div>
+               <div className='col col-12 col-md-6'>
+                  {!!trip.winning_proposal ? null : <ProposalsContainer trip={trip} />}
+               </div>
+            </div>
+            <div className='row mb-3'>
+               {!!trip.winning_proposal_id ? null : <VotingContainer />}
+            </div>
+            <div className='row fin'>
+               <div>
+                  <BackBtn />
+               </div>
+            </div>
+         </div>
       </div>
    )
 }

@@ -29,7 +29,6 @@ function UserInvitesContainer (props) {
 
    return (
       <div>
-         <h4>UserInvitesContainer</h4>
          {alerts}
       </div>
    )

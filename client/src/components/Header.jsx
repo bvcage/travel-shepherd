@@ -1,9 +1,8 @@
-import React from 'react'
 import NavBar from './NavBar'
 
 function Header (props) {
    return (
-      <div>Header
+      <div id='header' className='container'>
          <NavBar />
       </div>
    )

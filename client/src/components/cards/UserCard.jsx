@@ -1,4 +1,4 @@
-import React from 'react'
+import './cards.css'
 
 function UserCard (props) {
    const { user } = props
@@ -6,8 +6,10 @@ function UserCard (props) {
 
    return (
       <div className='card'>
-         <h5 className='card-title'>{first_name} {last_name}</h5>
-         <h6 className='card-subtitle'>@{username}</h6>
+         <div className='card-body'>
+            <h5 className='card-title'>{first_name} {last_name}</h5>
+            <h6 className='card-subtitle'>@{username}</h6>
+         </div>
       </div>
    )
 }

@@ -5,14 +5,19 @@ function UsersContainer (props) {
 
    const cards = !!users ? users.map(user => {
       return (
-         <UserCard key={user.id} user={user} />
+         <div className='col col-12 col-xl-6 mb-3'>
+            <div className='container-fluid p-0'>
+               <UserCard key={user.id} user={user} />
+            </div>
+         </div>
       )
    }) : null
 
    return (
-      <div>
-         <h6>user container</h6>
-         {cards}
+      <div className='container'>
+         <div className='row'>
+            {cards}
+         </div>
       </div>
    )
 }

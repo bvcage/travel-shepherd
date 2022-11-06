@@ -21,16 +21,32 @@ function ProposalsContainer (props) {
       navigate('proposals/' + goToId)
    }
 
+   const NewProposalBtn = () => {
+      return (
+         <button type='button'
+            className='btn btn-primary'
+            onClick={() => navigate('proposals/new')}
+            >+ make proposal</button>
+      )
+   }
+
    const cards = !!proposals ? proposals.map(proposal => {
       return (
-         <ProposalCard key={proposal.id} proposal={proposal} onClick={handleClick} />
+         <div className='col col-12 col-xl-6 mb-3'>
+            <div className='container-fluid p-0'>
+               <ProposalCard key={proposal.id} proposal={proposal} onClick={handleClick} />
+            </div>
+         </div>
       )
    }) : null
 
    return (
       <div className='container'>
-         {cards}
-         {trip.allow_proposals || trip.allow_proposals === null ? <button type='button' onClick={() => navigate('proposals/new')}>+ make proposal</button> : null}
+         <h3>Proposals</h3>
+         <div className='row'>
+            {cards}
+         </div>
+         {trip.allow_proposals || trip.allow_proposals === null ? <NewProposalBtn /> : null}
       </div>
    )
 }

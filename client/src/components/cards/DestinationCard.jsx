@@ -1,4 +1,4 @@
-import React from 'react'
+import './cards.css'
 
 function DestinationCard (props) {
    const { destination, onClick } = props
@@ -6,6 +6,7 @@ function DestinationCard (props) {
 
    const title = !!municipality ? municipality : country.name
    const subtitle = (title === municipality) ? (!!region ? region + ', ' : '') + country.name : null
+   const imgSrc = "https://picsum.photos/200"
 
    function capitalize (string) {
       if (!string) return
@@ -29,10 +30,13 @@ function DestinationCard (props) {
    }
 
    return (
-      <div className='card' onClick={handleClick}>
-         <div className='card-body'>
-            <h5 className='card-title'>{capitalize(title)} {country.flag}</h5>
-            <h6 className='card-subtitle'>{capitalize(subtitle)}</h6>
+      <div className='container p-2'>
+         <div className='card m-2' onClick={handleClick}>
+            <img className="card-img-top" src={imgSrc} alt={country.name} />
+            <div className='card-body'>
+               <h5 className='card-title'>{capitalize(title)} {country.flag}</h5>
+               <h6 className='card-subtitle'>{capitalize(subtitle)}</h6>
+            </div>
          </div>
       </div>
    )

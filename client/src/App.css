@@ -1,5 +1,6 @@
 :root {
    --primary-bg-color: #214E34;
+   --light-bg-color: #f8f1e9;
    --primary-color: #377350;
    --secondary-color: #6a9a7f;
    --accent-color: #CD7027;
@@ -9,6 +10,17 @@ html, body {
    background-color: var(--primary-bg-color);
    text-align: center;
 }
+
+/* fonts */
+h1 {
+   font-weight: bold;
+   font-family: 'Sansita Swashed', cursive;
+}
+
+nav {
+   font-family: 'Poppins', sans-serif;
+}
+
 
 #root {
    height: 100vh;

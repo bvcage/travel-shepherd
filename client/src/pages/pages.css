@@ -1,0 +1,60 @@
+:root {
+   --header-height: 10vh;
+   --page-title-height: 3rem;
+}
+
+#root > div {
+   background-color: var(--light-bg-color);
+}
+
+/* header & navbar */
+
+div#header {
+   position: relative;
+   height: var(--header-height);
+   width: 100%;
+}
+
+div#header nav {
+   position: absolute;
+   bottom: 0px;
+   left: 0px;
+   width: 100%;
+}
+
+nav.navbar ul.nav {
+   border-bottom: 2px solid var(--secondary-color);
+   padding: 0rem 1rem;
+}
+
+ul.nav li {
+   margin: 0rem 0.5rem;
+}
+
+/* page content */
+
+div#main-content {
+   height: calc(100vh - var(--header-height));
+}
+
+div#main-content > div.container {
+   height: 100%;
+}
+
+.page-title {
+   height: var(--page-title-height);
+}
+
+div.page-content {
+   height: calc(100% - var(--page-title-height));
+   overflow: scroll;
+}
+
+div.page-content > div.row {
+   height: auto;
+}
+
+.fin {
+   padding: 1rem;
+   min-height: 10vh;
+}

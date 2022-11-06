@@ -7,14 +7,20 @@ function TripsContainer (props) {
 
    const cards = !!trips[0] ? trips.map(trip => {
       return (
-         <TripCard key={trip.id} trip={trip} />
+         <div className='col-12 col-md-6'>
+            <TripCard key={trip.id} trip={trip} />
+         </div>
       )
    }) : null
 
    return (
-      <div>
-         <h6>trips container</h6>
-         {cards}
+      <div className='container'>
+         <h2 className='page-header'>my trips</h2>
+         <div className='page-content'>
+            <div className='row'>
+               {cards}
+            </div>
+         </div>
       </div>
    )
 }
