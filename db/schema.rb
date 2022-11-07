@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_07_161301) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_07_204107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.integer "destination_id"
+    t.integer "place_id"
+    t.integer "activity_type_id"
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "activity_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
@@ -35,6 +51,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_161301) do
     t.string "name"
   end
 
+  create_table "events", force: :cascade do |t|
+    t.integer "activity_id"
+    t.integer "itinerary_id"
+    t.string "name"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
+    t.integer "duration_in_minutes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "invite_statuses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -51,9 +78,39 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_161301) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "itineraries", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "logins", force: :cascade do |t|
     t.integer "user_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "place_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string "name"
+    t.integer "place_type_id"
+    t.string "street_number"
+    t.string "building_name"
+    t.string "street_number_suffix"
+    t.string "street_name"
+    t.string "street_type"
+    t.string "street_direction"
+    t.string "address_type"
+    t.string "address_type_identifier"
+    t.integer "destination_id"
+    t.integer "google_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
