@@ -1,4 +1,4 @@
-import './pages.css'
+import '../css/Pages.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
@@ -18,13 +18,13 @@ function Template (props) {
    
    if (!user.id) return <Navigate to='/welcome' />
    return (
-      <div className='container'>
+      <>
          <Header />
-         <div id='main-content' className='container'>
+         <div id='main-content'>
             <Outlet />
          </div>
          <Footer />
-      </div>
+      </>
    )
 }
 

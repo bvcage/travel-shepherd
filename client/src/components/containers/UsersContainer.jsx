@@ -5,7 +5,7 @@ function UsersContainer (props) {
 
    const cards = !!users ? users.map(user => {
       return (
-         <div className='col col-12 col-xl-6 mb-3'>
+         <div key={user.id} className='col col-12 col-xl-6 mb-3'>
             <div className='container-fluid p-0'>
                <UserCard key={user.id} user={user} />
             </div>

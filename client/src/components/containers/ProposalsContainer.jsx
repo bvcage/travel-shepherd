@@ -32,7 +32,7 @@ function ProposalsContainer (props) {
 
    const cards = !!proposals ? proposals.map(proposal => {
       return (
-         <div className='col col-12 col-xl-6 mb-3'>
+         <div key={proposal.id} className='col col-12 col-xl-6 mb-3'>
             <div className='container-fluid p-0'>
                <ProposalCard key={proposal.id} proposal={proposal} onClick={handleClick} />
             </div>

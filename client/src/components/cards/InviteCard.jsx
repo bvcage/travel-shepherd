@@ -1,4 +1,4 @@
-import React from 'react'
+// import '../../assets/css/cards.css'
 
 function InviteCard (props) {
    const { invite } = props

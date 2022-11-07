@@ -1,4 +1,4 @@
-import './HomePage.css'
+import '../css/HomePage.css'
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import LoginBtn from '../components/buttons/LoginBtn'
@@ -17,8 +17,12 @@ function HomePage (props) {
                <h1>Travel Shepherd</h1>
             </div>
             <div id='login' className='col col-md-5 col-lg-4'>
-               {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null}
-               <Outlet />
+               {/* {!path.includes('login') && !path.includes('signup') ? <LoginBtn /> : null} */}
+               <div>
+                  <h1>Travel Shepherd</h1>
+                  <LoginBtn />
+                  <Outlet />
+               </div>
             </div>
          </div>
       </div>

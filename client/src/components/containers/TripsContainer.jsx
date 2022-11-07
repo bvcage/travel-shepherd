@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import TripCard from '../cards/TripCard'
 
@@ -7,8 +6,10 @@ function TripsContainer (props) {
 
    const cards = !!trips[0] ? trips.map(trip => {
       return (
-         <div className='col-12 col-md-6'>
-            <TripCard key={trip.id} trip={trip} />
+         <div key={trip.id} className='col col-12 col-md-6 col-xl-3 mb-3'>
+            <div className='container-fluid p-0'>
+               <TripCard key={trip.id} trip={trip} />
+            </div>
          </div>
       )
    }) : null

@@ -12,7 +12,7 @@ function DestinationsContainer (props) {
    
    const cards = !!destinations[0] ? destinations.map(destination => {
       return (
-         <div className='col-12 col-md-6 col-lg-4 col-xl-3'>
+         <div key={destination.id} className='col-12 col-md-6 col-lg-4 col-xl-3'>
             <DestinationCard key={destination.id} destination={destination} onClick={handleClick} />
          </div>
       )

@@ -21,6 +21,13 @@ function VotingContainer (props) {
       }
    }, [trip, user])
 
+
+   const VoteBadge = () => {
+      return (
+         <h6><span className='badge bg-dark p-2 mb-2'>{status}</span></h6>
+      )
+   }
+
    const VoteBtn = () => {
       return (
          <button type='button'
@@ -31,15 +38,14 @@ function VotingContainer (props) {
    }
 
    const status = trip.voting_is_open
-      ? (traveler.has_voted ? 'vote submitted' : 'vote soon!')
-      : 'voting is not open'
+      ? (traveler.has_voted ? 'submitted' : 'vote soon!')
+      : (!!trip.voting_closes_at && new Date(trip.voting_closes_at) < Date.now() ? 'closed' : 'not yet open')
 
    if (!trip.id) return <></>
    return (
       <div className='container'>
-         <h4>Voting Container</h4>
-         <h5>status: {status}</h5>
-         {trip.voting_is_open && !traveler.has_voted ? <VoteBtn /> : null}
+         <h3>voting</h3>
+         {trip.voting_is_open && !traveler.has_voted ? <VoteBtn /> : <VoteBadge />}
          {user.id === trip.owner.id ? <VotingAdminContainer trip={trip} /> : null}
       </div>
    )

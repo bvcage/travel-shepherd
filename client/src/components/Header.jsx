@@ -2,7 +2,7 @@ import NavBar from './NavBar'
 
 function Header (props) {
    return (
-      <div id='header' className='container'>
+      <div id='header'>
          <NavBar />
       </div>
    )

@@ -1,4 +1,4 @@
-import './tables.css'
+// import './tables.css'
 import { useSelector } from 'react-redux'
 
 function UserVotesTable (props) {
@@ -16,7 +16,7 @@ function UserVotesTable (props) {
    }) : null
 
    return (
-      <table className='table align-middle'>
+      <table id='user-votes-table' className='table align-middle'>
          <thead>
             <tr>
                <th>companion</th>

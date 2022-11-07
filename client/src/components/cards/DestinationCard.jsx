@@ -1,4 +1,4 @@
-import './cards.css'
+// import './cards.css'
 
 function DestinationCard (props) {
    const { destination, onClick } = props
@@ -31,7 +31,7 @@ function DestinationCard (props) {
 
    return (
       <div className='container p-2'>
-         <div className='card m-2' onClick={handleClick}>
+         <div className='card' onClick={handleClick}>
             <img className="card-img-top" src={imgSrc} alt={country.name} />
             <div className='card-body'>
                <h5 className='card-title'>{capitalize(title)} {country.flag}</h5>

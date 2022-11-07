@@ -1,4 +1,4 @@
-import './tables.css'
+// import './tables.css'
 
 function ProposalVotesTable (props) {
    const { proposals } = props

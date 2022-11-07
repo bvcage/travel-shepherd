@@ -1,0 +1,13 @@
+table .proposal-points {
+   text-align: center;
+}
+
+table .voting-status {
+   text-align: right;
+}
+
+#user-votes-table {
+   border: 1px solid var(--primary-color);
+   max-width: 400px;
+   margin: 1rem auto;
+}

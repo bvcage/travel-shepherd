@@ -80,9 +80,8 @@ function VotingAdminContainer (props) {
    console.log(trip)
    return (
       <div className='container'>
-         <h3>admin</h3>
+         <h4>voting admin</h4>
          <div className='container'>
-            <h4>actions</h4>
             {displayOpenBtn ? <OpenVotingBtn /> : null}
             {displayCloseBtn ? <CloseVotingBtn /> : null}
             {displayOpenBtn || displayCloseBtn ? <UpdateVotingBtn /> : null}
@@ -90,7 +89,6 @@ function VotingAdminContainer (props) {
          </div>
          {displayCloseBtn ? (
             <div className='container'>
-               <h4>status</h4>
                <UserVotesTable />
             </div>
          ) : null }

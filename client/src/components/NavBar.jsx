@@ -31,8 +31,8 @@ function NavBar (props) {
                </li>
             </ul>
          </div>
-         <div className='nav navbar-right me-4'>
-            <div class='btn-group'>
+         <div className='nav navbar-right'>
+            <div className='btn-group'>
                <button id='userProfileDropdown'
                   className='btn btn-secondary dropdown-toggle'
                   type='button'
