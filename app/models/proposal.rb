@@ -10,7 +10,7 @@ class Proposal < ApplicationRecord
       if votes.any?
          votes.sum(:points)
       else
-         nil
+         0
       end
    end
 

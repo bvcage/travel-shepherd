@@ -17,6 +17,7 @@ Rails.application.routes.draw do
    resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
       get 'calc_results', to: 'calc_results'
+      get 'itinerary', to: 'events#index'
       resources :invites, only: [:index]
       resources :proposals, only: [:index]
       resources :travelers, only: [:index]

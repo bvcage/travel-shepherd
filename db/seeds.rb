@@ -242,7 +242,7 @@ puts " 🌱 seeding places..."
 puts " 🌱 seeding activities..."
 
    Place.all.each do |place|
-      Activity.create(
+      Activity.create!(
          name: Faker::Lorem.words(number: 2),
          description: Faker::Lorem.sentences(number: 3),
          destination_id: place.destination_id,
@@ -255,7 +255,7 @@ puts " 🌱 seeding events..."
 
    Activity.all.each do |activity|
       name = "#{activity.activity_type} at #{activity.place.name}"
-      Event.create(
+      Event.create!(
          activity_id: activity.id,
          name: name,
          start_time: Faker::Time.forward(days:14)
@@ -265,7 +265,7 @@ puts " 🌱 seeding events..."
 puts " 🌱 seeding itineraries..."
 
    Event.all.each do |event|
-      Itinerary.create(
+      Itinerary.create!(
          event_id: event.id,
          trip_id: rand(1..num_trips)
       )

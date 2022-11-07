@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
 import ProposalCard from '../components/cards/ProposalCard'
+import ItineraryContainer from '../components/containers/ItineraryContainer'
 import ProposalsContainer from '../components/containers/ProposalsContainer'
 import TravelersContainer from '../components/containers/TravelersContainer'
 import VotingContainer from '../components/containers/VotingContainer'
@@ -26,6 +27,9 @@ function TripSummaryPage (props) {
          <div className='page-content'>
             <div className='row mb-3'>
                <TripSummary trip={trip} />
+            </div>
+            <div className='row mb-3'>
+               <ItineraryContainer />
             </div>
             <div className='row mb-3'>
                <div className='col col-12 col-md-6'>
