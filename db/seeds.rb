@@ -1,14 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-
 require_relative '../config/.amadeus_keys.rb'
 
+
+
 puts "🚜...seeding CATEGORIES:"
+
 
 puts " 🌱 seeding invite statuses..."
 
@@ -29,12 +24,30 @@ puts " 🌱 seeding voting types..."
       end
    end
 
+puts " 🌱 seeding place types..."
+
+   PLACE_TYPES = %w(hotel museum restaurant park)
+   PLACE_TYPES.each do |place|
+      PlaceType.create(name: place)
+   end
+
+puts " 🌱 seeding activity types..."
+
+   ACTIVITY_TYPES = %w(travel visit dine participate)
+   ACTIVITY_TYPES.each do |activity|
+      ActivityType.create(name: activity)
+   end
+
+
+
 puts "🚜...seeding DATA:"
 
    num_users = 10
    num_trips = 10
    num_joins = 30
    num_countries = 40
+   num_places = num_countries*3*4
+
 
 puts " 🌱 seeding users..."
 
@@ -211,6 +224,51 @@ puts " 🌱 seeding votes..."
          proposals.delete(proposal)
          points -= 1 unless voting_type.name == 'pick'
       end
+   end
+
+puts " 🌱 seeding places..."
+
+   num_places.times do
+      Place.create!(
+         name: Faker::Lorem.words(number: 3),
+         street_number: rand(1..10000),
+         street_name: Faker::Address.street_name,
+         street_type: Faker::Address.street_suffix,
+         destination_id: rand(1..num_destinations),
+         place_type_id: rand(1..PLACE_TYPES.length)
+      )
+   end
+
+puts " 🌱 seeding activities..."
+
+   Place.all.each do |place|
+      Activity.create(
+         name: Faker::Lorem.words(number: 2),
+         description: Faker::Lorem.sentences(number: 3),
+         destination_id: place.destination_id,
+         place_id: place.id,
+         activity_type_id: rand(1..ACTIVITY_TYPES.length)
+      )
+   end
+
+puts " 🌱 seeding events..."
+
+   Activity.all.each do |activity|
+      name = "#{activity.activity_type} at #{activity.place.name}"
+      Event.create(
+         activity_id: activity.id,
+         name: name,
+         start_time: Faker::Time.forward(days:14)
+      )
+   end
+
+puts " 🌱 seeding itineraries..."
+
+   Event.all.each do |event|
+      Itinerary.create(
+         event_id: event.id,
+         trip_id: rand(1..num_trips)
+      )
    end
 
 puts "🌳🌳 done seeding"

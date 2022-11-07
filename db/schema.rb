@@ -53,7 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_204107) do
 
   create_table "events", force: :cascade do |t|
     t.integer "activity_id"
-    t.integer "itinerary_id"
     t.string "name"
     t.datetime "start_time", precision: nil
     t.datetime "end_time", precision: nil

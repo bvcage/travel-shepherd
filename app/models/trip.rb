@@ -1,5 +1,7 @@
 class Trip < ApplicationRecord
    has_many :invites
+   has_many :itineraries
+   has_many :events, through: :itineraries
    has_many :proposals
    has_many :travelers
    has_many :users, through: :travelers
