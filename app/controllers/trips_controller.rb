@@ -8,7 +8,20 @@ class TripsController < ApplicationController
    end
 
    def create
-      trip = Trip.create!(trip_params)
+      if params[:owner_id].nil?
+         owner_id = params[:user_id]
+      else
+         owner_id = params[:owner_id]
+      end
+      voting_type = VotingType.find_by(name: params['voting_type_name'], value: params['voting_type_value'])
+      trip = Trip.create!(**trip_params,
+         owner_id: owner_id,
+         voting_type_id: voting_type.id
+      )
+      Traveler.create!(
+         trip_id: trip.id,
+         user_id: params[:owner_id]
+      )
       render json: trip, status: :created
    end
 
@@ -50,6 +63,7 @@ class TripsController < ApplicationController
    def trip_params
       params.permit(
          :name,
+         :owner_id,
          :start_date,
          :end_date,
          :voting_opens_at,
@@ -57,7 +71,8 @@ class TripsController < ApplicationController
          :voting_is_open,
          :num_days,
          :allow_proposals,
-         :voting_type_id)
+         :voting_type_id
+      )
    end
 
 end

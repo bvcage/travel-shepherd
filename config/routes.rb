@@ -9,7 +9,7 @@ Rails.application.routes.draw do
    resources :countries, only: [:index] do
       resources :destinations, only: [:index]
    end
-   resources :destinations, only: [:index, :show]
+   resources :destinations, only: [:index, :show, :create]
    resources :invite_statuses, only: [:index]
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]

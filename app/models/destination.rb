@@ -5,9 +5,11 @@ class Destination < ApplicationRecord
    belongs_to :country
    has_many :proposals
 
-   def name
+   def gen_name
       name = ""
-      if not self.municipality.nil? then name += "#{self.municipality}, " end
+      if not (self.municipality.nil? || self.municipality.blank?)
+         name += "#{self.municipality}, "
+      end
       if not self.region.nil? then name += "#{self.region}, " end
       name += self.country.name
       name.titleize
@@ -23,4 +25,9 @@ class Destination < ApplicationRecord
       end
       explore_sample
    end
+
+   def self.filter_by_name name
+      self.where("lower(name) LIKE ?", "%#{name.downcase}%")
+   end
+
 end

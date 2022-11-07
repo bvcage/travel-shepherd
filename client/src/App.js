@@ -20,11 +20,12 @@ import TripsContainer from './components/containers/TripsContainer'
 import UserEditForm from './components/forms/UserEditForm'
 import UserProfile from './reducers/user/UserProfile'
 import TripEditForm from './components/forms/TripEditForm'
-import ProposalForm from './components/forms/ProposalForm'
+import NewProposalForm from './components/forms/NewProposalForm'
 import ProposalSummaryPage from './pages/ProposalSummaryPage'
 import EditProposalForm from './components/forms/EditProposalForm'
 import VotingSummaryPage from './pages/VotingSummaryPage'
 import VotingPage from './pages/VotingPage'
+import NewDestinationForm from './components/forms/NewDestinationForm'
 
 function App () {
    return (
@@ -41,6 +42,7 @@ function App () {
                </Route>
                <Route path='destinations'>
                   <Route index element={<DestinationsPage />} />
+                  <Route path='new' element={<NewDestinationForm />} />
                   <Route path=':id'>
                      <Route index element={<DestinationSummaryPage />} />
                   </Route>
@@ -54,7 +56,7 @@ function App () {
                      <Route path='invite' element={<InviteForm />} />
                      <Route path='proposals'>
                         <Route index element={<RedirectPage path='/trips/:trip_id' />} />
-                        <Route path='new' element={<ProposalForm />} />
+                        <Route path='new' element={<NewProposalForm />} />
                         <Route path=':id'>
                            <Route index element={<ProposalSummaryPage />} />
                            <Route path='edit' element={<EditProposalForm />} />

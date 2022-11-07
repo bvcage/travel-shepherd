@@ -16,6 +16,7 @@ function NewTripForm (props) {
    })
 
    function handleChange (e) {
+      console.log(e.target.value)
       setTrip({...trip, 
          [e.target.name]: e.target.value
       })
@@ -23,16 +24,24 @@ function NewTripForm (props) {
 
    function createTrip (e) {
       e.preventDefault()
+      // create post object
+      const post = {
+         ...trip,
+         'allow_proposals': trip.allowProposals ? true : false,
+         'num_days': trip.numDays ? parseInt(trip.numDays) : null,
+         'voting_type_name': trip.votingType.split(' ')[0],
+         'voting_type_value': parseInt(trip.votingType.split(' ')[1])
+      }
+      delete post['allowProposals']
+      delete post['numDays']
+      delete post['votingType']
+      // post to databaase
       fetch('/trips', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({...trip,
-            'num_days': trip.numDays,
-            'allow_proposals': trip.allowProposals,
-            'voting_type': trip.votingType
-         })
+         body: JSON.stringify(post)
       }).then(r=>{
          if (r.ok) r.json().then(trip => {
             dispatch({type: 'trips/tripAdded', payload: trip})
@@ -46,51 +55,78 @@ function NewTripForm (props) {
       <form onSubmit={createTrip}>
          <h2>new trip</h2>
 
-         <input name='name'
-            type='text'
-            placeholder='name'
-            value={trip.name}
-            onChange={(e) => handleChange(e, 'Trip')} />
+         <div className='input-group'>
+
+            <div className='form-floating'>
+               <input name='name'
+                  type='text'
+                  className='form-control'
+                  placeholder='group name'
+                  required={true}
+                  value={trip.name}
+                  onChange={handleChange} />
+               <label>group name</label>
+            </div>
+
+            <span className='input-group-text'>Trip</span>
+
+         </div>
 
          <br />
 
-         <input name='numDays'
-            type='number'
-            placeholder='number of days'
-            value={trip.num_days}
-            onChange={(e) => handleChange(e, 'Trip')} />
+         <div className='form-floating'>
+            <input name='numDays'
+               type='number'
+               className='form-control'
+               placeholder='est. number of days'
+               value={trip.num_days}
+               onChange={handleChange} />
+            <label>est. number of days</label>
+         </div>
 
          <br />
 
          <label>allow proposals?</label>
-         <input name='allowProposals'
-            type='radio'
-            value={true}
-            onSelect={(e) => handleChange(e, 'Trip')} />
-               <label>yes</label>
-         <input name='allowProposals'
-            type='radio'
-            value={false}
-            onSelect={(e) => handleChange(e, 'Trip')} />
-               <label>no</label>
+         <div className='form-check form-check-inline'>
+            <input name='allowProposals'
+               type='radio'
+               className='form-check-input'
+               value={true}
+               onChange={handleChange} />
+            <label className='form-check-label'>yes</label>
+         </div>
+         <div className='form-check form-check-inline'>
+            <input name='allowProposals'
+               type='radio'
+               className='form-check-input'
+               value={false}
+               onChange={handleChange} />
+            <label className='form-check-label'>no</label>
+         </div>
 
          <br />
 
          <label>voting type</label>
-         <input name='allowProposals'
-            type='radio'
-            value={1}
-            onSelect={(e) => handleChange(e, 'Trip')} />
-               <label>pick 1</label>
-         <input name='allowProposals'
-            type='radio'
-            value={2}
-            onSelect={(e) => handleChange(e, 'Trip')} />
-               <label>rank</label>
+         <div className='form-check form-check-inline'>
+            <input name='votingType'
+               type='radio'
+               className='form-check-input'
+               value='pick 1'
+               onChange={handleChange} />
+            <label>pick 1</label>
+         </div>
+         <div className='form-check form-check-inline'>
+            <input name='votingType'
+               type='radio'
+               className='form-check-input'
+               value='rank 3'
+               onChange={handleChange} />
+            <label>rank</label>
+         </div>
          
          <br />
 
-         <button type='submit'>continue</button>
+         <button type='submit' className='btn btn-primary'>continue</button>
 
       </form>
    )
