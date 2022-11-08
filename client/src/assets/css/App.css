@@ -57,6 +57,20 @@ nav, .nav-link {
    box-shadow: 0 0 0 0.25rem var(--primary-color);
 }
 
+#root button.btn-add-activity {
+   background-color: white;
+   border-radius: 100%;
+   position: absolute;
+      top: 1vh;
+      right: 1vw;
+   transition: all 0.2s;
+   z-index: 1;
+}
+
+#root button.btn-add-activity:hover {
+   transform: scale(1.1)
+}
+
 #footer {
    /* position: absolute;
    bottom: 0;

@@ -16,10 +16,12 @@ Rails.application.routes.draw do
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
    resources :proposals, only: [:show, :create, :update, :destroy]
+   resources :proposed_itineraries, only: [:create]
    resources :travelers, only: [:index]
    resources :trips, only: [:index, :show, :create, :update, :destroy] do
       get 'calc_results', to: 'calc_results'
       get 'itinerary', to: 'events#index'
+      resources :activities, only: [:index]
       resources :invites, only: [:index]
       resources :proposals, only: [:index]
       resources :travelers, only: [:index]

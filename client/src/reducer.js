@@ -7,12 +7,10 @@ import tripsReducer from './trips/tripsSlice'
 import userReducer from './users/userSlice'
 
 const rootReducer = combineReducers({
+   activities: activitiesReducer,
    countries: countriesReducer,
    invites: invitesReducer,
-   trip: combineReducers({
-      info: tripReducer,
-      activities: activitiesReducer
-   }),
+   trip: tripReducer,
    trips: tripsReducer,
    user: userReducer
 })

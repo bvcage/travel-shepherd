@@ -10,6 +10,7 @@ class Trip < ApplicationRecord
    belongs_to :voting_type, optional: true
    belongs_to :winning_proposal, class_name: "Proposal", optional: true
    has_one :destination, through: :winning_proposal
+   has_many :activities, through: :winning_proposal
 
    def calc_voting_results
       winning_proposal = self.proposals.sort{ |a,b| a.point_total <=> b.point_total }.last

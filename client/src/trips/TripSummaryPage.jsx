@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
 import ProposalCard from '../components/cards/ProposalCard'
 import ItineraryContainer from './events/ItineraryContainer'
@@ -12,8 +12,9 @@ import TripSummary from './TripSummary'
 
 function TripSummaryPage (props) {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { id } = useParams()
-   const trip = useSelector(state => state.trip.info)
+   const trip = useSelector(state => state.trip)
 
    useEffect(() => {
       fetch(`/trips/${id}`).then(r=>{
@@ -23,10 +24,9 @@ function TripSummaryPage (props) {
    }, [id, dispatch])
 
    useEffect(() => {
-      console.log(trip)
       if (!!trip.destination && !!trip.destination.id) {
          fetch(`/destinations/${trip.destination.id}/activities`).then(r=>{
-            if (r.ok) r.json().then(activities => dispatch({type: 'trip/activities/activitiesLoaded', payload: activities}))
+            if (r.ok) r.json().then(activities => dispatch({type: 'activities/activitiesLoaded', payload: activities}))
             else console.log(r)
          })
       }

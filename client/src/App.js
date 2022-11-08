@@ -7,9 +7,13 @@ import Template from './home/Template'
 import DestinationsPage from './destinations/DestinationsPage'
 import DestinationSummaryPage from './destinations/DestinationSummaryPage'
 import LandingPage from './home/LandingPage'
+import ProposalSummaryPage from './trips/proposals/ProposalSummaryPage'
 import RedirectPage from './home/RedirectPage'
+import TripActivitiesPage from './trips/activities/TripActivitiesPage'
 import TripSummaryPage from './trips/TripSummaryPage'
 import UserTripsPage from './users/UserTripsPage'
+import VotingPage from './trips/voting/VotingPage'
+import VotingSummaryPage from './trips/voting/VotingSummaryPage'
 
 // components
 import InviteForm from './trips/invites/NewInviteForm'
@@ -21,12 +25,8 @@ import UserEditForm from './users/UserEditForm'
 import UserProfile from './users/UserProfile'
 import TripEditForm from './trips/EditTripForm'
 import NewProposalForm from './trips/proposals/NewProposalForm'
-import ProposalSummaryPage from './trips/proposals/ProposalSummaryPage'
 import EditProposalForm from './trips/proposals/EditProposalForm'
-import VotingSummaryPage from './trips/voting/VotingSummaryPage'
-import VotingPage from './trips/voting/VotingPage'
 import NewDestinationForm from './destinations/NewDestinationForm'
-import TripActivitiesPage from './trips/activities/TripActivitiesPage'
 
 function App () {
    return (
@@ -54,6 +54,7 @@ function App () {
                   <Route path=':id'>
                      <Route index element={<TripSummaryPage />} />
                      <Route path='edit' element={<TripEditForm />} />
+                     <Route path='activities' element={<TripActivitiesPage />} />
                      <Route path='invite' element={<InviteForm />} />
                      <Route path='proposals'>
                         <Route index element={<RedirectPage path='/trips/:trip_id' />} />
@@ -63,7 +64,6 @@ function App () {
                            <Route path='edit' element={<EditProposalForm />} />
                         </Route>
                      </Route>
-                     <Route path='activities' element={<TripActivitiesPage />} />
                      <Route path='vote' element={<VotingPage />} />
                      <Route path='votes' element={<VotingSummaryPage />} />
                   </Route>
