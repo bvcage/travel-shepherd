@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import ReleaseResultsBtn from '../../components/buttons/ReleaseResultsBtn'
+import ReleaseResultsBtn from '../../../components/buttons/ReleaseResultsBtn'
 import UserVotesTable from './UserVotesTable'
 
 function VotingAdminContainer (props) {

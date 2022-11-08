@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SpringList from 'react-spring-dnd'
-import BackBtn from '../../components/buttons/BackBtn'
+import BackBtn from '../../../components/buttons/BackBtn'
 
 function NewVoteForm (props) {
    const { trip } = props

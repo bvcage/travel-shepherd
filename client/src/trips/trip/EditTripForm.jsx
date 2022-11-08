@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import BackBtn from '../components/buttons/BackBtn'
-import DeleteModal from '../components/modals/DeleteModal'
+import BackBtn from '../../components/buttons/BackBtn'
+import DeleteModal from '../../components/modals/DeleteModal'
 
 function EditTripForm (props) {
 

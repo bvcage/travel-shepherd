@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackBtn from '../components/buttons/BackBtn'
-import ProposalCard from '../components/cards/ProposalCard'
-import ItineraryContainer from './events/ItineraryContainer'
-import ProposalsContainer from './proposals/ProposalsContainer'
-import TravelersContainer from './travelers/TravelersContainer'
-import TripActivitiesContainer from './activities/TripActivitiesContainer'
-import VotingContainer from './voting/VotingContainer'
-import TripSummary from './TripSummary'
+import BackBtn from '../../components/buttons/BackBtn'
+import ProposalsContainer from '../proposals/ProposalsContainer'
+import TravelersContainer from '../travelers/TravelersContainer'
+import TripActivitiesContainer from '../activities/TripActivitiesContainer'
+import VotingContainer from '../proposals/voting/VotingContainer'
+import TripSummary from '../trip/TripSummary'
 
 function TripSummaryPage (props) {
    const dispatch = useDispatch()

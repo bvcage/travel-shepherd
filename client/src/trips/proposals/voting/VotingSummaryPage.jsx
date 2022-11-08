@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import BackBtn from '../../components/buttons/BackBtn'
-import ReleaseResultsBtn from '../../components/buttons/ReleaseResultsBtn'
+import BackBtn from '../../../components/buttons/BackBtn'
+import ReleaseResultsBtn from '../../../components/buttons/ReleaseResultsBtn'
 import VotingSummary from './VotingSummary'
 
 function VotingSummaryPage (props) {
