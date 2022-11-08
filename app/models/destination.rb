@@ -5,6 +5,7 @@ class Destination < ApplicationRecord
    belongs_to :country
    has_many :proposals
    has_many :places
+   has_many :activities, through: :places
 
    def gen_name
       name = ""

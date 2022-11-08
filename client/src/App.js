@@ -26,6 +26,7 @@ import EditProposalForm from './trips/proposals/EditProposalForm'
 import VotingSummaryPage from './trips/voting/VotingSummaryPage'
 import VotingPage from './trips/voting/VotingPage'
 import NewDestinationForm from './destinations/NewDestinationForm'
+import TripActivitiesPage from './trips/activities/TripActivitiesPage'
 
 function App () {
    return (
@@ -62,6 +63,7 @@ function App () {
                            <Route path='edit' element={<EditProposalForm />} />
                         </Route>
                      </Route>
+                     <Route path='activities' element={<TripActivitiesPage />} />
                      <Route path='vote' element={<VotingPage />} />
                      <Route path='votes' element={<VotingSummaryPage />} />
                   </Route>

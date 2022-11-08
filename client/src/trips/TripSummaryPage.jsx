@@ -6,14 +6,14 @@ import ProposalCard from '../components/cards/ProposalCard'
 import ItineraryContainer from './events/ItineraryContainer'
 import ProposalsContainer from './proposals/ProposalsContainer'
 import TravelersContainer from './travelers/TravelersContainer'
-import TripPlacesContainer from './activities/TripActivitiesContainer'
+import TripActivitiesContainer from './activities/TripActivitiesContainer'
 import VotingContainer from './voting/VotingContainer'
 import TripSummary from './TripSummary'
 
 function TripSummaryPage (props) {
    const dispatch = useDispatch()
    const { id } = useParams()
-   const trip = useSelector(state => state.trip)
+   const trip = useSelector(state => state.trip.info)
 
    useEffect(() => {
       fetch(`/trips/${id}`).then(r=>{
@@ -21,6 +21,16 @@ function TripSummaryPage (props) {
          else console.log(r)
       })
    }, [id, dispatch])
+
+   useEffect(() => {
+      console.log(trip)
+      if (!!trip.destination && !!trip.destination.id) {
+         fetch(`/destinations/${trip.destination.id}/activities`).then(r=>{
+            if (r.ok) r.json().then(activities => dispatch({type: 'trip/activities/activitiesLoaded', payload: activities}))
+            else console.log(r)
+         })
+      }
+   }, [trip, dispatch])
 
    return (
       <div className='container'>
@@ -37,7 +47,7 @@ function TripSummaryPage (props) {
                   <TravelersContainer trip={trip} mayInvite={true} />
                </div>
                <div className='col col-12 col-md-6'>
-                  {!!trip.winning_proposal ? <TripPlacesContainer /> : <ProposalsContainer trip={trip} />}
+                  {!!trip.winning_proposal ? <TripActivitiesContainer /> : <ProposalsContainer trip={trip} />}
                </div>
             </div>
             <div className='row mb-3'>

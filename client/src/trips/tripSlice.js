@@ -1,4 +1,6 @@
-const initialState = {}
+const initialState = {
+   activities: null
+}
 
 export default function tripReducer (state = initialState, action) {
    switch(action.type) {
