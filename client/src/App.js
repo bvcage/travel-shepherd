@@ -27,6 +27,8 @@ import TripEditForm from './trips/trip/EditTripForm'
 import NewProposalForm from './trips/proposals/NewProposalForm'
 import EditProposalForm from './trips/proposals/EditProposalForm'
 import NewDestinationForm from './destinations/NewDestinationForm'
+import DestinationActivitiesPage from './destinations/activities/DestinationActivitiesPage'
+import NewDestinationActivityForm from './destinations/activities/NewDestinationActivityForm'
 
 function App () {
    return (
@@ -46,6 +48,10 @@ function App () {
                   <Route path='new' element={<NewDestinationForm />} />
                   <Route path=':id'>
                      <Route index element={<DestinationSummaryPage />} />
+                     <Route path='activities'>
+                        <Route index element={<DestinationActivitiesPage />} />
+                        <Route path='new' element={<NewDestinationActivityForm />} />
+                     </Route>
                   </Route>
                </Route>
                <Route path='trips'>

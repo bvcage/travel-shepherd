@@ -10,6 +10,8 @@
    --fourth-color: #ff9a3c;
    --fifth-color: #ffc93b;
    --sixth-color: #f8f1e9;
+
+   --card-default-border-radius: 1rem;
 }
 
 html, body {
@@ -60,15 +62,27 @@ nav, .nav-link {
 #root button.btn-add-activity {
    background-color: white;
    border-radius: 100%;
+   border: 1px solid black;
    position: absolute;
-      top: 1vh;
+      bottom: 1vh;
       right: 1vw;
    transition: all 0.2s;
+   margin: 0px;
+   padding: 0px;
+   height: 38px;
+   width: 38px;
    z-index: 1;
 }
 
 #root button.btn-add-activity:hover {
-   transform: scale(1.1)
+   color: var(--second-color);
+   border-color: var(--second-color);
+   transform: scale(1.1);
+}
+
+#root div.card {
+   border-radius: var(--card-default-border-radius);
+   margin: 0.5rem;
 }
 
 #footer {

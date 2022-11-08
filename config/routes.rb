@@ -6,6 +6,8 @@ Rails.application.routes.draw do
    post '/signup', to: 'users#create'
    get '/users/exist', to: 'users#exist'
 
+   resources :activities, only: [:create]
+   resources :activity_types, only: [:index]
    resources :countries, only: [:index] do
       resources :destinations, only: [:index]
    end
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
    resources :invite_statuses, only: [:index]
    resources :invites, only: [:create, :update]
    resources :logins, only: [:index]
+   resources :place_types, only: [:index]
+   resources :places, only: [:create]
    resources :proposals, only: [:show, :create, :update, :destroy]
    resources :proposed_itineraries, only: [:create]
    resources :travelers, only: [:index]

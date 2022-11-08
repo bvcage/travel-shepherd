@@ -1,7 +1,6 @@
 require_relative '../config/.amadeus_keys.rb'
 
 
-
 puts "🚜...seeding CATEGORIES:"
 
 
@@ -26,14 +25,14 @@ puts " 🌱 seeding voting types..."
 
 puts " 🌱 seeding place types..."
 
-   PLACE_TYPES = %w(hotel museum restaurant park)
+   PLACE_TYPES = %w(hotel museum restaurant park other)
    PLACE_TYPES.each do |place|
       PlaceType.create(name: place)
    end
 
 puts " 🌱 seeding activity types..."
 
-   ACTIVITY_TYPES = %w(travel visit dine participate)
+   ACTIVITY_TYPES = %w(travel visit dining adventure other)
    ACTIVITY_TYPES.each do |activity|
       ActivityType.create(name: activity)
    end
@@ -173,16 +172,16 @@ puts " 🌱 seeding destinations..."
             destination = Destination.create(
                municipality: city["city"],
                country_id: country.id,
-               description: Faker::Lorem.paragraphs(number: 3),
-               summary: Faker::Lorem.sentences(number: 3)
+               description: Faker::Lorem.paragraphs(number: 3).join("\n"),
+               summary: Faker::Lorem.sentences(number: 3).join(" ")
             )
             destination.update(name: destination.gen_name)
          end
       else
          destination = Destination.create(
             country_id: country.id,
-            description: Faker::Lorem.paragraphs(number: 3),
-            summary: Faker::Lorem.sentences(number: 3)
+            description: Faker::Lorem.paragraphs(number: 3).join("\n"),
+            summary: Faker::Lorem.sentences(number: 3).join(" ")
          )
          destination.update(name: destination.gen_name)
       end
@@ -230,7 +229,7 @@ puts " 🌱 seeding places..."
 
    num_places.times do
       Place.create!(
-         name: Faker::Lorem.words(number: 3),
+         name: Faker::Lorem.words(number: 3).join(" "),
          street_number: rand(1..10000),
          street_name: Faker::Address.street_name,
          street_type: Faker::Address.street_suffix,
@@ -243,8 +242,8 @@ puts " 🌱 seeding activities..."
 
    Place.all.each do |place|
       Activity.create!(
-         name: Faker::Lorem.words(number: 2),
-         description: Faker::Lorem.sentences(number: 3),
+         name: Faker::Lorem.words(number: 2).join(" "),
+         description: Faker::Lorem.sentences(number: 3).join(" "),
          destination_id: place.destination_id,
          place_id: place.id,
          activity_type_id: rand(1..ACTIVITY_TYPES.length)

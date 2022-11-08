@@ -8,11 +8,13 @@ function BackBtn (props) {
    const path = location.pathname.split('/')
    path.pop()
    const back = path.join('/')
+
+   const backpath = !!props.path ? props.path : back
    
    return (
       <button type='button'
          className='btn btn-secondary'
-         onClick={() => navigate(back)}
+         onClick={() => navigate(backpath)}
          >back</button>
    )
 }

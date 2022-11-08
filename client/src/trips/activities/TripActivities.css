@@ -1,0 +1,9 @@
+.card.trip-activity {
+   text-align: left;
+   margin: 0.5rem;
+}
+
+.card.trip-activity p {
+   margin: 0px;
+   text-align: justify;
+}

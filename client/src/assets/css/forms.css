@@ -1,3 +1,25 @@
+form .form-floating textarea.form-control {
+   height: calc(3rem + 3rem + 2px); /* desired height + padding for text area & floating label */
+}
+
+form .row {
+   margin-bottom: 1rem;
+}
+
+form h3,
+form h4,
+form h5,
+form h6 {
+   text-align: left;
+}
+
+
+
+
+
+
+
+
 .modal-body {
    text-align: center;
 }
