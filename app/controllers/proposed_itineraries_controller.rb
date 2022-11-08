@@ -1,0 +1,2 @@
+class ProposedItinerariesController < ApplicationController
+end
