@@ -23,7 +23,7 @@ function EventsCalendar (props) {
          default:
             break
       }
-      title += JSON.parse(event.activity.place.name).join(' ')
+      title += event.activity.place.name
       return {
          id: event.id,
          title: title,

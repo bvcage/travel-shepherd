@@ -1,54 +1,39 @@
-/* #root > div {
-   height: 100vh;
+div#home-page h1 {
+   color: var(--accent-color);
 }
 
-div.row {
-   height: 100%;
-}
-
-div.col {
+div#home-page {
    display: flex;
+   height: 100vh;
    align-items: center;
    justify-content: center;
-} */
+}
 
-div#login {
+div#home-page-outlet {
    background-color: white;
+   border-radius: var(--container-default-border-radius);
+   max-width: 600px;
+   padding: 2rem;
 }
 
-div#login > form {
-   margin: 1rem;
-   min-width: 250px;
-   max-width: 400px;
-   width: 100%;
+form#signup-form .row {
+   margin-bottom: 0px;
 }
 
-div#login form .input {
-   width: 100%;
+form#signup-form .col {
+   padding: 0px;
 }
 
-div#login > form button {
-   margin: auto;
-   min-width: 150px;
-   width: 60%;
+form#signup-form div.input {
+   margin: 0rem 0.5rem;
 }
 
-/* .col {
-   background: 
-      linear-gradient(45deg, transparent 16px, var(--first-color) 0), 
-      linear-gradient(135deg, transparent 16px, var(--first-color)  0);
-   background-repeat: repeat-y;
-   background-position: left bottom;
-   background-size: 16px 16px;
-   content: "";
-   display: block;
-
-   width: 100%;
-   height: 16px;
-
-   position: relative;
-   top: var(--header-height);
-   left: 0px;
-
-   z-index: 1;
-} */
+form div {
+   transition: 0.5s ease;
+}
+form div.invalid {
+   color: var(--accent-color);
+}
+form div.invalid input{
+   border-color: var(--accent-color);
+}

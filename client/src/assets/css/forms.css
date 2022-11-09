@@ -13,10 +13,53 @@ form h6 {
    text-align: left;
 }
 
+div#trip-invite-container .col,
+div#trip-invite-container .col-auto,
+form#trip-invite-form .col,
+form#trip-invite-form .col-auto {
+   padding: 0.25rem 0.5rem;
+   text-align: left;
+}
+div#trip-invite-container .btn,
+form#trip-invite-form .btn {
+   margin: 0px;
+}
 
+/* validity styling */
+form div {
+   transition: 0.5s ease;
+}
+form .invalid {
+   border-color: var(--accent-color);
+}
 
+form#new-trip-form > .container {
+   max-width: 600px;
+}
+form#new-trip-form h2 {
+   margin-bottom: 2rem;
+}
+form#new-trip-form .btn-outline-primary {
+   margin: 0rem 0.5rem;
+   min-width: auto;
+   width: 8ch;
+}
+form#new-trip-form .invalid .vote-label-col label {
+   color: black;
+   text-decoration: underline solid var(--accent-color) 2px;
+}
+form#new-trip-form .invalid .btn-outline-primary {
+   border-color: var(--accent-color);
+}
 
-
+form#new-trip-form div.vote-btn-col {
+   text-align: left;
+}
+form#new-trip-form div.vote-label-col {
+   display: flex;
+   align-items: center;
+   justify-content: right;
+}
 
 
 

@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
+import '../../assets/css/forms.css'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
@@ -72,9 +72,13 @@ function NewInviteForm (props) {
       setInvite({...invite,
          [e.target.name]: e.target.value
       })
+      e.target.classList.remove('invalid')
    }
 
    function handleSubmit (e) {
+      e.preventDefault()
+      if (!validateRequired(e)) return console.log('missing required inputs')
+      if (!validateEmail(e)) return console.log('error with email')
       fetch('/invites', {
          method: 'POST',
          headers: {
@@ -91,53 +95,107 @@ function NewInviteForm (props) {
          })
          else r.json().then(console.log)
       })
-      e.preventDefault()
+   }
+
+   function validateEmail (e) {
+      let emailValid = true
+      const emailItems = e.target.querySelectorAll('input[name=email]')
+      Object.values(emailItems).forEach(item => {
+         if (!item.value.match(/^[A-z]+[A-z0-9.-_]*@[A-z0-9]+.[A-z]{2,}$/)) {
+            item.classList.add('invalid')
+            emailValid = false
+         }
+      })
+      return emailValid
+   }
+
+   function validateRequired (e) {
+      let reqValid = true
+      const reqItems = e.target.getElementsByClassName('required')
+      Object.values(reqItems).forEach(item => {
+         if (!item.value) {
+            item.classList.add('invalid')
+            reqValid = false
+         }
+      })
+      return reqValid
    }
 
    const invitesDisplay = inviteList.map((invite, i) => {
       let status = statusList.find(status => status.id === invite.status)
       status = !!status && !!status.name ? status.name : 'sent'
       return (
-         <div key={'invite' + i}>
-            <input name='name'
-               type='text'
-               disabled={true}
-               value={invite.name} />
+         <div id='trip-invite-container' key={'invite' + i} className='row'>
+            <div className='col'>
 
-            <input name='email'
-               type='text'
-               disabled={true}
-               value={invite.email} />
+               <input name='name'
+                  type='text'
+                  className='form-control'
+                  disabled={true}
+                  value={invite.name} />
 
-            <button type='button' disabled={true}>{status}</button>
+            </div>
+            <div className='col col-12 col-sm'>
+
+               <input name='email'
+                  type='text'
+                  className='form-control'
+                  disabled={true}
+                  value={invite.email} />
+
+            </div>
+            <div className='col col-2 col-md-1'>
+               
+               <button type='button' className='btn btn-secondary' disabled={true}>{status}</button>
+
+            </div>
+
          </div>
       )
    })
 
-   return (<>
-      {invitesDisplay}
+   return (
+      <div className='container'>
 
-      <form onSubmit={handleSubmit}>
+         {invitesDisplay}
 
-         <input name='name'
-            type='text'
-            placeholder='name'
-            value={invite.name}
-            onChange={handleChange} />
+         <form id='trip-invite-form' onSubmit={handleSubmit}>
+            <div className='row'>
+               <div className='col col-12 col-sm'>
 
-         <input name='email'
-            type='text'
-            placeholder='email'
-            value={invite.email}
-            onChange={handleChange} />
+                  <input name='name'
+                     type='text'
+                     className='form-control required'
+                     placeholder='name'
+                     value={invite.name}
+                     onChange={handleChange} />
+                     
+               </div>
+               <div className='col col-12 col-sm'>
 
-         <button type='submit'>invite</button>
-         
-      </form>
+                  <input name='email'
+                     type='text'
+                     className='form-control required'
+                     placeholder='email'
+                     value={invite.email}
+                     onChange={handleChange} />
 
-      <button type='button' onClick={() => navigate('../')}>continue</button>
+               </div>
+               <div className='col col-12 col-sm-2 col-md-1'>
+                  
+                  <button type='submit' className='btn btn-primary'>invite</button>
 
-   </>)
+               </div>
+            </div>
+         </form>
+
+         <button type='button'
+            className='btn btn-primary'
+            onClick={() => navigate('../')}
+            >continue</button>
+
+      </div>
+   )
 }
 
 export default NewInviteForm

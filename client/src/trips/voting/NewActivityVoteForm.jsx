@@ -53,6 +53,7 @@ function NewActivityVoteForm (props) {
       for (let i=0; i<Object.keys(choices).length / 2; ++i) {
          delete temp['str' + (i+1)]
       }
+      const votes = []
       Object.values(temp).forEach((activity, i) => {
          if (!!activity.id) {
             const post = {
@@ -68,11 +69,12 @@ function NewActivityVoteForm (props) {
                },
                body: JSON.stringify(post)
             }).then(r=>{
-               if (r.ok) r.json().then(() => navigate(backpath))
+               if (r.ok) r.json().then(vote => votes.push(vote))
                else console.log(r)
             })
          }
       })
+      setTimeout(() => Promise.all(votes).then(() => navigate(backpath)), 1000)
    }
 
    function validateChoice (e) {

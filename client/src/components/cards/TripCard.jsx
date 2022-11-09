@@ -1,15 +1,23 @@
 // import './cards.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function TripCard (props) {
    const { trip } = props
    const { id, name, num_days, owner } = trip
+   const dispatch = useDispatch()
    const user = useSelector(state => state.user)
    const navigate = useNavigate()
+
+   function handleClick () {
+      if (!!trip) {
+         dispatch({type: 'trip/tripChosen', payload: trip})
+         navigate('/trips/' + id, {state: {trip: trip}})
+      }
+   }
    
    return (
-      <div className='card' onClick={() => navigate('/trips/' + id, {state: {trip: trip}})}>
+      <div className='card' onClick={handleClick}>
          <div className='card-body'>
             <h5 className='card-title'>{name}</h5>
             <h6 className='card-subtitle'>{num_days} day{num_days > 1 ? 's' : null}</h6>

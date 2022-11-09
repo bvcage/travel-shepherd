@@ -8,6 +8,7 @@ import TripActivitiesContainer from '../activities/TripActivitiesContainer'
 import ProposalVotingContainer from '../voting/ProposalVotingContainer'
 import TripSummary from '../trip/TripSummary'
 import ActivityVotingContainer from '../voting/ActivityVotingContainer'
+import ItineraryContainer from '../events/ItineraryContainer'
 
 function TripSummaryPage (props) {
    const dispatch = useDispatch()
@@ -39,7 +40,12 @@ function TripSummaryPage (props) {
                <TripSummary trip={trip} />
             </div>
             <div className='row mb-3'>
-               {/* <ItineraryContainer /> */}
+               {!!trip.trip_status && trip.trip_status.code === 600 
+                  ? <ItineraryContainer /> 
+                  : !!trip.winning_proposal_id 
+                     ? <ActivityVotingContainer /> 
+                     : <ProposalVotingContainer />
+               }
             </div>
             <div className='row mb-3'>
                <div className='col col-12 col-md-6'>
@@ -50,7 +56,7 @@ function TripSummaryPage (props) {
                </div>
             </div>
             <div className='row mb-3'>
-               {!!trip.winning_proposal_id ? <ActivityVotingContainer /> : <ProposalVotingContainer />}
+               {}
             </div>
             <div className='row fin'>
                <div>

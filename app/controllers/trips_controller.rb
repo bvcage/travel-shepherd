@@ -8,15 +8,15 @@ class TripsController < ApplicationController
    end
 
    def create
-      if params[:owner_id].nil?
-         owner_id = params[:user_id]
-      else
-         owner_id = params[:owner_id]
-      end
+      if params[:owner_id].nil? then owner_id = params[:user_id]
+      else owner_id = params[:owner_id] end
       voting_type = VotingType.find_by(name: params['voting_type_name'], value: params['voting_type_value'])
+      if params[:trip_status_id].nil? then trip_status = TripStatus.find_by!(code: 100)
+      else trip_status = TripStatus.find(params[:trip_status_id]) end
       trip = Trip.create!(**trip_params,
          owner_id: owner_id,
-         voting_type_id: voting_type.id
+         voting_type_id: voting_type.id,
+         trip_status_id: trip_status.id
       )
       Traveler.create!(
          trip_id: trip.id,
@@ -54,6 +54,10 @@ class TripsController < ApplicationController
       if params[:voting_type]
          voting_type = VotingType.find_by!(name: params[:voting_type]['name'], value: params[:voting_type]['value'])
          @trip.update!(voting_type_id: voting_type.id)
+      end
+      if params[:trip_status_code]
+         trip_status = TripStatus.find_by!(code: params[:trip_status_code])
+         @trip.update!(trip_status_id: trip_status.id)
       end
       render json: @trip, status: :accepted
    end

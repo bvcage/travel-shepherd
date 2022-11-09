@@ -37,15 +37,15 @@ function ProposalVotingContainer (props) {
       )
    }
 
-   const status = trip.voting_is_open
-      ? (traveler.has_voted ? 'submitted' : 'vote soon!')
+   const status = trip['proposal_voting_is_open?']
+      ? (traveler.has_voted_for_proposal ? 'submitted' : 'vote soon!')
       : (!!trip.voting_closes_at && new Date(trip.voting_closes_at) < Date.now() ? 'closed' : 'not yet open')
 
    if (!trip.id) return <></>
    return (
       <div className='container'>
          <h3>voting</h3>
-         {trip.voting_is_open && !traveler.has_voted ? <VoteBtn /> : <VoteBadge />}
+         {trip['proposal_voting_is_open?'] && !traveler.has_voted_for_proposal ? <VoteBtn /> : <VoteBadge />}
          {user.id === trip.owner.id ? <VotingAdminContainer trip={trip} /> : null}
       </div>
    )

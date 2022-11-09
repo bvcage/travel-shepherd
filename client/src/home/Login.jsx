@@ -11,24 +11,32 @@ function Login (props) {
    })
    const [userExists, setUserExists] = useState(true)
 
-   function checkUsername () {
-      fetch(`/users/exist?username=${login.username}`).then(r=>{
-         if (login.username === "") setUserExists(true)
-         else if (r.ok) setUserExists(true)
-         else if (r.status === 404) setUserExists(false)
-         else console.log(r)
-      })
+   function checkUsername (e, username = login.username) {
+      if (!!username) {
+         fetch(`/users/exist?username=${username}`).then(r=>{
+            if (username === '') setUserExists(true)
+            else if (r.ok) setUserExists(true)
+            else if (r.status === 404) setUserExists(false)
+            else console.log(r)
+         })
+      }
    }
 
+   let timeout
    function handleChange (e) {
+      if (!!timeout) clearTimeout(timeout)
       setLogin({...login,
          [e.target.name]: e.target.value
       })
+      if (e.target.name === 'username') {
+         if (e.target.value === '') setUserExists(true)
+         else timeout = setTimeout(() => checkUsername(e, e.target.value), 1000)
+      }
    }
 
    function handleSubmit (e) {
       e.preventDefault()
-      if (!userExists) return navigate('../signup', {state: {'username': login.username, 'password': login.password}})
+      if (!userExists) return navigate('signup', {state: {'username': login.username, 'password': login.password}})
       fetch('/login', {
          method: 'POST',
          headers: {
@@ -41,7 +49,18 @@ function Login (props) {
             localStorage.setItem('user', JSON.stringify(user))
             navigate('/home')
          })
-         else console.log(r)
+         else {
+            switch (r.status) {
+               case 401:
+                  r.json().then(console.log)
+                  const inputs = e.target.getElementsByClassName('form-floating')
+                  inputs[1].classList.add('invalid')
+                  setTimeout(() => inputs[1].classList.remove('invalid'), 2000)
+                  break
+               default:
+                  console.log(r.json())
+            }
+         }
       })
    }
 

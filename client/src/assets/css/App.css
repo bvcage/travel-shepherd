@@ -12,6 +12,7 @@
    --sixth-color: #f8f1e9;
 
    --card-default-border-radius: 1rem;
+   --container-default-border-radius: 1rem;
 }
 
 html, body {
@@ -24,6 +25,7 @@ h1 {
    color: var(--sixth-color);
    font-weight: bold;
    font-family: 'Sansita Swashed', cursive;
+   margin-bottom: 2rem;
 }
 
 nav, .nav-link {
@@ -39,6 +41,11 @@ nav, .nav-link {
 
 #root button.btn {
    margin: 0.2rem;
+}
+
+#root .btn-group button.btn {
+   margin-left: 1px;
+   margin-right: 1px;
 }
 
 #root button.btn-primary,
