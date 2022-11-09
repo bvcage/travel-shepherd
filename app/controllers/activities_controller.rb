@@ -12,6 +12,7 @@ class ActivitiesController < ApplicationController
       elsif params[:trip_id]
          trip = Trip.find(params[:trip_id])
          activities = trip.activities
+         activities = activities.sort_by(&:calc_points).reverse
       else
          activities = Activity.all
       end

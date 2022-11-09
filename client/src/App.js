@@ -12,8 +12,8 @@ import RedirectPage from './home/RedirectPage'
 import TripActivitiesPage from './trips/activities/TripActivitiesPage'
 import TripSummaryPage from './trips/trip/TripSummaryPage'
 import UserTripsPage from './users/UserTripsPage'
-import VotingPage from './trips/proposals/voting/VotingPage'
-import VotingSummaryPage from './trips/proposals/voting/VotingSummaryPage'
+import VotingPage from './trips/voting/VotingPage'
+import VotingSummaryPage from './trips/voting/VotingSummaryPage'
 
 // components
 import InviteForm from './trips/invites/NewInviteForm'

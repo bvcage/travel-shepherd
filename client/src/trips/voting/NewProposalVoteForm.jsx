@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SpringList from 'react-spring-dnd'
-import BackBtn from '../../../components/buttons/BackBtn'
+import BackBtn from '../../components/buttons/BackBtn'
 
-function NewVoteForm (props) {
+function NewProposalVoteForm (props) {
    const { trip } = props
    const user = useSelector(state => state.user)
    const [proposals, setProposals] = useState([])
+   const [selected, setSelected] = useState('')
    // navigation
    const location = useLocation()
    const navigate = useNavigate()
@@ -24,6 +25,38 @@ function NewVoteForm (props) {
 
    function handleSubmit (e) {
       e.preventDefault()
+      switch (trip.voting_type.name) {
+         case 'pick':
+            submitPickVote()
+            break
+         case 'rank':
+            submitRankVote()
+            break
+         default:
+            console.log('voting type not available / not supported')
+      }
+   }
+
+   function submitPickVote () {
+      const post = {
+         'proposal_id': selected,
+         'trip_id': trip.id,
+         'user_id': user.id,
+         'points': 1
+      }
+      fetch('/votes', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(post)
+      }).then(r=>{
+         if (r.ok) navigate(path.join('/'))
+         else console.log(r)
+      })
+   }
+
+   function submitRankVote () {
       const items = document.getElementsByClassName('spring-item')
       const rank = [].slice.call(items).map(item => item.textContent)
       let points = trip.voting_type.value
@@ -50,26 +83,43 @@ function NewVoteForm (props) {
       Promise.all(votes).then(() => navigate(path.join('/')))
    }
 
-   const options = !!proposals[0]
+   const pickOptions = !!proposals[0]
+      ? proposals.map(item => {
+         return (<>
+            <input id={'proposal-vote-radio-' + item.id}
+               type='radio'
+               autoComplete='off'
+               checked={item.id === selected}
+               className='btn btn-check btn-primary'
+               name='proposals'
+               onChange={() => setSelected(item.id)} />
+            <label 
+               className='btn btn-outline-primary'
+               htmlFor={'proposal-vote-radio-' + item.id}
+               >{item.destination.name}</label>
+         </>)})
+      : null
+
+   const rankOptions = !!proposals[0]
       ? proposals.map(item => (
          <div key={item.id}>{item.destination.name}</div>
       )) : [<div key='loading'>loading...</div>]
 
    const PickForm = () => {
       return (
-         <div>pick</div>
+         <div>
+            {pickOptions}
+         </div>
       )
    }
 
    const RankForm = () => {
       return (
          <SpringList>
-            {options}
+            {rankOptions}
          </SpringList>
       )
    }
-
-   console.log(trip)
 
    if (!trip ||
        !trip.voting_type) return <></>
@@ -88,4 +138,4 @@ function NewVoteForm (props) {
    )
 }
 
-export default NewVoteForm
+export default NewProposalVoteForm

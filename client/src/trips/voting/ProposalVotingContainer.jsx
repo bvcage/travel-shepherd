@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import VotingAdminContainer from './VotingAdminContainer'
 
-function VotingContainer (props) {
+function ProposalVotingContainer (props) {
    const navigate = useNavigate()
    const trip = useSelector(state => state.trip)
    const user = useSelector(state => state.user)
@@ -51,4 +51,4 @@ function VotingContainer (props) {
    )
 }
 
-export default VotingContainer
+export default ProposalVotingContainer

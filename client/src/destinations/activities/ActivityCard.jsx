@@ -1,3 +1,4 @@
+import '../../assets/css/cards.css'
 
 function ActivityCard (props) {
    const { activity, onClickAdd } = props

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_08_151740) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_09_013229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -144,7 +144,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_151740) do
     t.integer "trip_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "has_voted"
+    t.boolean "has_voted_for_proposal"
+    t.boolean "has_voted_for_activities"
+  end
+
+  create_table "trip_statuses", force: :cascade do |t|
+    t.string "name"
+    t.integer "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "trips", force: :cascade do |t|
@@ -152,15 +160,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_151740) do
     t.integer "num_days"
     t.datetime "start_date", precision: nil
     t.datetime "end_date", precision: nil
-    t.datetime "voting_closes_at", precision: nil
+    t.datetime "proposal_voting_closes_at", precision: nil
     t.boolean "allow_proposals"
     t.integer "voting_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
-    t.datetime "voting_opens_at"
-    t.boolean "voting_is_open"
+    t.datetime "proposal_voting_opens_at"
+    t.boolean "proposal_voting_is_open?"
     t.integer "winning_proposal_id"
+    t.boolean "activity_voting_is_open?"
+    t.datetime "activity_voting_opens_at", precision: nil
+    t.datetime "activity_voting_closes_at", precision: nil
+    t.integer "trip_status_id"
     t.index ["owner_id"], name: "index_trips_on_owner_id"
   end
 

@@ -10,7 +10,7 @@ class VotesController < ApplicationController
       vote = Vote.create!(**vote_params,
          traveler_id: traveler_id
       )
-      Traveler.find(traveler_id).update(has_voted: true)
+      Traveler.find(traveler_id).update!(has_voted_for_proposal: true)
       render json: vote, status: :created
    end
 

@@ -22,18 +22,26 @@ function TripActivitiesContainer (props) {
 
    const cards = !!tripActivities ? tripActivities.map(activity => {
       return (
-         <TripActivityCard key={activity.id} activity={activity} />
+         <div key={activity.id} className='col col-12 col-xl-6 p-0'>
+            <TripActivityCard key={activity.id} activity={activity} />
+         </div>
       )
    }) : null
 
    return (
-      <div>
+      <div className='container'>
          <h3>must-do's</h3>
-         {cards}
-         <button type='button'
-            className='btn btn-primary'
-            onClick={() => navigate('activities', {state: {from: location.pathname}})}
-            >+ add activity</button>
+         <div className='row'>
+            {cards}
+         </div>
+         <div className='row'>
+            <div className='col'>
+               <button type='button'
+                  className='btn btn-primary'
+                  onClick={() => navigate('activities', {state: {from: location.pathname}})}
+                  >+ add activity</button>
+            </div>
+         </div>
       </div>
    )
 }

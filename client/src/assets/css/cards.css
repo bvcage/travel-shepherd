@@ -3,7 +3,6 @@ div.card {
    border-radius: 1rem;
    min-width: 225px;
    max-width: 350px;
-   width: 100%;
 }
 
 div.card:hover {

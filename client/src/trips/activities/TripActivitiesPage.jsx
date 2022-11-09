@@ -103,10 +103,8 @@ function TripActivitiesContainer (props) {
       .filter(activity => !tripActivities.map(ta=>ta.name.toLowerCase()).includes(activity.name.toLowerCase()))
       .map(activity => {
          return (
-            <div key={'explore-' + activity.id} className='col col-12 col-sm-6 col-md-4 col-lg'>
-               <div className='container'>
-                  <ActivityCard onClickAdd={handleAddToTrip} activity={activity} />
-               </div>
+            <div key={'explore-' + activity.id} className='col col-12 col-md-6 col-xl-4'>
+               <ActivityCard onClickAdd={handleAddToTrip} activity={activity} />
             </div>
          )
       }) : null

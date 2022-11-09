@@ -5,8 +5,9 @@ import BackBtn from '../../components/buttons/BackBtn'
 import ProposalsContainer from '../proposals/ProposalsContainer'
 import TravelersContainer from '../travelers/TravelersContainer'
 import TripActivitiesContainer from '../activities/TripActivitiesContainer'
-import VotingContainer from '../proposals/voting/VotingContainer'
+import ProposalVotingContainer from '../voting/ProposalVotingContainer'
 import TripSummary from '../trip/TripSummary'
+import ActivityVotingContainer from '../voting/ActivityVotingContainer'
 
 function TripSummaryPage (props) {
    const dispatch = useDispatch()
@@ -45,11 +46,11 @@ function TripSummaryPage (props) {
                   <TravelersContainer trip={trip} mayInvite={true} />
                </div>
                <div className='col col-12 col-md-6'>
-                  {!!trip.winning_proposal ? <TripActivitiesContainer /> : <ProposalsContainer trip={trip} />}
+                  {!!trip.winning_proposal_id ? <TripActivitiesContainer /> : <ProposalsContainer trip={trip} />}
                </div>
             </div>
             <div className='row mb-3'>
-               {!!trip.winning_proposal_id ? null : <VotingContainer />}
+               {!!trip.winning_proposal_id ? <ActivityVotingContainer /> : <ProposalVotingContainer />}
             </div>
             <div className='row fin'>
                <div>

@@ -1,4 +1,4 @@
-import UserCard from '../cards/UserCard'
+import UserCard from '../../components/cards/UserCard'
 
 function UsersContainer (props) {
    const { users } = props

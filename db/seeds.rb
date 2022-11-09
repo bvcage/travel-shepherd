@@ -11,6 +11,22 @@ puts " 🌱 seeding invite statuses..."
       InviteStatus.create(name: status)
    end
 
+puts " 🌱 seeding trip statuses..."
+
+   TRIP_STATUSES = [
+      {name: "inviting", code: 100},
+      {name: "proposing destinations", code: 200},
+      {name: "destination voting", code: 300},
+      {name: "proposing activities", code: 400},
+      {name: "activities voting", code: 500},
+      {name: "planning itinerary", code: 600},
+      {name: "in progress", code: 700},
+      {name: "complete", code: 800}
+   ]
+   TRIP_STATUSES.each do |status|
+      TripStatus.create!(name: status[:name], code: status[:code])
+   end
+
 puts " 🌱 seeding voting types..."
 
    VOTING_TYPES = {
@@ -85,7 +101,8 @@ puts " 🌱 seeding trips..."
          name: Faker::Lorem.word.titleize + ' Group Trip',
          num_days: rand(2..7),
          owner_id: rand(1..num_users),
-         voting_type_id: rand(1..num_voting_type)
+         voting_type_id: rand(1..num_voting_type),
+         trip_status_id: 1
       )
    end
 
@@ -94,8 +111,7 @@ puts " 🌱 seeding travelers (joins)..."
    num_joins.times do
       Traveler.create(
          user_id: rand(1..num_users),
-         trip_id: rand(1..num_trips),
-         has_voted: false
+         trip_id: rand(1..num_trips)
       )
    end
 
@@ -104,8 +120,7 @@ puts " 🌱 seeding travelers (joins)..."
       if not trip.travelers.include? trip.owner_id
          Traveler.create(
             user_id: trip.owner_id,
-            trip_id: trip.id,
-            has_voted: false
+            trip_id: trip.id
          )
       end
    end
@@ -115,8 +130,7 @@ puts " 🌱 seeding travelers (joins)..."
       if user.trips.length == 0
          Traveler.create(
             user_id: user.id,
-            trip_id: rand(1..num_trips),
-            has_voted: false
+            trip_id: rand(1..num_trips)
          )
       end
    end
@@ -126,8 +140,7 @@ puts " 🌱 seeding travelers (joins)..."
       if trip.users.length == 0
          Traveler.create(
             user_id: rand(1..num_users),
-            trip_id: trip.id,
-            has_voted: false
+            trip_id: trip.id
          )
       end
    end
@@ -219,7 +232,7 @@ puts " 🌱 seeding votes..."
             trip_id: trip.id,
             points: points
          )
-         traveler.update(has_voted: true)
+         traveler.update(has_voted_for_proposal: true)
          proposals.delete(proposal)
          points -= 1 unless voting_type.name == 'pick'
       end

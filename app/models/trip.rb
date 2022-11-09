@@ -6,6 +6,7 @@ class Trip < ApplicationRecord
    has_many :travelers
    has_many :users, through: :travelers
    has_many :votes
+   belongs_to :trip_status
    belongs_to :owner, class_name: "User"
    belongs_to :voting_type, optional: true
    belongs_to :winning_proposal, class_name: "Proposal", optional: true

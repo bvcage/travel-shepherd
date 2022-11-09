@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :trip_statuses
 
    get '/auth', to: 'users#auth'
    post '/login', to: 'sessions#create'
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
 
    resources :activities, only: [:create]
    resources :activity_types, only: [:index]
+   resources :activity_votes, only: [:create]
    resources :countries, only: [:index] do
       resources :destinations, only: [:index]
    end

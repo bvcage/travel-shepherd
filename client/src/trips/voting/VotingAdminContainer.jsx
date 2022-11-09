@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import ReleaseResultsBtn from '../../../components/buttons/ReleaseResultsBtn'
+import ReleaseResultsBtn from '../../components/buttons/ReleaseResultsBtn'
 import UserVotesTable from './UserVotesTable'
 
 function VotingAdminContainer (props) {
@@ -8,21 +8,53 @@ function VotingAdminContainer (props) {
    const navigate = useNavigate()
    const trip = useSelector(state => state.trip)
 
-   function handleCloseVoting () {
+   function closeActivitiesVoting () {
+      fetch(`/trips/${trip.id}`, {
+         method: 'PATCH',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            'activity_voting_is_open?': false,
+            'activity_voting_closes_at': new Date()
+         })
+      }).then(r=>{
+         if (r.ok) r.json().then(console.log)
+         else console.log(r)
+      })
+   }
+
+   function closeProposalVoting () {
       // if (!!trip.voting_closes_at && new Date(trip.voting_closes_at) < Date.now()) return console.log('error: voting has already closed')
       fetch(`/trips/${trip.id}`, {
          method: 'PATCH',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({'voting_is_open': false, 'voting_closes_at': new Date()})
+         body: JSON.stringify({'proposal_voting_is_open?': false, 'proposal_voting_closes_at': new Date()})
       }).then(r=>{
          if (r.ok) r.json().then(trip => {dispatch({type: 'trip/votingClosed', payload: trip})})
          else console.log(r)
       })
    }
 
-   function handleOpenVoting () {
+   function openActivitiesVoting () {
+      fetch(`/trips/${trip.id}`, {
+         method: 'PATCH',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            'activity_voting_is_open?': true,
+            'activity_voting_opens_at': new Date()
+         })
+      }).then(r=>{
+         if (r.ok) r.json().then(console.log)
+         else console.log(r)
+      })
+   }
+
+   function openProposalVoting () {
       // if (!!trip.voting_closes_at && new Date(trip.voting_closes_at) < Date.now()) return console.log('error: voting has already closed')
       dispatch({type: 'trip/votingOpened'})
       fetch(`/trips/${trip.id}`, {
@@ -30,7 +62,7 @@ function VotingAdminContainer (props) {
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({'voting_is_open': true, 'voting_opens_at': new Date()})
+         body: JSON.stringify({'proposal_voting_is_open?': true, 'proposal_voting_opens_at': new Date()})
       }).then(r=>{
          if (r.ok) r.json().then(console.log)
          else console.log(r)
@@ -41,7 +73,7 @@ function VotingAdminContainer (props) {
       return (
          <button type='button'
             className='btn btn-warning'
-            onClick={handleCloseVoting}
+            onClick={closeProposalVoting}
             >close voting</button>
       )
    }
@@ -50,7 +82,7 @@ function VotingAdminContainer (props) {
       return (
          <button type='button'
             className='btn btn-primary'
-            onClick={handleOpenVoting}
+            onClick={openProposalVoting}
             >open voting</button>
       )
    }
@@ -66,15 +98,15 @@ function VotingAdminContainer (props) {
          <button type='button'
             className='btn btn-primary'
             onClick={() => navigate('votes')}
-            >view summary</button>
+            >view votes summary</button>
       )
    }
 
-   const displayCloseBtn = trip.voting_is_open === true ? true : false
+   const displayCloseBtn = trip.proposal_voting_is_open === true ? true : false
 
    const displayOpenBtn = !trip.voting_is_open && 
-      (trip.voting_opens_at === null || new Date(trip.voting_opens_at) > Date.now()) &&
-      (trip.voting_closes_at === null || new Date(trip.voting_closes_at) > Date.now())
+      (trip.proposal_voting_opens_at === null || new Date(trip.proposal_voting_opens_at) > Date.now()) &&
+      (trip.proposal_voting_closes_at === null || new Date(trip.proposal_voting_closes_at) > Date.now())
       ? true : false
 
    console.log(trip)
@@ -86,10 +118,18 @@ function VotingAdminContainer (props) {
             {displayCloseBtn ? <CloseVotingBtn /> : null}
             {displayOpenBtn || displayCloseBtn ? <UpdateVotingBtn /> : null}
             {!displayOpenBtn && !displayCloseBtn ? <> <ViewSummaryBtn /> <ReleaseResultsBtn trip={trip} /> </>: null}
+            <button type='button'
+               className='btn btn-outline-primary'
+               onClick={openActivitiesVoting}
+               >open activity voting</button>
+            <button type='button'
+               className='btn btn-outline-warning'
+               onClick={closeActivitiesVoting}
+               >close activity voting</button>
          </div>
-         {displayCloseBtn ? (
+         {displayCloseBtn || !displayOpenBtn ? (
             <div className='container'>
-               <UserVotesTable />
+               <UserVotesTable showActVoteStatus={true} />
             </div>
          ) : null }
       </div>

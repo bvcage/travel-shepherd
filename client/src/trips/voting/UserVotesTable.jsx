@@ -2,6 +2,7 @@
 import { useSelector } from 'react-redux'
 
 function UserVotesTable (props) {
+   const { showActVoteStatus } = props
    const trip = useSelector(state => state.trip)
    const { travelers } = trip
 
@@ -9,7 +10,15 @@ function UserVotesTable (props) {
       return (
          <tr key={traveler.id}>
             <td>{traveler.user.first_name}</td>
-            <td className='voting-status'>{traveler.has_voted ? <span className='badge bg-success'>complete</span> : <span className='badge bg-warning'>pending</span> }
+            <td className='voting-status'>
+               { showActVoteStatus
+                  ? (traveler.has_voted_for_activities
+                     ? <span className='badge bg-success'>complete</span>
+                     : <span className='badge bg-warning'>pending</span>)
+                  : (traveler.has_voted_for_proposal
+                     ? <span className='badge bg-success'>complete</span>
+                     : <span className='badge bg-warning'>pending</span>)
+               }
             </td>
          </tr>
       )
