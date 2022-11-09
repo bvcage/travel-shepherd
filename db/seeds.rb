@@ -1,5 +1,3 @@
-require_relative '../config/.amadeus_keys.rb'
-
 
 puts "🚜...seeding CATEGORIES:"
 
