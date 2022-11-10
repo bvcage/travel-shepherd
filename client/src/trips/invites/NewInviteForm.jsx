@@ -56,7 +56,7 @@ function NewInviteForm (props) {
          }
       }) : []
    
-      if (!!invites[0]) initialInviteList.push(...invites.map(invite => {
+      if (!!invites[0] && !!invites[0].user) initialInviteList.push(...invites.map(invite => {
          return {
             name: invite.user.full_name,
             email: invite.user.email,
@@ -78,7 +78,7 @@ function NewInviteForm (props) {
    function handleSubmit (e) {
       e.preventDefault()
       if (!validateRequired(e)) return console.log('missing required inputs')
-      if (!validateEmail(e)) return console.log('error with email')
+      // if (!validateEmail(e)) return console.log('error with email')
       fetch('/invites', {
          method: 'POST',
          headers: {
@@ -154,6 +154,7 @@ function NewInviteForm (props) {
       )
    })
 
+   if (!user) return <></>
    return (
       <div className='container'>
 

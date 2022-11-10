@@ -54,3 +54,5 @@ gem "faker", "~> 2.23"
 gem "pundit", "~> 2.2"
 
 gem "http", "~> 5.1"
+
+gem "figaro", "~> 1.2"

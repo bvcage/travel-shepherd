@@ -4,6 +4,7 @@ function InviteCard (props) {
    const { invite } = props
    const { invite_status, user } = invite
 
+   if (!user) return <></>
    return (
       <div className='card'>
          <div className='card-body'>

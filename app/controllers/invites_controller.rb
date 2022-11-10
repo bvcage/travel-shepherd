@@ -1,26 +1,16 @@
 class InvitesController < ApplicationController
 
    def create
-      user = User.find_by(email: params[:user_email])
-      if user.nil?
-         if not params[:name].nil?
-            name = params[:name].split(' ')
-            last_name = name.pop
-            first_name = name.join(' ')
-         else
-            first_name = params[:name]
-            last_name = nil
-         end
-         user = User.new({
-            email: params[:user_email],
-            first_name: first_name,
-            last_name: last_name
-         })
-         user.save(validate: false)
+      @user = User.find_by(email: params[:user_email])
+      if @user.nil?
+         # if no user, create one with temp login
+         @user = User.setup_shell_user(params)
+         # send invite email
+         # @sender = User.find(params[:sender_user_id])
+         # UserMailer.with(user: @user, sender: @sender).invite_email.deliver_now
       end
-      pp user
       invite = Invite.create!({
-         user_id: user.id,
+         user_id: @user.id,
          **invite_params
       })
       render json: invite, status: :created
