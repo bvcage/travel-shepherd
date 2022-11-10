@@ -16,16 +16,31 @@ div#home-page-outlet {
    padding: 2rem;
 }
 
-form#signup-form .row {
-   margin-bottom: 0px;
+div#home-page-outlet form .btn {
+   margin: 0px;
+   width: 100%;
 }
 
-form#signup-form .col {
-   padding: 0px;
+div#home-page-outlet form .row {
+   margin: 0px;
+}
+
+div#home-page-outlet form .btn-row {
+   margin-bottom: 0px;
+   margin-top: 0.5rem;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 0px 0.25rem;
+   width: 100%;
+}
+
+div#home-page-outlet form .col,
+div#home-page-outlet form .col-auto {
+   padding: 0px 0.5rem;
 }
 
 form#signup-form div.input {
-   margin: 0rem 0.5rem;
+   margin: 0px;
 }
 
 form div {

@@ -36,7 +36,7 @@ function Login (props) {
 
    function handleSubmit (e) {
       e.preventDefault()
-      if (!userExists) return navigate('signup', {state: {'username': login.username, 'password': login.password}})
+      if (!login.username || !userExists) return navigate('signup', {state: {'username': login.username, 'password': login.password}})
       fetch('/login', {
          method: 'POST',
          headers: {
@@ -66,28 +66,50 @@ function Login (props) {
 
    return (
       <form onSubmit={handleSubmit}>
-         <div className='form-floating mb-3'>
-            <input name='username'
-               type='text'
-               className='form-control'
-               placeholder='username'
-               value={login.username}
-               onBlur={checkUsername}
-               onChange={handleChange} />
-            <label>username</label>
+         <div className='row'>
+            <div className='col'>
+               <div className='form-floating mb-3'>
+                  <input name='username'
+                     type='text'
+                     className='form-control'
+                     placeholder='username'
+                     value={login.username}
+                     onBlur={checkUsername}
+                     onChange={handleChange} />
+                  <label>username</label>
+               </div>
+            </div>
          </div>
 
-         <div className='form-floating mb-3'>
-            <input name='password'
-               type='password'
-               className='form-control'
-               placeholder='password'
-               value={login.password}
-               onChange={handleChange} />
-            <label>password</label>
+         <div className='row'>
+            <div className='col'>
+               <div className='form-floating mb-3'>
+                  <input name='password'
+                     type='password'
+                     className='form-control'
+                     placeholder='password'
+                     value={login.password}
+                     onChange={handleChange} />
+                  <label>password</label>
+               </div>
+            </div>
          </div>
 
-         <button type='submit' className='btn btn-primary'>{!!userExists ? 'login' : 'sign up'}</button>
+         <div className='row btn-row'>
+            <div className='col-auto'>
+               <button type='submit'
+                  className='btn btn-outline-secondary'
+                  disabled={!!login.username & !!userExists}
+                  >sign up</button>
+            </div>
+            <div className='col'>
+               <button
+                  type='submit'
+                  className='btn btn-primary'
+                  disabled={!userExists}
+                  >login</button>
+            </div>
+         </div>
       </form>
    )
 }

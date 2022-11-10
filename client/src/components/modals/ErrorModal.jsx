@@ -1,6 +1,7 @@
 import React from 'react'
 
 function ErrorModal (props) {
+   const { errors } = props
    return (
       <div id='errorModal'
             className='modal fade'

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
+import ErrorAlert from '../components/modals/ErrorAlert'
 
 function Signup (props) {
    const dispatch = useDispatch()
    const location = useLocation()
    const navigate = useNavigate()
+   const [errors, setErrors] = useState([])
    const [user, setUser] = useState({
       username: !!location.state && !!location.state.username ? location.state.username : "",
       email: "",
@@ -18,6 +20,12 @@ function Signup (props) {
       photoUrl: ""
    })
 
+   let timeout = useRef(null)
+   useEffect(() => {
+      timeout.current = clearTimeout(timeout.current)
+      timeout.current = setTimeout(() => setErrors([]), 2500)
+   }, [errors])
+
    function handleChange (e) {
       setUser({...user,
          [e.target.name]: e.target.value
@@ -28,9 +36,14 @@ function Signup (props) {
    function handleSubmit (e) {
       e.preventDefault()
       // validate form inputs
-      if (!validateRequired(e)) return console.log('missing required inputs')
-      if (!validateEmail(e)) return console.log('error with email')
-      if (!validatePassword(e)) return console.log('error with password')
+      setErrors([])
+      const reqErr = validateRequired(e)
+      if (reqErr.length > 0) return setErrors(reqErr)
+      const emailErr = validateEmail(e)
+      if (emailErr.length > 0) return setErrors(emailErr)
+      const passErr = validatePassword(e)
+      if (passErr.length > 0) return setErrors(passErr)
+      return console.log('all good')
       // send to server
       fetch('/signup', {
          method: 'POST',
@@ -68,7 +81,7 @@ function Signup (props) {
    }
 
    function validateEmail (e) {
-      let emailValid = true
+      let emailErrs = []
       const emailItems = e.target.getElementsByClassName('email')
       Object.values(emailItems).forEach(item => {
          const emailInputs = item.getElementsByTagName('input')
@@ -76,30 +89,49 @@ function Signup (props) {
             const email = input.value
             if (!email.match(/^[A-z]+[A-z0-9.-_]*@[A-z0-9]+.[A-z]{2,}$/)) {
                item.classList.add('invalid')
-               emailValid = false
+               emailErrs.push('email format is incorrect')
             }
          })
       })
-      return emailValid
+      return emailErrs
    }
 
    function validateRequired (e) {
-      let inputsValid = true
+      let invalidInputs = []
       const reqItems = e.target.getElementsByClassName('required')
       Object.values(reqItems).forEach(item => {
          const reqInputs = item.getElementsByTagName('input')
          Object.values(reqInputs).forEach(input => {
             if (!input.value) {
                item.classList.add('invalid')
-               inputsValid = false
+               invalidInputs.push([input.name,'is missing'])
             }
          })
       })
-      return inputsValid
+      invalidInputs = invalidInputs.map(([val, message]) => {
+         switch (val) {
+            case 'firstName':
+               val = 'first name'
+               break
+            case 'lastName':
+               val = 'last name'
+               break
+            case 'password1':
+               val = 'password'
+               break
+            case 'password2':
+               val = 'password confirmation'
+               break
+            default:
+               break
+         }
+         return [val, message].join(' ')
+      })
+      return invalidInputs
    }
 
    function validatePassword (e) {
-      let passValid = true
+      let invalPass = []
       let pass1
       const passItems = e.target.getElementsByClassName('password')
       Object.values(passItems).forEach(item => {
@@ -110,37 +142,46 @@ function Signup (props) {
             else {
                if (password !== pass1) {
                   item.classList.add('invalid')
-                  console.log('passwords do not match')
-                  passValid = false
+                  invalPass.push('passwords do not match')
                }
+               return
             }
             if (password.length < 8) {
                item.classList.add('invalid')
-               console.log('password is too short')
-               passValid = false
-            } else if (!password.match(/[A-Z]+/)) {
+               invalPass.push('password is too short')
+            }
+            if (!password.match(/[A-Z]+/)) {
                item.classList.add('invalid')
-               console.log('password is missing uppercase letter')
-               passValid = false
-            } else if (!password.match(/[a-z]+/)) {
+               invalPass.push('password is missing uppercase letter')
+            }
+            if (!password.match(/[a-z]+/)) {
                item.classList.add('invalid')
-               console.log('password is missing lowercase letter')
-               passValid = false
-            } else if (!password.match(/[0-9]+/)) {
+               invalPass.push('password is missing lowercase letter')
+            }
+            if (!password.match(/[0-9]+/)) {
                item.classList.add('invalid')
-               console.log('password is missing number')
-               passValid = false
-            } else if (!password.match(/[^A-Za-z0-9.,]+/)) {
+               invalPass.push('password is missing number')
+            }
+            if (!password.match(/[^A-Za-z0-9.,]+/)) {
                item.classList.add('invalid')
-               console.log('password is missing special character')
-               passValid = false
+               invalPass.push('password is missing special character')
             }
          })
       })
-      return passValid
+      return invalPass
    }
 
-   return (
+   const ErrorsContainer = () => {
+      return (
+         <div className='row'>
+            <div className='col'>
+               <ErrorAlert errors={errors} onClickClose={() => setErrors([])} />
+            </div>
+         </div>
+      )
+   }
+
+   return (<>
       <form id='signup-form' onSubmit={handleSubmit}>
          <div className='row'>
 
@@ -255,17 +296,24 @@ function Signup (props) {
             </div>
 
          </div>
-         <div className='row'>
+         <div className='row btn-row'>
+            <div className='col-auto'>
+
+               <BackBtn />
+
+            </div>
             <div className='col'>
                
-               <BackBtn />
                <button type='submit' className='btn btn-primary'>sign up</button>
 
             </div>
+            
          </div>
 
       </form>
-   )
+
+      {errors.length > 0 ? <ErrorsContainer /> : null}
+   </>)
 }
 
 export default Signup
