@@ -39,7 +39,7 @@ function TripActivitiesContainer (props) {
 
    // manage passed state
    useEffect(() => {
-      if (Object.keys(location.state).length > 0) {
+      if (!!location.state && Object.keys(location.state).length > 0) {
          Object.entries(location.state).forEach(([key, value]) => {
             switch (key) {
                case 'activity':

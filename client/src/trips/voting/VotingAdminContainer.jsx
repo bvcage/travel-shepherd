@@ -15,7 +15,8 @@ function VotingAdminContainer (props) {
 
    useEffect(() => {
       // proposal voting buttons
-      if (trip['proposal_voting_is_open?'] === ( null || true )) {
+      if (trip['proposal_voting_is_open?'] === null ||
+            trip['proposal_voting_is_open?'] === true) {
          setShowPVBtns(true)
       } else setShowPVBtns(false)
       // proposal results buttons

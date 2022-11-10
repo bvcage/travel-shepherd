@@ -8,13 +8,11 @@ class UsersController < ApplicationController
    end
 
    def create
-      user = User.find_or_create_by!(email: params[:email])
+      user = User.find_or_create_by(email: params[:email])
       user.update!(user_params)
       if (user && params[:password])
-         Login.create!(
-            user_id: user.id,
-            password: params[:password]
-         )
+         login = Login.find_or_create_by(user_id: user.id)
+         login.update!(password: params[:password])
       end
       render json: user, status: :created
    end

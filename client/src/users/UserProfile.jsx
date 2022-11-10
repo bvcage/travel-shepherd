@@ -1,3 +1,4 @@
+import './users.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -18,17 +19,23 @@ function UserProfile (props) {
 
    return (
       <div className='container'>
-         <h2>{user.username}'s Profile</h2>
-         <button onClick={() => navigate('edit')}>edit</button>
+         <div className='row' id='user-profile-container'>
+            <div className='col col-12 col-md-4'>
+               {!!user.photo_url ? <img src={user.photo_url} alt={`${user.username} avatar`} /> : null}
+               <h2>{user.username}</h2>
+               <button type='button'
+                  className='btn btn-secondary'
+                  onClick={() => navigate('edit')}
+                  >edit</button>
+            </div>
+            <div className='col col-12 col-md-8'>
+               <h3>{user.first_name} {user.last_name}</h3>
+               <h4>birthday: {user.date_of_birth}</h4>
+               <h4>email: {user.email}</h4>
+            </div>
+            <div className='col col-12'></div>
+         </div>
          <br />
-         {!!user.photo_url ? <img src={user.photo_url} alt={`${user.username} avatar`} /> : null}
-         <p>
-            {user.first_name} {user.last_name}
-            <br />
-            birthday: {user.date_of_birth}
-            <br />
-            email: {user.email}
-         </p>
       </div>
    )
 }

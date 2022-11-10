@@ -61,7 +61,7 @@ function NewProposalVoteForm (props) {
       const rank = [].slice.call(items).map(item => item.textContent)
       let points = trip.voting_type.value
       let votes = []
-      for (let i=0; i<trip.voting_type.value; ++i) {
+      for (let i=0; i<trip.voting_type.value && i<items.length; ++i) {
          const proposal = proposals.find(ele => ele.destination.name === rank[i])
          votes.push(fetch('/votes', {
             method: 'POST',
