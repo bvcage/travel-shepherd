@@ -39,11 +39,10 @@ function Signup (props) {
       setErrors([])
       const reqErr = validateRequired(e)
       if (reqErr.length > 0) return setErrors(reqErr)
-      const emailErr = validateEmail(e)
-      if (emailErr.length > 0) return setErrors(emailErr)
-      const passErr = validatePassword(e)
-      if (passErr.length > 0) return setErrors(passErr)
-      return console.log('all good')
+      // const emailErr = validateEmail(e)
+      // if (emailErr.length > 0) return setErrors(emailErr)
+      // const passErr = validatePassword(e)
+      // if (passErr.length > 0) return setErrors(passErr)
       // send to server
       fetch('/signup', {
          method: 'POST',
