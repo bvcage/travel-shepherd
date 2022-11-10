@@ -4,10 +4,12 @@ class InvitesController < ApplicationController
       @user = User.find_by(email: params[:user_email])
       if @user.nil?
          # if no user, create one with temp login
-         @user = User.setup_shell_user(params)
+         @user, temp_password = User.setup_shell_user(params)
          # send invite email
+         puts "TEMP PASSWORD IS:"
+         puts temp_password
          # @sender = User.find(params[:sender_user_id])
-         # UserMailer.with(user: @user, sender: @sender).invite_email.deliver_now
+         # UserMailer.with(user: @user, temp_pass: temp_password, sender: @sender).invite_email.deliver_now
       end
       invite = Invite.create!({
          user_id: @user.id,

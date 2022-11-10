@@ -11,7 +11,7 @@ function Signup (props) {
    const [errors, setErrors] = useState([])
    const [user, setUser] = useState({
       username: !!location.state && !!location.state.username ? location.state.username : "",
-      email: "",
+      email: !!location.state && !!location.state.email ? location.state.email : "",
       firstName: "",
       lastName: "",
       dob: "",

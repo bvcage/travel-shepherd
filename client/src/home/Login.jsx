@@ -6,15 +6,15 @@ function Login (props) {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [login, setLogin] = useState({
-      username: "",
+      email: "",
       password: ""
    })
    const [userExists, setUserExists] = useState(true)
 
-   function checkUsername (e, username = login.username) {
-      if (!!username) {
-         fetch(`/users/exist?username=${username}`).then(r=>{
-            if (username === '') setUserExists(true)
+   function checkEmail (e, email = login.email) {
+      if (!!email) {
+         fetch(`/users/exist?email=${email}`).then(r=>{
+            if (email === '') setUserExists(true)
             else if (r.ok) setUserExists(true)
             else if (r.status === 404) setUserExists(false)
             else console.log(r)
@@ -28,15 +28,15 @@ function Login (props) {
       setLogin({...login,
          [e.target.name]: e.target.value
       })
-      if (e.target.name === 'username') {
+      if (e.target.name === 'email') {
          if (e.target.value === '') setUserExists(true)
-         else timeout = setTimeout(() => checkUsername(e, e.target.value), 1000)
+         else timeout = setTimeout(() => checkEmail(e, e.target.value), 1000)
       }
    }
 
    function handleSubmit (e) {
       e.preventDefault()
-      if (!login.username || !userExists) return navigate('signup', {state: {'username': login.username, 'password': login.password}})
+      if (!login.email || !userExists) return navigate('signup', {state: {'email': login.email, 'password': login.password}})
       fetch('/login', {
          method: 'POST',
          headers: {
@@ -69,14 +69,14 @@ function Login (props) {
          <div className='row'>
             <div className='col'>
                <div className='form-floating mb-3'>
-                  <input name='username'
+                  <input name='email'
                      type='text'
                      className='form-control'
-                     placeholder='username'
-                     value={login.username}
-                     onBlur={checkUsername}
+                     placeholder='email'
+                     value={login.email}
+                     onBlur={checkEmail}
                      onChange={handleChange} />
-                  <label>username</label>
+                  <label>email</label>
                </div>
             </div>
          </div>
@@ -99,7 +99,7 @@ function Login (props) {
             <div className='col-auto'>
                <button type='submit'
                   className='btn btn-outline-secondary'
-                  disabled={!!login.username & !!userExists}
+                  disabled={!!login.email & !!userExists}
                   >sign up</button>
             </div>
             <div className='col'>

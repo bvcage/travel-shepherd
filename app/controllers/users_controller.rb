@@ -18,7 +18,9 @@ class UsersController < ApplicationController
    end
 
    def exist
-      user = User.find_by!(username: params[:username])
+      if params[:username] then user = User.find_by!(username: params[:username])
+      elsif params[:email] then user = User.find_by!(email: params[:email])
+      end
       render json: user
    end
 
