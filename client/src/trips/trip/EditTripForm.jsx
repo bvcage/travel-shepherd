@@ -1,5 +1,7 @@
-// import './forms.css'
+import 'react-datepicker/dist/react-datepicker.css'
+import '../../assets/css/forms.css'
 import { useEffect, useState } from 'react'
+import DatePicker from 'react-datepicker'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BackBtn from '../../components/buttons/BackBtn'
@@ -16,11 +18,17 @@ function EditTripForm (props) {
    useEffect(() => {
       if (!!params.id) {
          fetch(`/trips/${params.id}`).then(r=>{
-            if (r.ok) r.json().then(trip => setTrip({...trip,
-               'start_date': !!trip.start_date ? formatDate(new Date(trip.start_date)) : null,
-               'end_date': !!trip.end_date ? formatDate(new Date(trip.end_date)) : null,
-               'voting_closes_at': !!trip.voting_closes_at ? formatDate(new Date(trip.voting_closes_at).toLocaleString('en-US'), true) : null
-            }))
+            if (r.ok) r.json().then(trip => {
+               Object.entries(trip).forEach(([key, value]) => {
+                  if (value === null) value = ''
+                  if (typeof value === 'string' &&
+                     value.match(/^([0-9\-]{10})T([0-9:.]{5,})Z$/)) {
+                        value = new Date(value)
+                     }
+                  trip[key] = value
+               })
+               setTrip({...trip})
+            })
             else console.log(r)
          })
       }
@@ -54,7 +62,7 @@ function EditTripForm (props) {
                num_days = trip.num_days
                let time = new Date(e.target.value).getTime()
                time = time + (num_days * (24*60*60*1000))
-               end_date = formatDate(new Date(time))
+               end_date = new Date(time)
             }
             setTrip({...trip,
                [e.target.name]: e.target.value,
@@ -77,7 +85,7 @@ function EditTripForm (props) {
             if (!!start_date) {
                let time = (new Date(start_date)).getTime()
                time = time + (e.target.value * (24*60*60*1000))
-               end_date = formatDate(new Date(time))
+               end_date = new Date(time)
             }
             setTrip({...trip,
                [e.target.name]: e.target.value,
@@ -86,7 +94,7 @@ function EditTripForm (props) {
             break
          case 'allow_proposals':
             setTrip({...trip,
-               [e.target.name]: e.target.value === 'yes' ? true : false
+               [e.target.name]: (e.target.value === 'yes' ? true : false)
             })
             break
          default:
@@ -94,6 +102,13 @@ function EditTripForm (props) {
                [e.target.name]: e.target.value
             })
       }
+   }
+
+   function handleDatePicker (date, name) {
+      // date = date.toISOString()
+      setTrip({...trip,
+         [name]: date
+      })
    }
 
    function handleDelete () {
@@ -120,7 +135,7 @@ function EditTripForm (props) {
                value: trip.voting_type.value
             } : null
          ),
-         'voting_closes_at': !!trip.voting_closes_at ? (new Date(trip.voting_closes_at)).toUTCString() : null
+         // 'voting_closes_at': !!trip.voting_closes_at ? (new Date(trip.voting_closes_at)).toUTCString() : null
       }
       delete patch['invites']
       delete patch['travelers']
@@ -145,7 +160,7 @@ function EditTripForm (props) {
    const DeleteBtn = () => {
       return (
          <button type='button'
-            className='btn'
+            className='btn btn-outline-danger'
             data-bs-toggle='modal'
             data-bs-target='#deleteModal'
             >delete</button>
@@ -153,97 +168,302 @@ function EditTripForm (props) {
    }
 
    return (
-      <form onSubmit={handleSubmit}>
-         <h4>Trip Edit Form</h4>
+      <form id='edit-trip-form' onSubmit={handleSubmit}>
+         <div className='container'>
+            <h2>edit trip</h2>
 
-         <input name='name'
-            type='text'
-            placeholder='name'
-            value={trip.name}
-            onChange={handleChange} />
+            <h4>trip info</h4>
+            <div className='row'>
+               <div className='col'>
+                  <div className='form-floating'>
+                     <input name='name'
+                        type='text'
+                        className='form-control'
+                        placeholder='name'
+                        value={!!trip.name ? trip.name : ''}
+                        onChange={handleChange} />
+                     <label>name</label>
+                  </div>
+               </div>
+            </div>
 
-         <br />
+            <div className='row'>
+               <div className='col'>
+                  <div className='form-floating'>
+                     <input name='start_date'
+                        type='date'
+                        className='form-control'
+                        value={!!trip.start_date ? formatDate(trip.start_date) : ''}
+                        onChange={handleChange} />
+                     <label>depart</label>
+                  </div>
+               </div>
+               <div className='col'>
+                  <div className='form-floating'>
+                     <input name='end_date'
+                        type='date'
+                        className='form-control'
+                        min={trip.start_date}
+                        value={!!trip.end_date ? formatDate(trip.end_date) : ''}
+                        onChange={handleChange} />
+                     <label>return</label>
+                  </div>
+               </div>
+               <div className='col'>
+                  <div className='form-floating'>
+                     <input name='num_days'
+                        type='number'
+                        className='form-control'
+                        placeholder='number of days'
+                        value={!!trip.num_days ? trip.num_days : ''}
+                        onChange={handleChange} />
+                     <label>number of days</label>
+                  </div>
+               </div>
+            </div>
 
-         <input name='num_days'
-            type='number'
-            placeholder='number of days'
-            value={trip.num_days}
-            onChange={handleChange} />
+            <h4>voting options</h4>
 
-         <br />
+            <div className='row'>
+               <div className='col'>
+                  <div className='container-fluid'>
+                     <div className='row'>
+                        <div className='col col-3 vote-btn-col'>
+                           <div className='container vote-btn-container'>
+                              <div className='row'>
+                                 <div className='col'>
 
-         <label>depart</label>
-         <input name='start_date'
-            type='date'
-            value={trip.start_date}
-            onChange={handleChange} />
+                                    <input id='allow-proposals-yes'
+                                       name='allow_proposals'
+                                       type='radio'
+                                       checked={trip.allow_proposals === true}
+                                       className='btn-check'
+                                       value='yes'
+                                       onChange={handleChange} />
+                                    <label
+                                       className='btn btn-outline-primary'
+                                       htmlFor='allow-proposals-yes'
+                                       >yes</label>
 
-         <br />
+                                 </div>
+                                 <div className='col'>
 
-         <label>return</label>
-         <input name='end_date'
-            type='date'
-            min={trip.start_date}
-            value={trip.end_date}
-            onChange={handleChange} />
+                                    <input id='allow-proposals-no'
+                                       name='allow_proposals'
+                                       type='radio'
+                                       checked={trip.allow_proposals === false}
+                                       className='btn-check'
+                                       value='no'
+                                       onChange={handleChange} />
+                                    <label
+                                       className='btn btn-outline-primary'
+                                       htmlFor='allow-proposals-no'
+                                       >no</label>
 
-         <br />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div className='col vote-label-col'>
 
-         <label>voting deadline</label>
-         <input name='voting_closes_at'
-            type='datetime-local'
-            max={trip.start_date}
-            value={trip.voting_closes_at}
-            onChange={handleChange} />
+                           <label htmlFor='allow_proposals'>allow proposals?</label>
+                        
+                        </div>
+                     </div>
+                     <div className='row'>
+                        <div className='col col-3 vote-btn-col'>
+                           <div className='container'>
+                              <div className='row'>
+                                 <div className='col'>
 
-         <br />
+                                    <input id='voting-type-pick-1'
+                                       name='voting_type'
+                                       type='radio'
+                                       checked={(!!trip.voting_type &&
+                                          trip.voting_type.name === 'pick' &&
+                                          parseInt(trip.voting_type.value) === 1) ||
+                                          trip.voting_type === 'pick 1'}
+                                       className='btn-check'
+                                       value='pick 1'
+                                       onChange={handleChange} />
+                                    <label
+                                       className='btn btn-outline-primary'
+                                       htmlFor='voting-type-pick-1'
+                                       >pick 1</label>
 
-         <label>allow proposals</label>
-         <input name='allow_proposals'
-            checked={trip.allow_proposals === true}
-            type='radio'
-            value='yes'
-            id='proposalsYes'
-            onChange={handleChange} />
-         <label htmlFor='proposalsYes'>yes</label>
-         <input name='allow_proposals'
-            checked={trip.allow_proposals === false}
-            type='radio'
-            value='no'
-            id='proposalsNo'
-            onChange={handleChange} />
-         <label htmlFor='proposalsNo'>no</label>
+                                 </div>
+                                 <div className='col'>
+                                    
+                                    <input id='voting-type-rank-3'
+                                       name='voting_type'
+                                       type='radio'
+                                       checked={(!!trip.voting_type &&
+                                          trip.voting_type.name === 'rank' &&
+                                          parseInt(trip.voting_type.value) === 3) ||
+                                          trip.voting_type === 'rank 3'}
+                                       className='btn-check'
+                                       value='rank 3'
+                                       onChange={handleChange} />
+                                    <label
+                                       className='btn btn-outline-primary'
+                                       htmlFor='voting-type-rank-3'
+                                       >rank</label>
 
-         <br />
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div className='col vote-label-col'>
 
-         <label>voting type</label>
-         <input name='voting_type'
-            checked={(!!trip.voting_type &&
-               trip.voting_type.name === 'pick' &&
-               parseInt(trip.voting_type.value) === 1) ||
-               trip.voting_type === 'pick 1'}
-            type='radio'
-            value='pick 1'
-            id='votingPick'
-            onChange={handleChange} />
-         <label htmlFor='votingPick'>pick 1</label>
-         <input name='voting_type'
-            checked={(!!trip.voting_type &&
-               trip.voting_type.name === 'rank' &&
-               parseInt(trip.voting_type.value) === 3) ||
-               trip.voting_type === 'rank 3'}
-            type='radio'
-            value='rank 3'
-            id='votingRank'
-            onChange={handleChange} />
-         <label htmlFor='votingRank'>rank choice</label>
+                           <label htmlFor='voting_type'>voting type</label>
 
-         <br />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div className='row'>
 
-         <button type='submit'>save</button>
-         <DeleteBtn />
-         <BackBtn />
-         <DeleteModal record={trip} recordType={'trip'} onConfirm={handleDelete} />
+               <div className='col'>
+                  <div className='form-floating'>
+                     <div className='form-control'>
+                        <DatePicker
+                           dateFormat={
+                              !!trip.proposal_voting_opens_at &&
+                              trip.proposal_voting_opens_at.getFullYear() === new Date().getFullYear()
+                              ? "MMM d @ h aa"
+                              : "MMM d, yyyy @ h aa"
+                           }
+                           // disabled={!!trip.proposal_voting_closes_at && new Date(trip.proposal_voting_closes_at) < new Date()}
+                           isClearable={!!trip.proposal_voting_opens_at && trip.proposal_voting_opens_at > Date.now()}
+                           // minDate={Date.now()}
+                           maxDate={!!trip.proposal_voting_closes_at ? new Date(trip.proposal_voting_closes_at.getTime() - (24*60*60*1000)) : ''}
+                           placeholderText='mm/ddd/yyyy @ hh'
+                           selected={!!trip.proposal_voting_opens_at ? trip.proposal_voting_opens_at : ''}
+                           showTimeSelect={true}
+                           timeIntervals={60}
+                           onChange={date => handleDatePicker(date, 'proposal_voting_opens_at')}
+                        />
+                     </div>
+                     <label>{trip.allow_proposals ? 'submit proposals by' : 'open proposal voting at' }</label>
+                  </div>
+               </div>
+
+               <div className='col'>
+                  <div className='form-floating'>
+                     <div className='form-control'>
+                        <DatePicker
+                           dateFormat={
+                              !!trip.proposal_voting_closes_at &&
+                              trip.proposal_voting_closes_at.getFullYear() === new Date().getFullYear()
+                              ? "MMM d @ h aa"
+                              : "MMM d, yyyy @ h aa"
+                           }
+                           disabled={!!trip.proposal_voting_closes_at &&
+                              trip.proposal_voting_closes_at.getTime() < new Date().getTime() - (24*60*60*1000)}
+                           isClearable={!!trip.proposal_voting_closes_at &&
+                              trip.proposal_voting_closes_at.getTime() > new Date().getTime() - (24*60*60*1000)}
+                           minDate={!!trip.proposal_voting_opens_at 
+                              ? new Date(Math.max(trip.proposal_voting_opens_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                              : ''}
+                           placeholderText='mm/ddd/yyyy @ hh'
+                           selected={!!trip.proposal_voting_closes_at ? trip.proposal_voting_closes_at : ''}
+                           showTimeSelect={true}
+                           timeIntervals={60}
+                           onChange={date => handleDatePicker(date, 'proposal_voting_closes_at')}
+                        />
+                     </div>
+                     <label>{trip.allow_proposals ? 'vote on proposals by' : 'close proposal voting at' }</label>
+                  </div>
+               </div>
+
+            </div>
+            <div className='row'>
+
+               <div className='col'>
+                  <div className='form-floating'>
+                     <div className='form-control'>
+                        <DatePicker
+                           dateFormat={
+                              !!trip.activity_voting_opens_at &&
+                              trip.activity_voting_opens_at.getFullYear() === new Date().getFullYear()
+                              ? "MMM d @ h aa"
+                              : "MMM d, yyyy @ h aa"
+                           }
+                           disabled={!!trip.activity_voting_opens_at &&
+                              trip.activity_voting_opens_at.getTime() < new Date().getTime() - (24*60*60*1000)
+                           }
+                           isClearable={!!trip.activity_voting_opens_at &&
+                              trip.activity_voting_opens_at.getTime() > new Date().getTime() - (24*60*60*1000)
+                           }
+                           minDate={!!trip.proposal_voting_closes_at
+                              ? new Date(Math.max(trip.proposal_voting_closes_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                              : !!trip.proposal_voting_opens_at
+                                 ? new Date(Math.max(trip.proposal_voting_opens_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                                 : ''
+                           }
+                           placeholderText='mm/ddd/yyyy @ hh'
+                           selected={!!trip.activity_voting_opens_at ? trip.activity_voting_opens_at : ''}
+                           showTimeSelect={true}
+                           timeIntervals={60}
+                           onChange={date => handleDatePicker(date, 'activity_voting_opens_at')}
+                        />
+                     </div>
+                     <label>submit activities by</label>
+                  </div>
+               </div>
+
+               <div className='col'>
+                  <div className='form-floating'>
+                     <div className='form-control'>
+                        <DatePicker
+                           dateFormat={
+                              !!trip.activity_voting_closes_at &&
+                              trip.activity_voting_closes_at.getFullYear() === new Date().getFullYear()
+                              ? "MMM d @ h aa"
+                              : "MMM d, yyyy @ h aa"
+                           }
+                           disabled={!!trip.activity_voting_closes_at &&
+                              trip.activity_voting_closes_at.getTime() < new Date().getTime() - (24*60*60*1000)
+                           }
+                           isClearable={!!trip.activity_voting_closes_at &&
+                              trip.activity_voting_closes_at.getTime() > new Date().getTime() - (24*60*60*1000)
+                           }
+                           minDate={!!trip.activity_voting_opens_at
+                              ? new Date(Math.max(trip.activity_voting_opens_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                              : !!trip.proposal_voting_closes_at
+                                 ? new Date(Math.max(trip.proposal_voting_closes_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                                 : !!trip.proposal_voting_opens_at
+                                    ? new Date(Math.max(trip.proposal_voting_opens_at.getTime() + (24*60*60*1000), new Date().getTime()))
+                                    : ''
+                           }
+                           placeholderText='mm/ddd/yyyy @ hh'
+                           selected={!!trip.activity_voting_closes_at ? trip.activity_voting_closes_at : ''}
+                           showTimeSelect={true}
+                           timeIntervals={60}
+                           onChange={date => handleDatePicker(date, 'activity_voting_closes_at')}
+                        />
+                     </div>
+                     <label>vote on activities by</label>
+                  </div>
+               </div>
+
+            </div>
+            <div className='row action-btns-row'>
+               <div className='col'>
+
+                  <BackBtn />
+
+               </div>
+               <div className='col'>
+
+                  <button type='submit' className='btn btn-primary'>save</button>
+                  <DeleteBtn />
+                  <DeleteModal record={trip} recordType={'trip'} onConfirm={handleDelete} />
+               
+               </div>
+            </div>
+         </div>
       </form>
    )
 }

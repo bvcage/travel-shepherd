@@ -33,35 +33,82 @@ form .invalid {
    border-color: var(--accent-color);
 }
 
-form#new-trip-form > .container {
-   max-width: 600px;
-}
-form#new-trip-form h2 {
+/* TRIP FORMS */
+
+form#new-trip-form h2,
+form#edit-trip-form h2 {
    margin-bottom: 2rem;
 }
-form#new-trip-form .btn-outline-primary {
-   margin: 0rem 0.5rem;
-   min-width: auto;
-   width: 8ch;
-}
-form#new-trip-form .invalid .vote-label-col label {
-   color: black;
-   text-decoration: underline solid var(--accent-color) 2px;
-}
-form#new-trip-form .invalid .btn-outline-primary {
-   border-color: var(--accent-color);
+form#new-trip-form h4,
+form#edit-trip-form h4 {
+   margin-bottom: 2rem;
 }
 
-form#new-trip-form div.vote-btn-col {
-   text-align: left;
-}
-form#new-trip-form div.vote-label-col {
-   display: flex;
-   align-items: center;
-   justify-content: right;
-}
+   /* New Trip Form */
 
+   form#new-trip-form > .container {
+      max-width: 600px;
+   }
+   form#new-trip-form .btn-outline-primary {
+      margin: 0rem 0.5rem;
+      min-width: auto;
+      width: 8ch;
+   }
+   form#new-trip-form .invalid .vote-label-col label {
+      color: black;
+      text-decoration: underline solid var(--accent-color) 2px;
+   }
+   form#new-trip-form .invalid .btn-outline-primary {
+      border-color: var(--accent-color);
+   }
+   form#new-trip-form div.vote-btn-col {
+      text-align: left;
+   }
+   form#new-trip-form div.vote-label-col {
+      display: flex;
+      align-items: center;
+      justify-content: right;
+   }
 
+   /* Edit Trip Form */
+
+   form#edit-trip-form > .container {
+      max-width: 800px;
+   }
+   form#edit-trip-form div.vote-btn-col {
+      padding: 0px;
+      text-align: justify;
+   }
+   form#edit-trip-form div.vote-label-col {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+   }
+   form#edit-trip-form div.vote-btn-col div.col,
+   form#edit-trip-form div.vote-label-col div.col {
+      padding: 0rem 0.2rem;
+   }
+   form#edit-trip-form div.vote-btn-col div.col > *,
+   form#edit-trip-form div.vote-label-col div.col > * {
+      width: 100%;
+   }
+   form#edit-trip-form div.vote-btn-container > div.row,
+   form#edit-trip-form div.vote-btn-col > div.container > div.row {
+      margin-bottom: 0px;
+   }
+   form#edit-trip-form div.action-btns-row div.col:first-child {
+      text-align: left;
+   }
+   form#edit-trip-form div.action-btns-row div.col:last-child {
+      text-align: right;
+   }
+
+      /* Edit Trip DatePicker Component */
+
+      form#edit-trip-form div.react-datepicker-wrapper input {
+         border: none;
+         width: 100%;
+      }
 
 .modal-body {
    text-align: center;

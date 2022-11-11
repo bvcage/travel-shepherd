@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 function TripCard (props) {
    const { trip } = props
-   const { id, name, num_days, owner } = trip
+   const { id, name, num_days, owner, trip_status } = trip
    const dispatch = useDispatch()
    const user = useSelector(state => state.user)
    const navigate = useNavigate()
@@ -25,6 +25,7 @@ function TripCard (props) {
          <ul className='list-group list-group-flush'>
             <li className='list-group-item'>
                <div className='badge rounded-pill'>{owner.id === user.id ? 'organizer' : 'traveler'}</div>
+               <div className='badge rounded-pill ms-2'>{trip_status.name}</div>
             </li>
          </ul>
       </div> 

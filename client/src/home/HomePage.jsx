@@ -8,7 +8,7 @@ function HomePage (props) {
    const navigate = useNavigate()
    const username = useSelector(state => state.user.username)
 
-   if (!!username) return (<Navigate to='/home' />)
+   if (!!username) return (<Navigate to='/destinations' />)
    return (
       <div id='home-page' className='container-fluid'>
          <div id='home-page-outlet'>

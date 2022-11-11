@@ -12,7 +12,7 @@ function DeleteModal (props) {
          <div className='modal-dialog' role='document'>
             <div className='modal-content'>
                <div className='modal-heaer'>
-                  <h1 className='modal-title'>delete {recordType}</h1>
+                  <h2 className='modal-title'>delete {recordType}</h2>
                </div>
                <div className='modal-body'>
                   <p>
