@@ -1,6 +1,12 @@
 class User < ApplicationRecord
    validates_presence_of :first_name, :last_name, :email, :username
-   validates_uniqueness_of :email, :username, :message => "already taken"
+   validates_uniqueness_of :email, :message => "already taken"
+   validates :username,
+      format: {
+         with: /\A[A-Z0-9_.]+\z/i,
+         message: "cannot have special characters"
+      },
+      uniqueness: { case_sensitivie: false, message: "already taken" }
    has_one :login
    has_many :travelers
    has_many :trips, through: :travelers
