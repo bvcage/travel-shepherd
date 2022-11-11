@@ -6,7 +6,8 @@ class UserSerializer < ActiveModel::Serializer
    :full_name,
    :email,
    :date_of_birth,
-   :photo_url
+   :photo_url,
+   :has_signed_up
 
    def full_name
       self.object.full_name

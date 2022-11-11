@@ -54,7 +54,8 @@ function Signup (props) {
             'last_name': user.lastName,
             'date_of_birth': user.dob,
             'photo_url': user.photoUrl,
-            'password': user.password1
+            'password': user.password1,
+            'has_signed_up': true
          })
       }).then(r=>{
          if (r.ok) r.json().then(newUser => {
@@ -64,7 +65,7 @@ function Signup (props) {
                   'Content-Type': 'application/json'
                },
                body: JSON.stringify({
-                  'username': newUser.username,
+                  'email': newUser.email,
                   'password': user.password1
                })
             }).then(r=>{
@@ -75,8 +76,31 @@ function Signup (props) {
                else console.log(r)
             })
          })
-         else r.json().then(console.log)
+         else {
+            switch (r.status) {
+               case 403:
+               case 422:
+                  r.json().then(res => {
+                     const resErrs = []
+                     if (!!res.errors) console.log('do smth')
+                     else resErrs.push(parseErrMsg(res.error))
+                     setErrors([...errors, ...resErrs])
+                  })
+                  break
+               default:
+                  console.log(r)
+                  r.json().then(console.log)
+            }
+         }
       })
+   }
+
+   function parseErrMsg (msg) {
+      if (msg.indexOf(':') > 0) {
+         const temp = msg.split(':')
+         msg = temp.pop()
+      }
+      return msg
    }
 
    function validateEmail (e) {

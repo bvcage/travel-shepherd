@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-   validates_presence_of :first_name, :last_name, :username, :email
-   validates_uniqueness_of :username, :email
+   validates_presence_of :first_name, :last_name, :email, :username
+   validates_uniqueness_of :email, :username, :message => "already taken"
    has_one :login
    has_many :travelers
    has_many :trips, through: :travelers
@@ -20,9 +20,15 @@ class User < ApplicationRecord
          first_name = params[:name]
          last_name = nil
       end
+      if params[:username].nil?
+         username = "user" + 10.times.map{rand(0..9)}.join
+      else
+         username = params[:username]
+      end
       # create user, skipping validations
       user = User.new({
          email: params[:user_email],
+         username: username,
          first_name: first_name,
          last_name: last_name,
          has_signed_up: false
@@ -31,5 +37,8 @@ class User < ApplicationRecord
       return user
    end
 
+   after_create do |user|
+      if user.has_signed_up.nil? then user.update!(has_signed_up: false) end
+   end
    
 end

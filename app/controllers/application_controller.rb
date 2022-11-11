@@ -12,12 +12,12 @@ class ApplicationController < ActionController::API
    rescue_from Pundit::NotAuthorizedError, with: :user_unauthorized_message
 
    def record_invalid_message err
-      pp err
+      puts err.message
       render json: {error: err.message}, status: :unprocessable_entity
    end
 
    def user_unauthorized_message err
-      render json: {error: 'user cannot perfom this action'}, status: :forbidden
+      render json: {error: "user cannot perfom this action"}, status: :forbidden
    end
 
    private

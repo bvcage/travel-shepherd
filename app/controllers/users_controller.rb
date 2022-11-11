@@ -8,19 +8,23 @@ class UsersController < ApplicationController
    end
 
    def create
-      user = User.find_or_create_by(email: params[:email])
-      user.update!(user_params)
-      if (user && params[:password])
-         login = Login.find_or_create_by(user_id: user.id)
-         login.update!(password: params[:password])
+      @user = User.find_or_create_by(email: params[:email])
+      if @user.has_signed_up
+         render json: { error: "email already taken" }, status: :forbidden
+      else   
+         @user.update!({**user_params, has_signed_up: true})
+         if (@user && params[:password])
+            Login.create!(user_id: @user.id, password: params[:password])
+         end
+         render json: @user, status: :created
       end
-      render json: user, status: :created
    end
 
    def exist
       if params[:username] then user = User.find_by!(username: params[:username])
       elsif params[:email] then user = User.find_by!(email: params[:email])
       end
+      Login.find_by!(user_id: user.id)
       render json: user
    end
 
@@ -55,7 +59,8 @@ class UsersController < ApplicationController
          :first_name,
          :last_name,
          :date_of_birth,
-         :photo_url
+         :photo_url,
+         :has_signed_up
       )
    end
 

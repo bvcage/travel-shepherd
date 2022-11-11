@@ -68,7 +68,8 @@ puts " 🌱 seeding users..."
       username: "test",
       email: "test",
       first_name: "test",
-      last_name: "test"
+      last_name: "test",
+      has_signed_up: true
    )
    Login.create(
       user_id: user1.id,
@@ -83,7 +84,8 @@ puts " 🌱 seeding users..."
          last_name: last_name,
          email: Faker::Internet.safe_email(name: first_name),
          username: Faker::Internet.username(specifier: "#{first_name} #{last_name}", separators: %w(. _ -)),
-         photo_url: Faker::Avatar.image
+         photo_url: Faker::Avatar.image,
+         has_signed_up: true
       )
       Login.create(
          user_id: user.id,
