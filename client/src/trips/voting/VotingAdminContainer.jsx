@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import ReleaseResultsBtn from '../../components/buttons/ReleaseResultsBtn'
+import ReleaseResultsBtn from './ReleaseResultsBtn'
 import UserVotesTable from './UserVotesTable'
 
 function VotingAdminContainer (props) {
@@ -37,7 +37,7 @@ function VotingAdminContainer (props) {
             setShowARBtns(true)
          } else setShowARBtns(false)
    }, [trip])
-
+console.log(trip.trip_status)
    function closeActivitiesVoting () {
       fetch(`/trips/${trip.id}`, {
          method: 'PATCH',
@@ -46,7 +46,8 @@ function VotingAdminContainer (props) {
          },
          body: JSON.stringify({
             'activity_voting_is_open?': false,
-            'activity_voting_closes_at': new Date()
+            'activity_voting_closes_at': new Date(),
+            'trip_status_code': 600    // planning itinerary
          })
       }).then(r=>{
          if (r.ok) r.json().then(trip => dispatch({type: 'trip/activityVotingClosed', payload: trip}))
@@ -61,7 +62,11 @@ function VotingAdminContainer (props) {
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({'proposal_voting_is_open?': false, 'proposal_voting_closes_at': new Date()})
+         body: JSON.stringify({
+            'proposal_voting_is_open?': false,
+            'proposal_voting_closes_at': new Date(),
+            // trip_status_code is set when owner releases results
+         })
       }).then(r=>{
          if (r.ok) r.json().then(trip => dispatch({type: 'trip/proposalVotingClosed', payload: trip}))
          else console.log(r)
@@ -76,7 +81,8 @@ function VotingAdminContainer (props) {
          },
          body: JSON.stringify({
             'activity_voting_is_open?': true,
-            'activity_voting_opens_at': new Date()
+            'activity_voting_opens_at': new Date(),
+            'trip_status_code': 500    // activities voting
          })
       }).then(r=>{
          if (r.ok) r.json().then(trip => dispatch({type: 'trip/activityVotingOpened', payload: trip}))
@@ -94,7 +100,8 @@ function VotingAdminContainer (props) {
          },
          body: JSON.stringify({
             'proposal_voting_is_open?': true,
-            'proposal_voting_opens_at': new Date()
+            'proposal_voting_opens_at': new Date(),
+            'trip_status_code': 300    // destination aka proposal voting
          })
       }).then(r=>{
          if (r.ok) r.json().then(trip => dispatch({type: 'trip/proposalVotingOpened', payload: trip}))

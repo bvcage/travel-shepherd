@@ -15,7 +15,12 @@ class Trip < ApplicationRecord
 
    def calc_voting_results
       winning_proposal = self.proposals.sort{ |a,b| a.point_total <=> b.point_total }.last
-      self.update!(name: self.name + ' trip to ' + winning_proposal.destination.name, winning_proposal_id: winning_proposal.id)
+      trip_status = TripStatus.find_by(code: 400)
+      self.update!(
+         name: self.name + ' trip to ' + winning_proposal.destination.name,
+         winning_proposal_id: winning_proposal.id,
+         trip_status_id: trip_status.id
+      )
       winning_proposal
    end
 

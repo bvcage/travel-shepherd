@@ -16,6 +16,7 @@ function ReleaseResultsBtn (props) {
       fetch(`/trips/${trip.id}/calc_results`).then(r=>{
          if (r.ok) r.json().then(winner => {
             dispatch({type: 'trip/resultsAreIn', payload: winner})
+            dispatch({type: 'trip/statusUpdated', payload: 400})
             navigate(backpath)
          })
          else console.log(r)
