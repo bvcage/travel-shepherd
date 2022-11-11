@@ -1,4 +1,4 @@
-import React from 'react'
+import './alerts.css'
 import { useDispatch } from 'react-redux'
 
 function InviteAlert (props) {
@@ -24,17 +24,13 @@ function InviteAlert (props) {
    }
 
    return (
-      <div className='card'>
-         <div className='card-body'>
-            <div className='row'>
-               <div className='col'>
-                  {`${sender.full_name} invites you to join their trip ${trip.name}`}
-               </div>
-               <div className='col-auto'>
-                  <button type='button' onClick={() => {completeInvite(2)}}>accept</button>
-                  <button type='button' onClick={() => {completeInvite(3)}}>decline</button>
-               </div>
-            </div>
+      <div className='alert alert-light invite-alert' role='alert'>
+         <div className='col'>
+            {`${sender.full_name} invites you to join their trip ${trip.name}`}
+         </div>
+         <div className='col btn-col col-auto'>
+            <button type='button' className='btn btn-primary' onClick={() => {completeInvite(2)}}>accept</button>
+            <button type='button' className='btn btn-warning' onClick={() => {completeInvite(3)}}>X</button>
          </div>
       </div>
    )

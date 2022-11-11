@@ -1,14 +1,16 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import useMeasure from 'react-use-measure'
 
 const selectUser = state => state.user
 
 function UserEditForm (props) {
+   const dispatch = useDispatch()
    const navigate = useNavigate()
-
    const user = useSelector(selectUser)
    const [edit, setEdit] = useState({...user})
+   const [ref, measures] = useMeasure()
 
    function handleChange (e) {
       setEdit({...user,
@@ -27,6 +29,7 @@ function UserEditForm (props) {
       }).then(r=>{
          if (r.ok) r.json().then(user => {
             localStorage.setItem('user', JSON.stringify(user))
+            dispatch({type: 'user/userUpdated', payload: {...user}})
             navigate('/' + user.username + '/profile', {state: {user: user}})
          })
          else console.log(r)

@@ -1,5 +1,101 @@
 div#user-profile-container {
-   display: flex;
+   display: flexbox;
+   justify-content: center;
+   justify-items: center;
+   background-color: lightblue;
+   background: linear-gradient(120deg,
+      #b0d8d6 10%,
+      #aad9d8 20%, 
+      #a4d8e4 30%,
+      #a2d8e5 50%,
+      #a0d1e6 70%,
+      #a1cee7 80%,
+      #b0c9e7 90%,
+      #b5c9e5 100%
+   );
+   border-color: darkblue;
+   border-radius: 2rem;
+   border-style: solid;
+   border-width: 3px;
+   margin: 0px auto;
+   max-height: 600px;
+   max-width: 800px;
+   padding-bottom: 1rem;
+}
+
+div#user-profile-main {
+   background-color: #f9f8f6bb;
+   border-radius: 1rem;
+   min-height: 30vh;
+   max-height: 400px;
+   margin: 0.5rem;
+   position: relative;
+}
+
+div#user-profile-main > div.container {
+   display: block;
    align-items: center;
+   margin: 0px;
+   padding: 0px;
+   width: 100%;
+}
+
+div#user-profile-main > div.container > div.row {
    height: 100%;
+   margin: 0px;
+   padding: 1rem 0.5rem;
+   width: 100%;
+}
+
+div#user-profile-main div.form-floating > input:disabled {
+   background-color: transparent;
+   border-color: transparent;
+}
+
+div#user-profile-main div.form-floating > input {
+   background-color: transparent;
+   border-color: rgba(118, 118, 118, 0.5);
+   border-style: solid;
+   border-width: 1px;
+   box-shadow: none;
+}
+
+div#user-profile-main div.form-floating > input:focus {
+   box-shadow: 0 0 0 0.1rem rgba(118, 118, 118, 0.5);
+}
+
+div#user-profile-photo {
+   padding: 1rem 0 2rem 1rem;
+}
+
+div#user-profile-photo img {
+   max-width: 100%;
+   box-shadow: 0 0 0 0.1rem rgba(118, 118, 118);
+}
+
+div#user-profile-info {
+   margin-top: 1rem;
+}
+
+div#user-profile-info .row {
+   margin: 0px;
+}
+
+div#user-profile-info .row .col {
+   margin: 0.25rem;
+   padding: 0px;
+}
+
+div#user-profile-barcode {
+   min-height: 3rem;
+}
+
+div#user-profile-barcode p {
+   font-family: 'IBM Plex Mono', monospace;
+   margin: 0px;
+}
+
+div#user-profile-barcode .edit-btn {
+   float: right;
+   margin-right: 1.5rem;
 }
