@@ -14,11 +14,22 @@ class TripSerializer < ActiveModel::Serializer
       :allow_proposals,
       :owner,
       :winning_proposal_id,
-      :winning_proposal
+      :winning_proposal,
+      :num_activities,
+      :num_proposals
    belongs_to :voting_type
    belongs_to :owner
    has_many :travelers
    has_many :invites
    has_many :proposals
    has_one :destination
+
+   def num_activities
+      self.object.activities.count
+   end
+
+   def num_proposals
+      self.object.proposals.count
+   end
+
 end

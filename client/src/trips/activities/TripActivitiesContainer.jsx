@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import TripActivityCard from './TripActivityCard'
 
 function TripActivitiesContainer (props) {
+   const dispatch = useDispatch()
    const location = useLocation()
    const navigate = useNavigate()
+   const params = useParams()
    const trip = useSelector(state => state.trip)
    const activities = useSelector(state => state.activities)
 
@@ -18,7 +20,16 @@ function TripActivitiesContainer (props) {
             else console.log(r)
          })
       }
-   }, [trip, activities])
+   }, [trip, dispatch])
+
+   const AddBtn = () => {
+      return (
+         <button type='button'
+            className='btn btn-primary'
+            onClick={() => navigate('activities', {state: {from: location.pathname}})}
+            >+ add activity</button>
+      )
+   }
 
    const cards = !!tripActivities ? tripActivities.map(activity => {
       return (
@@ -36,10 +47,7 @@ function TripActivitiesContainer (props) {
          </div>
          <div className='row'>
             <div className='col'>
-               <button type='button'
-                  className='btn btn-primary'
-                  onClick={() => navigate('activities', {state: {from: location.pathname}})}
-                  >+ add activity</button>
+               {trip['activity_voting_is_open?'] ? null : <AddBtn />}
             </div>
          </div>
       </div>

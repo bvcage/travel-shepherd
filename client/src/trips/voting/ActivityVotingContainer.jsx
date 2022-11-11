@@ -54,9 +54,7 @@ function ActivityVotingContainer (props) {
             >pending...</button>
       )
    }
-
-   console.log(trip)
-   console.log(traveler)
+   
    return (
       <div>
          <h3>activity voting</h3>

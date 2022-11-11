@@ -10,11 +10,15 @@ export default function tripReducer (state = initialState, action) {
          return {...state,
             trip_status: action.payload
          }
+      case 'trip/activitiesLoaded':
+         return {...state,
+            num_activities: action.payload
+         }
       case 'trip/proposalVotingOpened':
       case 'trip/proposalVotingClosed':
       case 'trip/activityVotingOpened':
       case 'trip/activityVotingClosed':
-         return {...action.payload}
+         return {...state, ...action.payload}
       case 'trip/resultsAreIn':
          return {...state,
             'winning_proposal': action.payload

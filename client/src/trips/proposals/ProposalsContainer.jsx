@@ -46,7 +46,10 @@ function ProposalsContainer (props) {
          <div className='row'>
             {cards}
          </div>
-         {trip.allow_proposals || trip.allow_proposals === null ? <NewProposalBtn /> : null}
+         {(trip.allow_proposals ||
+            trip.allow_proposals === null) &&
+            !trip['proposal_voting_is_open?']
+            ? <NewProposalBtn /> : null}
       </div>
    )
 }
