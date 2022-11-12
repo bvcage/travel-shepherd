@@ -130,7 +130,7 @@ function VotingAdminContainer (props) {
          <div className='btn-group'>
             <button type='button'
                className='btn btn-primary'
-               disabled={trip['proposal_voting_is_open?']}
+               disabled={trip['proposal_voting_is_open?'] || trip.proposals.length < 2 || trip.travelers.length < 2}
                onClick={openProposalVoting}
                >open proposal voting</button>
             <button type='button'

@@ -26,7 +26,7 @@ function InviteAlert (props) {
    return (
       <div className='alert alert-light invite-alert' role='alert'>
          <div className='col'>
-            {`${sender.full_name} invites you to join their trip ${trip.name}`}
+            {`${sender.full_name} invites you to join ${trip.name}`}
          </div>
          <div className='col btn-col col-auto'>
             <button type='button' className='btn btn-primary' onClick={() => {completeInvite(2)}}>accept</button>

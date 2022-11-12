@@ -1,8 +1,8 @@
 import '../../assets/css/cards.css'
 
-function UserCard (props) {
-   const { user } = props
-   const { first_name, last_name, username, email } = user
+function TravelerCard (props) {
+   const { traveler } = props
+   const { first_name, last_name, username, email } = traveler
 
    return (
       <div className='card'>
@@ -15,4 +15,4 @@ function UserCard (props) {
    )
 }
 
-export default UserCard
+export default TravelerCard

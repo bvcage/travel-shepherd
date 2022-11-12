@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import TripInvitesContainer from '../invites/TripInvitesContainer'
-import UserCard from '../../components/cards/UserCard'
+import TravelerCard from './TravelerCard'
 
 function TravelersContainer (props) {
    const { trip, mayInvite } = props
@@ -24,7 +24,7 @@ function TravelersContainer (props) {
    const cards = !!travelers ? travelers.map(traveler => {
       return (
          <div key={traveler.user.id} className='col col-12 col-md-6'>
-            <UserCard key={traveler.user.id} user={traveler.user} />
+            <TravelerCard key={traveler.user.id} traveler={traveler.user} />
          </div>
       )
    }) : null

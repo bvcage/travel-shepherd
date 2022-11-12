@@ -17,11 +17,18 @@ class Trip < ApplicationRecord
       winning_proposal = self.proposals.sort{ |a,b| a.point_total <=> b.point_total }.last
       trip_status = TripStatus.find_by(code: 400)
       self.update!(
-         name: self.name + ' trip to ' + winning_proposal.destination.name,
+         name: self.name + " to " + winning_proposal.destination.name,
          winning_proposal_id: winning_proposal.id,
          trip_status_id: trip_status.id
       )
       winning_proposal
+   end
+
+   after_create do |trip|
+      if trip.name.last(5).downcase != " trip"
+         if trip.name.last(1) == " " then trip.update!(name: trip.name + "Group Trip")
+         else trip.update!(name: trip.name + " Group Trip") end
+      end
    end
 
 end

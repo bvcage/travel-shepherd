@@ -21,7 +21,6 @@ function NewTripForm (props) {
       })
       switch (e.target.name) {
          case 'allowProposals':
-         case 'votingType':
             e.target.parentNode.parentNode.classList.remove('invalid')
             break
          default:

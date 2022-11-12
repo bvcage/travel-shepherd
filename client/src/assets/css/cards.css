@@ -20,6 +20,13 @@ div.card > ul.list-group > li.list-group-item {
    text-align: right;
 }
 
+div.card > ul.list-group > li.list-group-item:last-child {
+   border-bottom-left-radius: var(--card-default-border-radius);
+   border-bottom-right-radius: var(--card-default-border-radius);
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+}
+
 .rounded-pill {
    background-color: var(--secondary-color);
 }

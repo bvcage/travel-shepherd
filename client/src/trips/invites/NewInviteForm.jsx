@@ -125,7 +125,7 @@ function NewInviteForm (props) {
       let status = statusList.find(status => status.id === invite.status)
       status = !!status && !!status.name ? status.name : 'sent'
       return (
-         <div id='trip-invite-container' key={'invite' + i} className='row'>
+         <div key={'invite' + i} className='row'>
             <div className='col'>
 
                <input name='name'
@@ -144,7 +144,7 @@ function NewInviteForm (props) {
                   value={invite.email} />
 
             </div>
-            <div className='col col-2 col-md-1'>
+            <div className='col col-12 col-sm-2'>
                
                <button type='button' className='btn btn-secondary' disabled={true}>{status}</button>
 
@@ -158,34 +158,44 @@ function NewInviteForm (props) {
    return (
       <div className='container'>
 
-         {invitesDisplay}
+         <h2>invite friends{!!trip && !!trip.name ? ' to ' + trip.name : null}</h2>
+
+         <div className='row'>
+            <div className='col'>
+               <div id='trip-invite-container' className='container'>
+                  {invitesDisplay}
+               </div>
+            </div>
+         </div>
 
          <form id='trip-invite-form' onSubmit={handleSubmit}>
-            <div className='row'>
-               <div className='col col-12 col-sm'>
+            <div className='container'>
+               <div className='row'>
+                  <div className='col col-12 col-sm'>
 
-                  <input name='name'
-                     type='text'
-                     className='form-control required'
-                     placeholder='name'
-                     value={invite.name}
-                     onChange={handleChange} />
+                     <input name='name'
+                        type='text'
+                        className='form-control required'
+                        placeholder='name'
+                        value={invite.name}
+                        onChange={handleChange} />
+                        
+                  </div>
+                  <div className='col col-12 col-sm'>
+
+                     <input name='email'
+                        type='text'
+                        className='form-control required'
+                        placeholder='email'
+                        value={invite.email}
+                        onChange={handleChange} />
+
+                  </div>
+                  <div className='col col-12 col-sm-2'>
                      
-               </div>
-               <div className='col col-12 col-sm'>
+                     <button type='submit' className='btn btn-primary'>invite</button>
 
-                  <input name='email'
-                     type='text'
-                     className='form-control required'
-                     placeholder='email'
-                     value={invite.email}
-                     onChange={handleChange} />
-
-               </div>
-               <div className='col col-12 col-sm-2 col-md-1'>
-                  
-                  <button type='submit' className='btn btn-primary'>invite</button>
-
+                  </div>
                </div>
             </div>
          </form>

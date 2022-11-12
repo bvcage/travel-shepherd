@@ -1,4 +1,4 @@
-// import './cards.css'
+import '../../assets/css/cards.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,11 +15,14 @@ function TripCard (props) {
          navigate('/trips/' + id, {state: {trip: trip}})
       }
    }
+
+   const title = name.split(' to ')[0] + ' to'
+   const title2 = name.slice(title.length)
    
    return (
       <div className='card' onClick={handleClick}>
          <div className='card-body'>
-            <h5 className='card-title'>{name}</h5>
+            <h5 className='card-title'>{!!trip.winning_proposal_id ? <>{title}<br />{title2}</> : name}</h5>
             <h6 className='card-subtitle'>{num_days} day{num_days > 1 ? 's' : null}</h6>
          </div>
          <ul className='list-group list-group-flush'>

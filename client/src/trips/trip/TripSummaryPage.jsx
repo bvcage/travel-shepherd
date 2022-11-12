@@ -34,7 +34,7 @@ function TripSummaryPage (props) {
 
    return (
       <div className='container'>
-         <h2 className='page-header'>{trip.name} Trip</h2>
+         <h2 className='page-header'>{trip.name}</h2>
          <div className='page-content'>
             <div className='container'>
                {/* summary component */}

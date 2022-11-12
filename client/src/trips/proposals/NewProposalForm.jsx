@@ -43,6 +43,16 @@ function NewProposalForm (props) {
       })
    }, [proposal])
 
+   let timeout
+   function handleBlur (e) {
+      if (!!timeout) clearTimeout()
+      timeout = setTimeout(() => {
+         setShowCountries(false)
+         setShowRegions(false)
+         setShowCities(false)
+      }, 100)
+   }
+
    function handleChange (e) {
       setProposal({...proposal,
          [e.target.name]: e.target.value
@@ -61,7 +71,6 @@ function NewProposalForm (props) {
 
    function handleSubmit (e) {
       e.preventDefault()
-      console.log(proposal)
       const post = {
          'country_id': proposal.country.id,
          'destination_id': proposal.destination.id,
@@ -141,7 +150,12 @@ function NewProposalForm (props) {
                   className='form-control'
                   placeholder='destination'
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)} />
+                  onChange={(e) => setSearch(e.target.value)}
+                  onFocus={() => {
+                     setShowCountries(false)
+                     setShowRegions(false)
+                     setShowCities(false)
+                  }} />
                <label>destination</label>
             </div>
 
@@ -166,6 +180,7 @@ function NewProposalForm (props) {
                         className='form-control'
                         placeholder='country'
                         value={!!proposal.country.name ? proposal.country.name : ''}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {
                            setShowCountries(true)
@@ -187,6 +202,7 @@ function NewProposalForm (props) {
                         className='form-control'
                         placeholder='region'
                         value={proposal.destination.region}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {
                            setShowCountries(false)
@@ -206,6 +222,7 @@ function NewProposalForm (props) {
                         className='form-control'
                         placeholder='city'
                         value={proposal.destination.municipality}
+                        onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {
                            setShowCountries(false)
