@@ -36,31 +36,35 @@ function TripSummaryPage (props) {
       <div className='container'>
          <h2 className='page-header'>{trip.name} Trip</h2>
          <div className='page-content'>
-            <div className='row mb-3'>
-               <TripSummary trip={trip} />
-            </div>
-            <div className='row mb-3'>
-               {!!trip.trip_status && trip.trip_status.code === 600 
-                  ? <ItineraryContainer /> 
-                  : !!trip.winning_proposal_id 
-                     ? <ActivityVotingContainer /> 
-                     : <ProposalVotingContainer />
-               }
-            </div>
-            <div className='row mb-3'>
-               <div className='col col-12 col-md-6'>
-                  <TravelersContainer trip={trip} mayInvite={true} />
+            <div className='container'>
+               {/* summary component */}
+               <div className='row'>
+                  <TripSummary trip={trip} />
                </div>
-               <div className='col col-12 col-md-6'>
-                  {!!trip.winning_proposal_id ? <TripActivitiesContainer /> : <ProposalsContainer trip={trip} />}
+               {/* voting component */}
+               <div className='row'>
+                  {!!trip.trip_status && trip.trip_status.code === 600 
+                     ? <ItineraryContainer /> 
+                     : !!trip.winning_proposal_id 
+                        ? <ActivityVotingContainer /> 
+                        : <ProposalVotingContainer />
+                  }
                </div>
-            </div>
-            <div className='row mb-3'>
-               {}
-            </div>
-            <div className='row fin'>
-               <div>
-                  <BackBtn />
+               <div className='row'>
+                  <div className='col col-12 col-xl-6'>
+                     {!!trip.winning_proposal_id ? <TripActivitiesContainer /> : <ProposalsContainer trip={trip} />}
+                  </div>
+                  <div className='col col-12 col-xl-6'>
+                     <TravelersContainer trip={trip} mayInvite={true} />
+                  </div>
+               </div>
+               <div className='row mb-3'>
+                  {}
+               </div>
+               <div className='row fin'>
+                  <div>
+                     <BackBtn />
+                  </div>
                </div>
             </div>
          </div>

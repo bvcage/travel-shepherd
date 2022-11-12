@@ -9,6 +9,7 @@ function TripActivitiesContainer (props) {
    const navigate = useNavigate()
    const params = useParams()
    const trip = useSelector(state => state.trip)
+   const user = useSelector(state => state.user)
    const activities = useSelector(state => state.activities)
 
    const [tripActivities, setTripActivites] = useState([])
@@ -39,6 +40,7 @@ function TripActivitiesContainer (props) {
       )
    }) : null
 
+   console.log(trip)
    return (
       <div className='container'>
          <h3>must-do's</h3>
@@ -47,7 +49,9 @@ function TripActivitiesContainer (props) {
          </div>
          <div className='row'>
             <div className='col'>
-               {trip['activity_voting_is_open?'] ? null : <AddBtn />}
+               {trip.trip_status.code >= 400 && trip.trip_status.code < 500  ? <AddBtn /> : (
+                  trip.owner.id === user.id ? <AddBtn /> : null
+               )}
             </div>
          </div>
       </div>

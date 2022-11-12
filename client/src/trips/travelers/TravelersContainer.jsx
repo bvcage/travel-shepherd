@@ -23,7 +23,7 @@ function TravelersContainer (props) {
 
    const cards = !!travelers ? travelers.map(traveler => {
       return (
-         <div key={traveler.user.id} className='col col-12 col-xl-6 p-0'>
+         <div key={traveler.user.id} className='col col-12 col-md-6'>
             <UserCard key={traveler.user.id} user={traveler.user} />
          </div>
       )

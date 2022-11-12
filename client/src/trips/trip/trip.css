@@ -1,0 +1,14 @@
+div#trip-summary-container {
+   background-color: white;
+   border-radius: var(--container-default-border-radius);
+   border: 2px solid #d8d8d7;
+   margin: 1rem auto;
+   max-width: 800px;
+   padding: 1rem;
+   width: auto;
+}
+
+div#trip-summary-container div.row div.col {
+   align-self: center;
+   margin: 0.25rem 0rem;
+}

@@ -89,7 +89,7 @@ nav, .nav-link {
 
 #root div.card {
    border-radius: var(--card-default-border-radius);
-   margin: 0.5rem;
+   margin: 0.5rem auto;
 }
 
 #footer {

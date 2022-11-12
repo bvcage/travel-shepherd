@@ -22,30 +22,24 @@ function ProposalVotingContainer (props) {
    }, [trip, user])
 
 
-   const VoteBadge = () => {
-      return (
-         <h6><span className='badge bg-dark p-2 mb-2'>{status}</span></h6>
-      )
-   }
-
    const VoteBtn = () => {
+      const status = trip['proposal_voting_is_open?']
+         ? (traveler.has_voted_for_proposal ? 'submitted' : 'vote')
+         : (!!trip.voting_closes_at && trip.voting_closes_at < Date.now() ? 'closed' : 'not open yet')
       return (
          <button type='button'
             className='btn btn-primary'
+            disabled={status !== 'vote'}
             onClick={() => navigate('vote')}
-            >vote</button>
+            >{status}</button>
       )
    }
 
-   const status = trip['proposal_voting_is_open?']
-      ? (traveler.has_voted_for_proposal ? 'submitted' : 'vote soon!')
-      : (!!trip.voting_closes_at && new Date(trip.voting_closes_at) < Date.now() ? 'closed' : 'not yet open')
 
    if (!trip.id) return <></>
    return (
       <div className='container'>
-         <h3>voting</h3>
-         {trip['proposal_voting_is_open?'] && !traveler.has_voted_for_proposal ? <VoteBtn /> : <VoteBadge />}
+         {trip['proposal_voting_is_open?'] && !traveler.has_voted_for_proposal ? <VoteBtn /> : null}
          {user.id === trip.owner.id ? <VotingAdminContainer trip={trip} /> : null}
       </div>
    )

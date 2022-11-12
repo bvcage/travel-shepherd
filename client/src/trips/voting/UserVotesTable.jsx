@@ -1,8 +1,7 @@
-// import './tables.css'
+import '../../assets/css/tables.css'
 import { useSelector } from 'react-redux'
 
 function UserVotesTable (props) {
-   const { showActVoteStatus } = props
    const trip = useSelector(state => state.trip)
    const { travelers } = trip
 
@@ -11,7 +10,7 @@ function UserVotesTable (props) {
          <tr key={traveler.id}>
             <td>{traveler.user.first_name}</td>
             <td className='voting-status'>
-               { showActVoteStatus
+               { trip.trip_status.code >= 500 && trip.trip_status.code < 600
                   ? (traveler.has_voted_for_activities
                      ? <span className='badge bg-success'>complete</span>
                      : <span className='badge bg-warning'>pending</span>)
@@ -25,7 +24,7 @@ function UserVotesTable (props) {
    }) : null
 
    return (
-      <table id='user-votes-table' className='table align-middle'>
+      <table id='user-votes-table' className='table align-middle table-striped'>
          <thead>
             <tr>
                <th>companion</th>

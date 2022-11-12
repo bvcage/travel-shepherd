@@ -37,7 +37,7 @@ function VotingAdminContainer (props) {
             setShowARBtns(true)
          } else setShowARBtns(false)
    }, [trip])
-console.log(trip.trip_status)
+
    function closeActivitiesVoting () {
       fetch(`/trips/${trip.id}`, {
          method: 'PATCH',
@@ -197,7 +197,12 @@ console.log(trip.trip_status)
          </div>
          {/* {displayCloseBtn || !displayOpenBtn ? ( */}
             <div className='container'>
-               <UserVotesTable showActVoteStatus={trip['activities_voting_is_open?']} />
+               {!!trip.trip_status && (
+                  (trip.trip_status.code >= 300 && trip.trip_status.code < 400) ||
+                  (trip.trip_status.code >= 500 && trip.trip_status.code < 600)) 
+                  ? <UserVotesTable showActVoteStatus={(trip['activities_voting_is_open?'])} />
+                  : null }
+               
             </div>
          {/* ) : null } */}
       </div>

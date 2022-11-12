@@ -1,4 +1,4 @@
-// import './cards.css'
+import '../../assets/css/cards.css'
 
 function UserCard (props) {
    const { user } = props

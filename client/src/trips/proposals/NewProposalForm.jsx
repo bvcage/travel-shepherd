@@ -49,6 +49,16 @@ function NewProposalForm (props) {
       })
    }
 
+   function handleSelect (e, name, value) {
+      e.stopPropagation()
+      setProposal({...proposal,
+         [name]: value
+      })
+      setShowCountries(false)
+      setShowRegions(false)
+      setShowCities(false)
+   }
+
    function handleSubmit (e) {
       e.preventDefault()
       console.log(proposal)
@@ -77,11 +87,9 @@ function NewProposalForm (props) {
    const displayResults = results ? results.map(result => {
       return (
          <div key={result.id}
-            onClick={() => {
+            onClick={(e) => {
                setSearch(result.name)
-               setProposal({...proposal,
-                  destination: result
-               })
+               handleSelect(e, 'destination', result)
             }}
             >{result.name}</div>
       )
@@ -90,7 +98,8 @@ function NewProposalForm (props) {
    const divCountries = countries ? countries.map(country => {
       return (
          <div key={country.id}
-            onClick={() => {
+            onClick={(e) => {
+               handleSelect(e, 'country', country)
                setProposal({...proposal, country: country})
                setShowCountries(false)
             }}
@@ -100,7 +109,11 @@ function NewProposalForm (props) {
 
    const divRegions = destinations ? destinations.map(destination => {
       return (
-         <div key={'region-' + destination.id}>{destination.region}</div>
+         <div key={'region-' + destination.id}
+            onClick={(e) => {
+               handleSelect(e, 'destination', destination)
+            }}
+            >{destination.region}</div>
       )
    }) : null
 
@@ -109,7 +122,9 @@ function NewProposalForm (props) {
          // .filter(destination => destination.region.toLowerCase().includes(proposal.destination.region))
          .map(destination => {
             return (
-               <div key={'city-' + destination.id}>{destination.municipality}</div>
+               <div key={'city-' + destination.id}
+                  onClick={(e) => handleSelect(e, 'destination', destination)}
+                  >{destination.municipality}</div>
             )
          }) 
       : null
@@ -117,8 +132,9 @@ function NewProposalForm (props) {
    return (
       <div className='container'>
          <form onSubmit={handleSubmit}>
-            <h2>new proposal</h2>
+            <h2>new destination proposal</h2>
 
+            <h4>search by destination</h4>
             <div className='form-floating'>
                <input name='name'
                   type='text'
@@ -139,8 +155,7 @@ function NewProposalForm (props) {
                : null }
 
             <br />
-            <h6>or</h6>
-            <br />
+            <h4>or narrow by country / region</h4>
 
             <div className='row'>
                <div className='col'>
@@ -150,9 +165,13 @@ function NewProposalForm (props) {
                         type='text'
                         className='form-control'
                         placeholder='country'
-                        value={proposal.country.name}
+                        value={!!proposal.country.name ? proposal.country.name : ''}
                         onChange={handleChange}
-                        onFocus={() => setShowCountries(true)} />
+                        onFocus={() => {
+                           setShowCountries(true)
+                           setShowRegions(false)
+                           setShowCities(false)
+                        }} />
                      <label>country</label>
                   </div>
                   {showCountries ? divCountries : null}
@@ -168,10 +187,15 @@ function NewProposalForm (props) {
                         className='form-control'
                         placeholder='region'
                         value={proposal.destination.region}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        onFocus={() => {
+                           setShowCountries(false)
+                           setShowRegions(true)
+                           setShowCities(false)
+                        }} />
                      <label>region</label>
                   </div>
-                  {divRegions}
+                  {showRegions ? divRegions : null}
 
                </div>
                <div className='col col-12 col-md-6'>
@@ -182,16 +206,21 @@ function NewProposalForm (props) {
                         className='form-control'
                         placeholder='city'
                         value={proposal.destination.municipality}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        onFocus={() => {
+                           setShowCountries(false)
+                           setShowRegions(false)
+                           setShowCities(true)
+                        }} />
                      <label>city</label>
                   </div>
-                  {divCities}
+                  {showCities ? divCities : null}
 
                </div>
 
             </div>
 
-            <button type='submit' className='btn btn-primary'>submit</button>
+            <button type='submit' className='btn btn-primary'>+ make proposal</button>
 
          </form>
       </div>
