@@ -21,7 +21,6 @@ import Login from './home/Login'
 import NewTripForm from './trips/trip/NewTripForm'
 import Signup from './home/Signup'
 import TripsContainer from './users/UserTripsContainer'
-import UserEditForm from './users/UserEditForm'
 import UserProfile from './users/UserProfile'
 import TripEditForm from './trips/trip/EditTripForm'
 import NewProposalForm from './trips/proposals/NewProposalForm'
@@ -38,7 +37,6 @@ function App () {
                <Route index path='home' element={<LandingPage />} />
                <Route path=':username'>
                   <Route index path='profile' element={<UserProfile />} />
-                  <Route path='edit' element={<UserEditForm />} />
                   <Route path='trips' element={<UserTripsPage />}>
                      <Route index element={<TripsContainer />} />
                   </Route>

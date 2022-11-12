@@ -14,12 +14,22 @@ function UserProfile (props) {
    const user = useSelector(state => state.user)
    const [barcode, setBarcode] = useState()
    const [editable, setEditable] = useState(false)
-   const [edits, setEdits] = useState({...user})
+   const [edits, setEdits] = useState({})
 
    const barcodeWidth = paraWidth - btnWidth
    const charWidth = 11
    const joinDate = new Date(user.created_at)
    const placeholder = 'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg'
+
+
+   useEffect(() => {
+      let temp = user
+      Object.entries(temp).forEach(([key, value]) => {
+         if (value === null) value = ''
+         temp[key] = value
+      })
+      setEdits({...temp})
+   }, [user])
 
    const characters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789'
    useEffect(() => {
@@ -82,17 +92,23 @@ function UserProfile (props) {
       e.preventDefault()
       if (!editable) return setEditable(!editable)
       setEditable(!editable)
+      const patch = {...edits,
+         'middle_name': edits.middle_initial
+      }
+      // Object.entries(patch).forEach(([key, value]) => {
+      //    if (value === '') value = null
+      //    patch[key] = value
+      // })
       fetch(`/users/${edits.id}`, {
          method: 'PATCH',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify(edits)
+         body: JSON.stringify(patch)
       }).then(r=>{
          if (r.ok) r.json().then(user => {
-            console.log(user.date_of_birth)
-            localStorage.setItem('user', JSON.stringify(user))
             dispatch({type: 'user/userUpdated', payload: {...user}})
+            localStorage.setItem('user', JSON.stringify(user))
          })
          else console.log(r)
       })
@@ -146,8 +162,9 @@ function UserProfile (props) {
                                              name='middle_initial'
                                              type='text'
                                              className='form-control'
-                                             disabled={true}
+                                             disabled={!editable}
                                              placeholder='MI'
+                                             value={edits.middle_initial}
                                              onChange={handleChange} />
                                           <label>MI</label>
                                        </div>
@@ -162,8 +179,7 @@ function UserProfile (props) {
                                              className='form-control'
                                              disabled={true}
                                              placeholder='email'
-                                             value={user.email}
-                                             onChange={handleChange} />
+                                             value={user.email} />
                                           <label>email</label>
                                        </div>
                                     </div>
@@ -177,8 +193,7 @@ function UserProfile (props) {
                                              className='form-control'
                                              disabled={true}
                                              placeholder='username'
-                                             value={user.username}
-                                             onChange={handleChange} />
+                                             value={user.username} />
                                           <label>username</label>
                                        </div>
                                     </div>
@@ -213,12 +228,14 @@ function UserProfile (props) {
                                     <div className='col'>
                                        <div className='form-floating'>
                                           <input
-                                             name='last_visited'
+                                             name='last_destination_visited'
                                              type='text'
                                              className='form-control'
                                              disabled={!editable}
                                              placeholder='last visited'
-                                             value='location unknown'
+                                             value={!!edits.last_destination_visited 
+                                                ? edits.last_destination_visited 
+                                                : editable ? null : 'location unknown'}
                                              onChange={handleChange} />
                                           <label>last visited</label>
                                        </div>

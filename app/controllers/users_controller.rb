@@ -47,6 +47,8 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       authorize @user
       @user.update!(user_params)
+      puts "USERUSERUSERUSER"
+      pp @user
       render json: @user, status: :accepted
    end
 
@@ -58,10 +60,12 @@ class UsersController < ApplicationController
          :username,
          :email,
          :first_name,
+         :middle_name,
          :last_name,
          :date_of_birth,
          :photo_url,
-         :has_signed_up
+         :has_signed_up,
+         :last_destination_visited
       )
    end
 

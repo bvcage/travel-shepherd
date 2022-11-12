@@ -16,6 +16,10 @@ class User < ApplicationRecord
       "#{self.first_name} #{self.last_name}"
    end
 
+   def middle_initial
+      self.middle_name.to_s.at(0)
+   end
+
    def self.setup_shell_user params
       # parse name if one was provided
       if not params[:name].nil?
