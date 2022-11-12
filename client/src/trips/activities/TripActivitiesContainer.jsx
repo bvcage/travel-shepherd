@@ -40,7 +40,6 @@ function TripActivitiesContainer (props) {
       )
    }) : null
 
-   console.log(trip)
    return (
       <div className='container'>
          <h3>must-do's</h3>

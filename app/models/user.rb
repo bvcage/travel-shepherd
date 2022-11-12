@@ -49,6 +49,7 @@ class User < ApplicationRecord
 
    after_create do |user|
       if user.has_signed_up.nil? then user.update!(has_signed_up: false) end
+      if user.photo_url.nil? || user.photo_url.empty? then user.update!(photo_url: Faker::Avatar.image) end
    end
    
 end
