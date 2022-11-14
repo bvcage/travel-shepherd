@@ -33,7 +33,7 @@ function ProposalSummaryPage (props) {
    return (
       <div className='container'>
          <h5>{proposal.user.first_name}'s proposal to...</h5>
-         <h2>{proposal.destination.name} {proposal.destination.country.flag}</h2>
+         <h2>{proposal.destination.label} {proposal.destination.country.flag}</h2>
          {user.id === proposal.user.id ? <EditBtn /> : null}
          <BackBtn />
          

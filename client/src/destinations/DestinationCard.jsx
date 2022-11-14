@@ -3,10 +3,10 @@ import React from 'react'
 
 function DestinationCard (props) {
    const { destination, onClick } = props
-   const { id, municipality, region, country } = destination
+   const { id, locality, region, country } = destination
 
-   const title = !!municipality ? municipality : `${country.name} ${country.flag}`
-   const subtitle = (title === municipality) ? (!!region ? region + ', ' : '') + `${country.name} ${country.flag}` : null
+   const title = !!locality ? locality : `${country.name} ${country.flag}`
+   const subtitle = (title === locality) ? (!!region ? region + ', ' : '') + `${country.name} ${country.flag}` : null
    const imgSrc = "https://picsum.photos/200"
 
    if (!id) return <></>
@@ -17,10 +17,6 @@ function DestinationCard (props) {
             <h5 className='card-title'>{title}</h5>
             {subtitle ? <h6 className='card-subtitle'>{subtitle}</h6> : null }
          </div>
-         {/* <div className='card-body'>
-            <h5 className='card-title'>{capitalize(title)} {country.flag}</h5>
-            <h6 className='card-subtitle'>{capitalize(subtitle)}</h6>
-         </div> */}
       </div>
    )
 }

@@ -207,7 +207,7 @@ function NewDestinationActivityForm (props) {
    return (
       <div className='container'>
          <form onSubmit={handleSubmit}>
-            <h2>new activity for...<br />{destination.name}</h2>
+            <h2>new activity for...<br />{destination.label}</h2>
             
             <h3>activity</h3>
 
@@ -314,7 +314,7 @@ function NewDestinationActivityForm (props) {
                         className='form-control'
                         disabled={true}
                         placeholder='city'
-                        value={destination.municipality} />
+                        value={destination.locality} />
                      <label>city</label>
                   </div>
                </div>

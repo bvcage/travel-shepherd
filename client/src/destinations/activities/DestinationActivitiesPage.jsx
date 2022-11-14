@@ -31,7 +31,7 @@ function DestinationActivitiesPage (props) {
 
    return (
       <div className='container'>
-         <h2>things to do in {destination.name}</h2>
+         <h2>things to do in {destination.label}</h2>
          <div className='row'>
             {cards}
          </div>

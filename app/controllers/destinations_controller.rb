@@ -5,12 +5,12 @@ class DestinationsController < ApplicationController
    def create
       country = Country.find_or_create_by(name: params[:country].titleize)
       region = params[:region].titleize
-      municipality = params[:municipality].titleize
+      locality = params[:locality].titleize
       destination = Destination.find_or_create_by!(
-         municipality: municipality,
+         locality: locality,
          country_id: country.id
       )
-      destination.update!(name: destination.gen_name)
+      destination.update!(name: destination.gen_label)
       if region && destination.region.nil? then destination.update!(region: region) end
       render json: destination, status: :accepted
    end
@@ -25,7 +25,7 @@ class DestinationsController < ApplicationController
       # only return destinations for country
       if params[:country_id]
          country = Country.find(params[:country_id])
-         destinations = country.destinations.order(:municipality)
+         destinations = country.destinations.order(:locality)
       # only return random sample
       elsif params[:sample]
          destinations = Destination.explore_sample params[:sample]

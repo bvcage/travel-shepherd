@@ -16,7 +16,7 @@ function DestinationSummaryPage (props) {
       }
    }, [params])
 
-   const title = !!destination.municipality ? destination.municipality + ', ' + destination.country.name : ''
+   const title = !!destination.locality ? destination.locality + ', ' + destination.country.name : ''
 
    return (
       <div className='container'>

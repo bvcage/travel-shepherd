@@ -1,3 +1,3 @@
 class DestinationExploreSerializer < ActiveModel::Serializer
-   attributes :id, :name, :municipality, :region, :country
+   attributes :id, :label, :locality, :region, :country
 end

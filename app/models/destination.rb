@@ -7,14 +7,14 @@ class Destination < ApplicationRecord
    has_many :places
    has_many :activities, through: :places
 
-   def gen_name
-      name = ""
-      if not (self.municipality.nil? || self.municipality.blank?)
-         name += "#{self.municipality}, "
+   def gen_label
+      label = ""
+      if not (self.locality.nil? || self.locality.blank?)
+         label += "#{self.locality}, "
       end
-      if not self.region.nil? then name += "#{self.region}, " end
-      name += self.country.name
-      name.titleize
+      if not self.region.nil? then label += "#{self.region}, " end
+      label += self.country.name
+      label.titleize
    end
 
    def self.explore_sample value
@@ -29,7 +29,7 @@ class Destination < ApplicationRecord
    end
 
    def self.filter_by_name name
-      self.where("lower(name) LIKE ?", "%#{name.downcase}%")
+      self.where("lower(label) LIKE ?", "%#{name.downcase}%")
    end
 
 end

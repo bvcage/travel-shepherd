@@ -62,7 +62,7 @@ function NewProposalVoteForm (props) {
       let points = trip.voting_type.value
       let votes = []
       for (let i=0; i<trip.voting_type.value && i<items.length; ++i) {
-         const proposal = proposals.find(ele => ele.destination.name === rank[i])
+         const proposal = proposals.find(ele => ele.destination.label === rank[i])
          votes.push(fetch('/votes', {
             method: 'POST',
             headers: {
@@ -96,13 +96,13 @@ function NewProposalVoteForm (props) {
             <label 
                className='btn btn-outline-primary'
                htmlFor={'proposal-vote-radio-' + item.id}
-               >{item.destination.name}</label>
+               >{item.destination.label}</label>
          </>)})
       : null
 
    const rankOptions = !!proposals[0]
       ? proposals.map(item => (
-         <div key={item.id}>{item.destination.name}</div>
+         <div key={item.id}>{item.destination.label}</div>
       )) : [<div key='loading'>loading...</div>]
 
    const PickForm = () => {

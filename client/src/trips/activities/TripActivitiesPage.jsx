@@ -112,7 +112,7 @@ function TripActivitiesContainer (props) {
    if (!destination) return <></>
    return (
       <div className='container'>
-         <h3>activities in {destination.name}</h3>
+         <h3>activities in {destination.label}</h3>
          {!!tripActivities && tripActivities.length > 0 ? <>
             <h4>nominated</h4>
             <div className='row'>

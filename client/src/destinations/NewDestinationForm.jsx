@@ -9,7 +9,7 @@ function NewDestinationForm (props) {
    const [destination, setDestination] = useState({
       country: '',
       region: '',
-      municipality: ''
+      locality: ''
    })
    const [countries, setCountries] = useState([])
    const [regions, setRegions] = useState([])
@@ -66,13 +66,13 @@ function NewDestinationForm (props) {
             setDestination({
                country: e.target.value,
                region: '',
-               municipality: ''
+               locality: ''
             })
             break
          case 'region':
             setDestination({...destination,
                region: e.target.value,
-               municipality: ''
+               locality: ''
             })
             break
          default:
@@ -134,12 +134,12 @@ function NewDestinationForm (props) {
 
    const divCities = !!cities
       ? cities
-         .filter(city => city.toLowerCase().includes(destination.municipality.toLowerCase()))
+         .filter(city => city.toLowerCase().includes(destination.locality.toLowerCase()))
          .sort()
          .map(city => {
             return (
                <div key={'city-' + city}
-                  onClick={(e) => handleSelect(e, 'municipality', city)}
+                  onClick={(e) => handleSelect(e, 'locality', city)}
                   >{city}</div>
             )
          })
@@ -195,11 +195,11 @@ function NewDestinationForm (props) {
             <div className='col'>
 
                <div className='form-floating'>
-                  <input name='municipality'
+                  <input name='locality'
                      type='text'
                      className='form-control'
                      placeholder='city'
-                     value={destination.municipality}
+                     value={destination.locality}
                      onChange={handleChange}
                      onFocus={() => {
                         setShowCountries(false)

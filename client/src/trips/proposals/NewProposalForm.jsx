@@ -133,7 +133,7 @@ function NewProposalForm (props) {
             return (
                <div key={'city-' + destination.id}
                   onClick={(e) => handleSelect(e, 'destination', destination)}
-                  >{destination.municipality}</div>
+                  >{destination.locality}</div>
             )
          }) 
       : null
@@ -221,7 +221,7 @@ function NewProposalForm (props) {
                         type='text'
                         className='form-control'
                         placeholder='city'
-                        value={proposal.destination.municipality}
+                        value={proposal.destination.locality}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {

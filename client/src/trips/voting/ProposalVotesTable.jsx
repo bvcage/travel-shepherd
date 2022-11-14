@@ -7,7 +7,7 @@ function ProposalVotesTable (props) {
       return (
          <tr key={proposal.id}>
             <td className='proposal-points'>{proposal.point_total}</td>
-            <td>{proposal.destination.name}</td>
+            <td>{proposal.destination.label}</td>
          </tr>
       )
    }) : null

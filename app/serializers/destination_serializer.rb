@@ -1,4 +1,4 @@
 class DestinationSerializer < ActiveModel::Serializer
-   attributes :id, :municipality, :region, :postal_area, :country, :name, :summary, :description
+   attributes :id, :locality, :region, :postal_area, :country, :label, :summary, :description, :lat, :lon
    
 end

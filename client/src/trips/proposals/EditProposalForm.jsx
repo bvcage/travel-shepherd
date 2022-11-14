@@ -117,7 +117,7 @@ function EditProposalForm (props) {
       return (
          <option key={destination.id}
             value={destination.id}
-            >{destination.municipality}</option>
+            >{destination.locality}</option>
       )
    }) : null
 

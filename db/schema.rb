@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_12_025828) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_14_205612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_12_025828) do
   end
 
   create_table "destinations", force: :cascade do |t|
-    t.string "municipality"
+    t.string "locality"
     t.string "region"
     t.string "postal_area"
     t.integer "country_id"
@@ -58,7 +58,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_12_025828) do
     t.datetime "updated_at", null: false
     t.string "summary"
     t.text "description"
-    t.string "name"
+    t.string "label"
+    t.float "lat"
+    t.float "lon"
+    t.string "region_code"
   end
 
   create_table "events", force: :cascade do |t|

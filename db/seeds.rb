@@ -182,13 +182,29 @@ puts " 🌱 seeding destinations..."
       cities = HTTP.get(url).parse["data"]
       if cities.kind_of? Array
          cities.each do |city|
+            # location info
             destination = Destination.create(
-               municipality: city["city"],
+               locality: city["city"],
                country_id: country.id,
                description: Faker::Lorem.paragraphs(number: 3).join("\n"),
                summary: Faker::Lorem.sentences(number: 3).join(" ")
             )
-            destination.update(name: destination.gen_name)
+            # generate name from location info
+            label = destination.gen_label
+            destination.update(label: label)
+            # get geocode data
+            url = "http://api.positionstack.com/v1/forward?" + URI.encode_www_form(
+               "access_key" => ENV["POSITION_STACK_KEY"],
+               "query" => label,
+               "limit" => 1
+            )
+            api = HTTP.get(url).parse
+            data = api["data"][0]
+            destination.update(
+               lat: data["latitude"],
+               lon: data["longitude"],
+               region: data["region"]
+            )
          end
       else
          destination = Destination.create(
@@ -196,7 +212,20 @@ puts " 🌱 seeding destinations..."
             description: Faker::Lorem.paragraphs(number: 3).join("\n"),
             summary: Faker::Lorem.sentences(number: 3).join(" ")
          )
-         destination.update(name: destination.gen_name)
+         label = destination.gen_label
+         destination.update(label: label)
+         # get geocode data
+         url = "http://api.positionstack.com/v1/forward?" + URI.encode_www_form(
+            "access_key" => ENV["POSITION_STACK_KEY"],
+            "query" => label,
+            "limit" => 1
+         )
+         api = HTTP.get(url).parse
+         data = api["data"][0]
+         destination.update(
+            lat: data["latitude"],
+            lon: data["longitude"]
+         )
       end
    end
 
@@ -277,7 +306,7 @@ puts " 🌱 seeding events..."
 puts " 🌱 seeding itineraries..."
 
    Event.all.each do |event|
-      Itinerary.create!(
+      Itinerary.create(
          event_id: event.id,
          trip_id: rand(1..num_trips)
       )
