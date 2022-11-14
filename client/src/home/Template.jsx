@@ -7,14 +7,17 @@ import Header from './Header'
 
 function Template (props) {
    const dispatch = useDispatch()
+   const countries = useSelector(state => state.countries)
    const user = useSelector(state => state.user)
    
    useEffect(() => {
-      fetch('/countries').then(r=>{
-         if (r.ok) r.json().then(countries => dispatch({type: 'countries/countriesLoaded', payload: countries}))
-         else console.log(r)
-      })
-   }, [dispatch])
+      if (!countries) {
+         fetch('/countries').then(r=>{
+            if (r.ok) r.json().then(countries => dispatch({type: 'countries/countriesLoaded', payload: countries}))
+            else console.log(r)
+         })
+      }
+   }, [countries, dispatch])
    
    if (!user.id) return <Navigate to='/welcome' />
    return (

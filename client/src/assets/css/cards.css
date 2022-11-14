@@ -1,6 +1,10 @@
+:root {
+   --card-border-width: 2px;
+}
+
 div.card {
-   border-width: 2px;
-   border-radius: 1rem;
+   border-width: var(--card-border-width);
+   border-radius: var(--card-default-border-radius);
    min-width: 225px;
    max-width: 350px;
    margin-left: auto;
@@ -9,6 +13,24 @@ div.card {
 
 div.card:hover {
    border-color: var(--accent-color);
+}
+
+div.card div.col {
+   padding: 0;
+}
+
+div.card > img.card-img-top {
+   border-radius: calc(var(--card-default-border-radius) - var(--card-border-width));
+   border-bottom-left-radius: 0;
+   border-bottom-right-radius: 0;
+}
+
+div.card h5.card-title {
+   margin-bottom: 0;
+}
+
+div.card h6.card-subtitle {
+   margin-top: 0.2rem;
 }
 
 div.card > ul.list-group {

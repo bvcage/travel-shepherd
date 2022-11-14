@@ -5,6 +5,7 @@ Rails.application.routes.draw do
    post '/login', to: 'sessions#create'
    delete '/logout', to: 'sessions#destroy'
    post '/signup', to: 'users#create'
+   get '/destinations/explore', to: 'destinations#explore'
    get '/users/exist', to: 'users#exist'
 
    resources :activities, only: [:create]

@@ -30,11 +30,12 @@ import DestinationActivitiesPage from './destinations/activities/DestinationActi
 import NewDestinationActivityForm from './destinations/activities/NewDestinationActivityForm'
 
 function App () {
+   console.log('App render')
    return (
       <Router>
          <Routes>
             <Route path='/' element={<Template />}>
-               <Route index path='home' element={<LandingPage />} />
+               <Route index path='home' element={< LandingPage />} />
                <Route path=':username'>
                   <Route index path='profile' element={<UserProfile />} />
                   <Route path='trips' element={<UserTripsPage />}>

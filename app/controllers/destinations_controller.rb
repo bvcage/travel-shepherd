@@ -1,5 +1,7 @@
 class DestinationsController < ApplicationController
 
+   skip_before_action :auth, only: [:explore, :show]
+
    def create
       country = Country.find_or_create_by(name: params[:country].titleize)
       region = params[:region].titleize
@@ -11,6 +13,11 @@ class DestinationsController < ApplicationController
       destination.update!(name: destination.gen_name)
       if region && destination.region.nil? then destination.update!(region: region) end
       render json: destination, status: :accepted
+   end
+
+   def explore
+      destinations = Destination.all.order("RANDOM()")
+      render json: destinations, each_serializer: DestinationExploreSerializer
    end
 
    def index

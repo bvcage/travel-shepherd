@@ -87,11 +87,6 @@ nav, .nav-link {
    transform: scale(1.1);
 }
 
-#root div.card {
-   border-radius: var(--card-default-border-radius);
-   margin: 0.5rem auto;
-}
-
 #footer {
    /* position: absolute;
    bottom: 0;
