@@ -1,11 +1,11 @@
-// import './cards.css'
+import '../../assets/css/cards.css'
 
 function ProposalCard (props) {
    const { proposal, onClick } = props
    const { destination, user } = proposal
 
    function handleClick () {
-      onClick(proposal.id)
+      onClick(destination.id)
    }
 
    if (!proposal) return <></>

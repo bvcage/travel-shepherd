@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import DestinationsContainer from './DestinationsContainer'
 
 function DestinationsPage (props) {
-   console.log('DestinationPage render')
    const dispatch = useDispatch()
    const destinations = useSelector(state => state.destinations.list)
    const [numShow, setNumShow] = useState(12)

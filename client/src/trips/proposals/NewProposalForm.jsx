@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import BackBtn from '../../components/buttons/BackBtn'
 
 function NewProposalForm (props) {
    const location = useLocation()
@@ -237,6 +238,7 @@ function NewProposalForm (props) {
 
             </div>
 
+            <BackBtn />
             <button type='submit' className='btn btn-primary'>+ make proposal</button>
 
          </form>

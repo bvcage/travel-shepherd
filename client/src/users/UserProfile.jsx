@@ -18,9 +18,16 @@ function UserProfile (props) {
 
    const barcodeWidth = paraWidth - btnWidth
    const charWidth = 11
-   const joinDate = new Date(user.created_at)
    const placeholder = 'https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg'
 
+   useEffect(() => {
+      if (!!params.username && params.username !== user.username) {
+         fetch('/users/exist?username='+params.username).then(r=>{
+            if (r.ok) r.json().then(setEdits)
+            else console.log(r)
+         })
+      } else setEdits(user)
+   }, [params, user])
 
    useEffect(() => {
       let temp = user
@@ -219,7 +226,7 @@ function UserProfile (props) {
                                              className='form-control'
                                              disabled={true}
                                              placeholder='date of issue'
-                                             value={joinDate.toDateString()} />
+                                             value={new Date(user.created_at).toDateString()} />
                                           <label>date of issue</label>
                                        </div>
                                     </div>
@@ -254,35 +261,15 @@ function UserProfile (props) {
                      ref={refBtn}
                      type='submit'
                      className={editable ? 'btn btn-secondary edit-btn' : 'btn btn-outline-secondary edit-btn'}
+                     disabled={user.username !== params.username}
                      form='user-passport'
-                     >{editable ? 'save' : 'edit'}</button>
+                     >{user.username === params.username
+                        ? editable ? 'save' : 'edit'
+                        : '<ts>' }
+                     </button>
                   {barcode}
                </p>
             </div>
-            {/* <div className='container'>
-               <div className='row'>
-                  <div className='col col-12 col-md-5'>
-                     {!!user.photo_url ? <img src={user.photo_url} alt={`${user.username} avatar`} /> : null}
-                     <h2>{user.username}</h2>
-                     <button type='button'
-                        className='btn btn-secondary'
-                        onClick={() => navigate('edit')}
-                        >edit</button>
-                  </div>
-                  <div className='col col-12 col-md-7'>
-                     <h3>{user.first_name} {user.last_name}</h3>
-                     <h4>birthday: {user.date_of_birth}</h4>
-                     <h4>email: {user.email}</h4>
-                  </div>
-               </div>
-               <div className='row'>
-                  <div className='col'>
-                     <div id='user-profile-barcode'>
-                        <p>&lt;</p>
-                     </div>
-                  </div>
-               </div>
-            </div> */}
          </div>
       </div>
    )

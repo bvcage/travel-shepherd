@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TripInvitesContainer from '../invites/TripInvitesContainer'
 import TravelerCard from './TravelerCard'
 
 function TravelersContainer (props) {
    const { trip, mayInvite } = props
-
+   const navigate = useNavigate()
    const [travelers, setTravelers] = useState([])
    const [invites, setInvites] = useState([])
 
@@ -21,10 +22,14 @@ function TravelersContainer (props) {
       }
    }, [trip])
 
+   function handleClick (username) {
+      navigate(`/${username}/profile`)
+   }
+
    const cards = !!travelers ? travelers.map(traveler => {
       return (
          <div key={traveler.user.id} className='col col-12 col-md-6'>
-            <TravelerCard key={traveler.user.id} traveler={traveler.user} />
+            <TravelerCard key={traveler.user.id} traveler={traveler.user} onClick={handleClick} />
          </div>
       )
    }) : null

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import ProposalCard from '../../components/cards/ProposalCard'
+import ProposalCard from './ProposalCard'
 
 function ProposalsContainer (props) {
    const trip = useSelector(state => state.trip)
@@ -18,7 +18,7 @@ function ProposalsContainer (props) {
    }, [trip])
 
    function handleClick (goToId) {
-      navigate('proposals/' + goToId)
+      navigate('/destinations/' + goToId, {state: {from: '/trips/'+trip.id}})
    }
 
    const NewProposalBtn = () => {

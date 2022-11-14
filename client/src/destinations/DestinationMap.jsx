@@ -10,9 +10,10 @@ function DestinationMap (props) {
 
    useEffect(() => {
       if (ref.current && lat && lon && !map) {
+         const zoom = !!destination.locality ? 9 : 5
          setMap(new window.google.maps.Map(ref.current, {
             center: { lat: lat, lng: lon },
-            zoom: 9,
+            zoom: zoom,
             disableDefaultUI: true,
          }))
       }

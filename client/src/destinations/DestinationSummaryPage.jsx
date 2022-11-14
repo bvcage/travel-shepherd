@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
 import DestinationSummary from './DestinationSummary'
 
 function DestinationSummaryPage (props) {
+   const location = useLocation()
    const params = useParams()
    const [destination, setDestination] = useState({})
 
@@ -16,13 +17,11 @@ function DestinationSummaryPage (props) {
       }
    }, [params])
 
-   const title = !!destination.locality ? destination.locality + ', ' + destination.country.name : ''
-
    return (
       <div className='container'>
-         <h2>{title}</h2>
+         <h2>{destination.label}</h2>
          <DestinationSummary destination={destination} />
-         <BackBtn />
+         <BackBtn path={!!location.state && !!location.state.from ? location.state.from : null} />
       </div>
    )
 }
