@@ -27,8 +27,12 @@ h1 {
    font-family: 'Sansita Swashed', cursive;
    margin-bottom: 2rem;
 }
+div#header h1 {
+   margin-bottom: 0;
+}
 
-nav, .nav-link {
+nav,
+.nav-link {
    color: var(--sixth-color);
    font-family: 'Poppins', sans-serif;
 }

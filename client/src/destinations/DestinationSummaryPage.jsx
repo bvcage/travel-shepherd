@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import BackBtn from '../components/buttons/BackBtn'
+import ActivitiesContainer from './activities/ActivitiesContainer'
 import DestinationSummary from './DestinationSummary'
 
 function DestinationSummaryPage (props) {
@@ -21,6 +22,7 @@ function DestinationSummaryPage (props) {
       <div className='container'>
          <h2>{destination.label}</h2>
          <DestinationSummary destination={destination} />
+         <ActivitiesContainer destination={destination} />
          <BackBtn path={!!location.state && !!location.state.from ? location.state.from : null} />
       </div>
    )

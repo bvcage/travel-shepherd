@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import TripInvitesContainer from '../invites/TripInvitesContainer'
 import TravelerCard from './TravelerCard'
@@ -6,6 +7,7 @@ import TravelerCard from './TravelerCard'
 function TravelersContainer (props) {
    const { trip, mayInvite } = props
    const navigate = useNavigate()
+   const user = useSelector(state => state.user)
    const [travelers, setTravelers] = useState([])
    const [invites, setInvites] = useState([])
 
@@ -40,7 +42,9 @@ function TravelersContainer (props) {
          <div className='row'>
             {cards}
          </div>
-         {!!trip.winning_proposal_id ? null : <TripInvitesContainer invites={invites} mayInvite={mayInvite} />}
+         {!!trip.winning_proposal_id && trip.owner.id !== user.id
+            ? null
+            : <TripInvitesContainer invites={invites} mayInvite={mayInvite} />}
       </div>
    )
 }

@@ -10,7 +10,22 @@ class DestinationsController < ApplicationController
          locality: locality,
          country_id: country.id
       )
-      destination.update!(name: destination.gen_label)
+      # generate label
+      label = destination.gen_label
+      destination.update!(label: label)
+      # get lat / lon
+      url = "http://api.positionstack.com/v1/forward?" + URI.encode_www_form(
+         "access_key" => ENV["POSITION_STACK_KEY"],
+         "query" => label,
+         "limit" => 1
+      )
+      api = HTTP.get(url).parse
+      data = api["data"][0]
+      destination.update(
+         lat: data["latitude"].to_f,
+         lon: data["longitude"].to_f,
+         region: data["region"]
+      )
       if region && destination.region.nil? then destination.update!(region: region) end
       render json: destination, status: :accepted
    end

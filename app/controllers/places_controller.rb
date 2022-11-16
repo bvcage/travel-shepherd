@@ -1,6 +1,7 @@
 class PlacesController < ApplicationController
 
    def create
+      pp place_params
       place = Place.find_or_create_by!(place_params)
       render json: place, status: :accepted
    end
@@ -18,7 +19,7 @@ class PlacesController < ApplicationController
    private
 
    def place_params
-      params.permit(:name, :street_number, :street_name, :street_type, :destination_id, :place_type_id)
+      params.permit(:name, :street_number, :street_name, :street_type, :destination_id, :place_type_id, :google_id)
    end
 
 end

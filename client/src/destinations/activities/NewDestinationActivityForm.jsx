@@ -2,8 +2,10 @@ import '../../assets/css/forms.css'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 import DefaultAddressForm from '../../components/addressForms/DefaultAddressForm'
 import BackBtn from '../../components/buttons/BackBtn'
+import GooglePlaces from './GooglePlaces'
 
 function NewDestinationActivityForm (props) {
    const dispatch = useDispatch()
@@ -12,12 +14,16 @@ function NewDestinationActivityForm (props) {
    const navigate = useNavigate()
    const params = useParams()
 
+   // form input
    const [destination, setDestination] = useState({})
    const [activities, setActivities] = useState([])
    const [activityTypes, setActivityTypes] = useState([])
    const [showActivityTypes, setShowActivityTypes] = useState(false)
    const [placeTypes, setPlaceTypes] = useState([])
    const [showPlaceTypes, setShowPlaceTypes] = useState(false)
+   const [search, setSearch] = useState({token: '', text: ''})
+   const [searchToken, setSearchToken] = useState('')
+   const [predictions, setPredictions] = useState([])
    const [newPlace, setNewPlace] = useState({
       name: '',
       street_number: '',
@@ -122,12 +128,33 @@ function NewDestinationActivityForm (props) {
       })
    }
 
+   function handleSearchSelect (place) {
+      console.log(place)
+      setNewPlace({
+         name: place.structured_formatting.main_text,
+         // street_number: '',
+         // building_name: '',
+         // street_number_suffix: '',
+         // street_name: '',
+         // street_type: '',
+         // street_direction: '',
+         // address_type: '',
+         // address_type_identifier: '',
+         destination_id: destination.id,
+         type: undefined,
+         typeSearch: place.types.join(', '),
+         google_id: place.place_id
+      })
+      // clear session token when user selects
+      setSearchToken('')
+   }
+
    function handleSubmit (e) {
       e.preventDefault()
       const placePost = {
          ...newPlace,
          'destination_id': destination.id,
-         'place_type_id': newPlace.type.id
+         'place_type_id': newPlace.type ? newPlace.type.id : null
       }
       fetch('/places', {
          method: 'POST',
@@ -154,10 +181,16 @@ function NewDestinationActivityForm (props) {
                   dispatch({type: 'activities/newActivity', payload: activity})
                   navigate(backpath, {state: {activity: activity}})
                })
-               else console.log(r)
+               else {
+                  console.log(r)
+                  r.json().then(err => console.log('error message: ' + err))
+               }
             })
          })
-         else console.log(r)
+         else {
+            console.log(r)
+            r.json().then(err => console.log(err.error))
+         }
       })
    }
 
@@ -209,28 +242,28 @@ function NewDestinationActivityForm (props) {
          <form onSubmit={handleSubmit}>
             <h2>new activity for...<br />{destination.label}</h2>
             
-            <h3>activity</h3>
+            <h3>do...</h3>
 
             <div className='row'>
                <div className='col col-12 col-md-8 col-xl-9'>
                   <div className='form-floating'>
                      <input type='text'
                         className='form-control'
-                        placeholder='name'
+                        placeholder='activity'
                         required={true}
                         value={newActivity.name}
                         onChange={(e) => {
                            setNewActivity({...newActivity, name: e.target.value})
                         }}
                         onFocus={() => setShowActivityTypes(false)} />
-                     <label>title</label>
+                     <label>activity</label>
                   </div>
                </div>
                <div className='col col-12 col-md-4 col-xl-3'>
                   <div className='form-floating'>
                      <input type='text'
                         className='form-control'
-                        placeholder='activity type'
+                        placeholder='category'
                         required={true}
                         value={newActivity.typeSearch}
                         onBlur={checkActivityType}
@@ -240,7 +273,7 @@ function NewDestinationActivityForm (props) {
                            })
                         }}
                         onFocus={() => setShowActivityTypes(true)} />
-                     <label>type</label>
+                     <label>category</label>
                   </div>
                   {showActivityTypes
                      ?  <div className='dropdown-list'>
@@ -255,7 +288,6 @@ function NewDestinationActivityForm (props) {
                      <textarea
                         className='form-control'
                         placeholder='description'
-                        required={true}
                         value={newActivity.description}
                         onChange={(e) => {
                            setNewActivity({...newActivity, description: e.target.value})
@@ -267,7 +299,13 @@ function NewDestinationActivityForm (props) {
             </div>
             
 
-            <h3>location</h3>
+            <h3>at...</h3>
+
+            <div className='row'>
+               <div className='col'>
+                  <GooglePlaces destination={destination} onSelectPlace={handleSearchSelect} />
+               </div>
+            </div>
 
             <div className='row'>
                <div className='col'>
@@ -305,7 +343,7 @@ function NewDestinationActivityForm (props) {
                </div>
             </div>
 
-            <DefaultAddressForm place={newPlace} onChange={handlePlaceChange} />
+            {/* <DefaultAddressForm place={newPlace} onChange={handlePlaceChange} /> */}
 
             <div className='row'>
                <div className='col col-12 col-md-6 col-lg-6'>

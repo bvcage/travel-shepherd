@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import ReleaseResultsBtn from './ReleaseResultsBtn'
 import UserVotesTable from './UserVotesTable'
+import VotingModal from './VotingModal'
 
 function VotingAdminContainer (props) {
    const dispatch = useDispatch()
@@ -136,7 +137,9 @@ function VotingAdminContainer (props) {
             <button type='button'
                className='btn btn-warning'
                disabled={!trip['proposal_voting_is_open?']}
-               onClick={closeProposalVoting}
+               data-bs-toggle='modal'
+               data-bs-target='#votingModal'
+               // onClick={closeProposalVoting}
                >close proposal voting</button>
          </div>
       )
@@ -165,7 +168,9 @@ function VotingAdminContainer (props) {
             <button type='button'
                className='btn btn-danger'
                disabled={!trip['activity_voting_is_open?']}
-               onClick={closeActivitiesVoting}
+               data-bs-toggle='modal'
+               data-bs-target='#votingModal'
+               // onClick={closeActivitiesVoting}
                >close activity voting</button>
          </div>
       )
@@ -195,16 +200,21 @@ function VotingAdminContainer (props) {
             { showAVBtns ? <ActivityVotingBtns /> : null }
             { showARBtns ? <ActivityResultsBtns /> : null }
          </div>
-         {/* {displayCloseBtn || !displayOpenBtn ? ( */}
-            <div className='container'>
-               {!!trip.trip_status && (
-                  (trip.trip_status.code >= 300 && trip.trip_status.code < 400) ||
-                  (trip.trip_status.code >= 500 && trip.trip_status.code < 600)) 
-                  ? <UserVotesTable showActVoteStatus={(trip['activities_voting_is_open?'])} />
-                  : null }
-               
-            </div>
-         {/* ) : null } */}
+         <div className='container'>
+            {!!trip.trip_status && (
+               (trip.trip_status.code >= 300 && trip.trip_status.code < 400) ||
+               (trip.trip_status.code >= 500 && trip.trip_status.code < 600)) 
+               ? <UserVotesTable showActVoteStatus={(trip['activity_voting_is_open?'])} />
+               : null }
+         </div>
+         <VotingModal trip={trip}
+            onClickConfirm={
+               trip['proposal_voting_is_open?']
+               ? closeProposalVoting
+               : trip['activity_voting_is_open?']
+                  ? closeActivitiesVoting
+                  : () => {}}
+         />
       </div>
    )
 }

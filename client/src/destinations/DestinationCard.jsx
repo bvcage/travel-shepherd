@@ -3,11 +3,13 @@ import React from 'react'
 
 function DestinationCard (props) {
    const { destination, onClick } = props
-   const { id, locality, region, country } = destination
+   const { id, locality, region, country, image_src } = destination
 
+   console.log(destination)
+   console.log(image_src)
    const title = !!locality ? locality : `${country.name} ${country.flag}`
    const subtitle = (title === locality) ? (!!region ? region + ', ' : '') + `${country.name} ${country.flag}` : null
-   const imgSrc = "https://picsum.photos/200"
+   const imgSrc = image_src ? image_src : "https://picsum.photos/200"
 
    if (!id) return <></>
    return (

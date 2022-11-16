@@ -48,7 +48,9 @@ function ProposalsContainer (props) {
          </div>
          {(trip.allow_proposals ||
             trip.allow_proposals === null) &&
-            !trip['proposal_voting_is_open?']
+            !trip['proposal_voting_is_open?'] &&
+            (trip.proposal_voting_closes_at === null ||
+               trip.proposal_voting_closes_at > Date.now())
             ? <NewProposalBtn /> : null}
       </div>
    )

@@ -1,4 +1,4 @@
-// import '../../assets/css/cards.css'
+import '../../assets/css/cards.css'
 
 function InviteCard (props) {
    const { invite } = props
@@ -6,7 +6,7 @@ function InviteCard (props) {
 
    if (!user) return <></>
    return (
-      <div className='card'>
+      <div className='card invite-card'>
          <div className='card-body'>
             <div className='row'>
                <div className='col'>

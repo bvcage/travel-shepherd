@@ -22,7 +22,7 @@ function DestinationSummary (props) {
 
    return (
       <div className='container'>
-         <Wrapper apiKey={'AIzaSyCMrrg8fJ3bv8zc8Y6_L41zHoOwH8fK0JM'}>
+         <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_KEY}>
             <DestinationMap destination={destination} />
          </Wrapper>
          <h4>summary</h4>

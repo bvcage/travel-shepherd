@@ -5,6 +5,7 @@
 div.card {
    border-width: var(--card-border-width);
    border-radius: var(--card-default-border-radius);
+   cursor: pointer;
    min-width: 225px;
    max-width: 350px;
    margin-left: auto;
@@ -51,4 +52,8 @@ div.card > ul.list-group > li.list-group-item:last-child {
 
 .rounded-pill {
    background-color: var(--secondary-color);
+}
+
+div.card.invite-card {
+   cursor: auto;
 }

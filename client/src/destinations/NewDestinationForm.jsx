@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 function NewDestinationForm (props) {
@@ -19,8 +20,11 @@ function NewDestinationForm (props) {
    const [showCities, setShowCities] = useState(false)
 
    useEffect(() => {
+      console.log('do')
       fetch('https://countriesnow.space/api/v0.1/countries/iso').then(r=>{
-         if (r.ok) r.json().then(res => setCountries(res.data))
+         if (r.ok) r.json().then(res => {
+            setCountries(res.data)
+         })
          else console.log(r)
       })
    }, [])

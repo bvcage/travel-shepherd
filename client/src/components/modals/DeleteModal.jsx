@@ -11,7 +11,7 @@ function DeleteModal (props) {
             aria-hidden='true' >
          <div className='modal-dialog' role='document'>
             <div className='modal-content'>
-               <div className='modal-heaer'>
+               <div className='modal-header'>
                   <h2 className='modal-title'>delete {recordType}</h2>
                </div>
                <div className='modal-body'>
