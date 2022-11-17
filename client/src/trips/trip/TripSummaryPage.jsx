@@ -43,11 +43,13 @@ function TripSummaryPage (props) {
                </div>
                {/* voting component */}
                <div className='row'>
-                  {!!trip.trip_status && trip.trip_status.code === 600 
-                     ? <ItineraryContainer /> 
-                     : !!trip.winning_proposal_id 
-                        ? <ActivityVotingContainer /> 
-                        : <ProposalVotingContainer />
+                  {
+                     // !!trip.trip_status && trip.trip_status.code === 600 
+                     //    ? <ItineraryContainer /> 
+                     //    : 
+                           !!trip.winning_proposal_id 
+                              ? <ActivityVotingContainer /> 
+                              : <ProposalVotingContainer />
                   }
                </div>
                <div className='row'>

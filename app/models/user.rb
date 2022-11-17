@@ -7,10 +7,10 @@ class User < ApplicationRecord
          message: "cannot have special characters"
       },
       uniqueness: { case_sensitivie: false, message: "already taken" }
-   has_one :login
-   has_many :travelers
+   has_one :login, dependent: :destroy
+   has_many :travelers, dependent: :destroy
    has_many :trips, through: :travelers
-   has_many :invites
+   has_many :invites, dependent: :destroy
 
    def full_name
       "#{self.first_name} #{self.last_name}"

@@ -42,7 +42,7 @@ function TripActivitiesContainer (props) {
 
    return (
       <div className='container'>
-         <h3>must-do's</h3>
+         <h3>Activities</h3>
          <div className='row'>
             {cards}
          </div>

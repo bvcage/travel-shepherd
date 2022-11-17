@@ -4,6 +4,7 @@ function ProposalVotesTable (props) {
    const { proposals } = props
 
    const rows = !!proposals ? proposals.map(proposal => {
+      if (!proposal.destination) return <></>
       return (
          <tr key={proposal.id}>
             <td className='proposal-points'>{proposal.point_total}</td>
@@ -13,8 +14,8 @@ function ProposalVotesTable (props) {
    }) : null
 
    return (
-      <table className='table'>
-         <thead>
+      <table className='table table-striped table-bordered'>
+         <thead className='table-success'>
             <tr>
                <th className='proposal-points'>points</th>
                <th>destination</th>

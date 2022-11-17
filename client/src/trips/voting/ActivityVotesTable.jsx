@@ -13,11 +13,11 @@ function ActivityVotesTable (props) {
    }) : null
 
    return (
-      <table className='table'>
-         <thead>
+      <table className='table table-striped table-bordered'>
+         <thead className='table-success'>
             <tr>
-               <th>points</th>
-               <th>activity</th>
+               <th scope='col'>points</th>
+               <th scope='col'>activity</th>
             </tr>
          </thead>
          <tbody>

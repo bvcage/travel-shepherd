@@ -20,7 +20,6 @@ function NewDestinationForm (props) {
    const [showCities, setShowCities] = useState(false)
 
    useEffect(() => {
-      console.log('do')
       fetch('https://countriesnow.space/api/v0.1/countries/iso').then(r=>{
          if (r.ok) r.json().then(res => {
             setCountries(res.data)

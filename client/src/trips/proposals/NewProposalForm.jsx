@@ -1,3 +1,4 @@
+import '../../assets/css/forms.css'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -22,6 +23,7 @@ function NewProposalForm (props) {
    const [results, setResults] = useState([])
    const [regions, setRegions] = useState([])
    const [cities, setCities] = useState([])
+   const [showResults, setShowResults] = useState(false)
    const [showCountries, setShowCountries] = useState(false)
    const [showRegions, setShowRegions] = useState(false)
    const [showCities, setShowCities] = useState(false)
@@ -33,6 +35,7 @@ function NewProposalForm (props) {
             else console.log(r)
          })
       } else {
+         setShowResults(false)
          setResults([])
       }
    }, [search])
@@ -48,6 +51,7 @@ function NewProposalForm (props) {
    function handleBlur (e) {
       if (!!timeout) clearTimeout()
       timeout = setTimeout(() => {
+         setShowResults(false)
          setShowCountries(false)
          setShowRegions(false)
          setShowCities(false)
@@ -62,9 +66,19 @@ function NewProposalForm (props) {
 
    function handleSelect (e, name, value) {
       e.stopPropagation()
-      setProposal({...proposal,
-         [name]: value
-      })
+      switch (name) {
+         case 'destination':
+            setProposal({...proposal,
+               [name]: value,
+               country: value.country
+            })
+            break
+         default:
+            setProposal({...proposal,
+               [name]: value
+            })
+      }
+      setShowResults(false)
       setShowCountries(false)
       setShowRegions(false)
       setShowCities(false)
@@ -95,17 +109,26 @@ function NewProposalForm (props) {
    }
 
    const displayResults = results ? results.map(result => {
+      console.log(result)
+      let label = result.label.split(' ')
+      label = label.map((word, i) => {
+         if (i < label.length-1) word += ' '
+         if (word.toLowerCase().includes(search.toLowerCase())) return (<strong>{word}</strong>)
+         else return (<>{word}</>)
+      })
       return (
          <div key={result.id}
+            className='dropdown-list-item'
             onClick={(e) => {
-               setSearch(result.name)
+               setSearch(result.label)
                handleSelect(e, 'destination', result)
             }}
-            >{result.name}</div>
+            >{label}</div>
       )
    }) : null
 
    const divCountries = countries ? countries.map(country => {
+      console.log(country)
       return (
          <div key={country.id}
             onClick={(e) => {
@@ -141,33 +164,43 @@ function NewProposalForm (props) {
 
    return (
       <div className='container'>
-         <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit} autoComplete='off'>
+            <input autoComplete='false' name='hidden' type='text' style={{display: 'none'}} />
             <h2>new destination proposal</h2>
 
             <h4>search by destination</h4>
-            <div className='form-floating'>
-               <input name='name'
-                  type='text'
-                  className='form-control'
-                  placeholder='destination'
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  onFocus={() => {
-                     setShowCountries(false)
-                     setShowRegions(false)
-                     setShowCities(false)
-                  }} />
-               <label>destination</label>
-            </div>
+            <div className='container dropdown-container'>
+               <div className='form-floating'>
+                  <input name='name'
+                     type='text'
+                     autoComplete='off'
+                     className='form-control'
+                     placeholder='destination'
+                     value={search}
+                     onBlur={handleBlur}
+                     onChange={(e) => {
+                        setSearch(e.target.value)
+                        setShowResults(true)
+                     }}
+                     onFocus={() => {
+                        setShowResults(true)
+                        setShowCountries(false)
+                        setShowRegions(false)
+                        setShowCities(false)
+                     }} />
+                  <label>destination</label>
+               </div>
 
-            {!!search
-               ? <div className='container'>
-                     {displayResults}
-                     <div key='search'
-                        onClick={() => navigate('/destinations/new', {state: {from: location.pathname}})}
-                        >can't find what you're looking for?</div>
-                  </div>
-               : null }
+               {!!showResults && !!search
+                  ? <div className='dropdown-list'>
+                        {displayResults}
+                        <div key='search'
+                           className='dropdown-list-item'
+                           onClick={() => navigate('/destinations/new', {state: {from: location.pathname}})}
+                           >can't find what you're looking for?</div>
+                     </div>
+                  : null }
+            </div>
 
             <br />
             <h4>or narrow by country / region</h4>
@@ -175,22 +208,28 @@ function NewProposalForm (props) {
             <div className='row'>
                <div className='col'>
 
-                  <div className='form-floating'>
-                     <input name='country'
-                        type='text'
-                        className='form-control'
-                        placeholder='country'
-                        value={!!proposal.country.name ? proposal.country.name : ''}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        onFocus={() => {
-                           setShowCountries(true)
-                           setShowRegions(false)
-                           setShowCities(false)
-                        }} />
-                     <label>country</label>
+                  <div className='container dropdown-container'>
+                     <div className='form-floating'>
+                        <input name='country'
+                           type='text'
+                           autoComplete='off'
+                           className='form-control'
+                           placeholder='country'
+                           value={!!proposal.country.name ? proposal.country.name : ''}
+                           onBlur={handleBlur}
+                           onChange={handleChange}
+                           onFocus={() => {
+                              setShowResults(false)
+                              setShowCountries(true)
+                              setShowRegions(false)
+                              setShowCities(false)
+                           }} />
+                        <label>country</label>
+                     </div>
+                     {showCountries
+                        ? <div className='dropdown-list'>{divCountries}</div>
+                        : null}
                   </div>
-                  {showCountries ? divCountries : null}
 
                </div>
             </div>
@@ -200,12 +239,14 @@ function NewProposalForm (props) {
                   <div className='form-floating'>
                      <input name='region'
                         type='text'
+                        autoComplete='off'
                         className='form-control'
                         placeholder='region'
                         value={proposal.destination.region}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {
+                           setShowResults(false)
                            setShowCountries(false)
                            setShowRegions(true)
                            setShowCities(false)
@@ -220,12 +261,14 @@ function NewProposalForm (props) {
                   <div className='form-floating'>
                      <input name='city'
                         type='text'
+                        autoComplete='off'
                         className='form-control'
                         placeholder='city'
                         value={proposal.destination.locality}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         onFocus={() => {
+                           setShowResults(false)
                            setShowCountries(false)
                            setShowRegions(false)
                            setShowCities(true)

@@ -57,3 +57,11 @@ div.card > ul.list-group > li.list-group-item:last-child {
 div.card.invite-card {
    cursor: auto;
 }
+
+div.card.traveler-card {
+   cursor: auto;
+}
+
+div.card.traveler-card div.card-body {
+   cursor: pointer;
+}

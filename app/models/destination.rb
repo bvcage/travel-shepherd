@@ -28,8 +28,8 @@ class Destination < ApplicationRecord
       explore_sample
    end
 
-   def self.filter_by_name name
-      self.where("lower(label) LIKE ?", "%#{name.downcase}%")
+   def self.filter_by_name search
+      self.all.where("lower(label) LIKE ?", "%#{search.downcase}%")
    end
 
 end

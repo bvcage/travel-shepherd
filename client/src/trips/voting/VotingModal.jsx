@@ -10,7 +10,6 @@ function VotingModal (props) {
    const votingMessage = trip['proposal_voting_is_open?'] ? 'This will confirm a destination and allow users to propose activities.' :
       trip['activity_voting_is_open?'] ? 'This will auto-generate a suggested itinerary.' : null
 
-      console.log(trip)
    if (!trip) return <></>
    return (
       <div id='votingModal'

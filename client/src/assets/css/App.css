@@ -98,3 +98,37 @@ nav,
    text-align: right;
    width: 100%;
 }
+
+/* dropdowns */
+
+div.dropdown-container {
+   position: relative;
+   display: block;
+   margin: 0;
+   padding: 0;
+}
+
+div.dropdown-list {
+   background-color: white;
+   border-bottom-left-radius: 1rem;
+   border-bottom-right-radius: 1rem;
+   line-height: 2rem;
+   margin: 0.5rem;
+   margin-top: 0;
+   max-height: 40vh;
+   overflow: scroll;
+   padding: 0.5rem;
+   position: absolute;
+   text-align: left;
+   max-width: 50%;
+   z-index: 1;
+}
+
+div.dropdown-list-item {
+   border-radius: 0.5rem;
+   padding: 0 0.5rem;
+}
+
+div.dropdown-list-item:hover {
+   background-color: #6a9a7f7d;
+}

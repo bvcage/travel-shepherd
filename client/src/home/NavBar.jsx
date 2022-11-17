@@ -17,9 +17,9 @@ function NavBar (props) {
          </button>
          <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
-               <li className='nav-item'>
+               {/* <li className='nav-item'>
                   <div className='nav-link' onClick={() => navigate('home')}>home</div>
-               </li>
+               </li> */}
                <li className='nav-item'>
                   <div className='nav-link' onClick={() => navigate('destinations')}>destinations</div>
                </li>

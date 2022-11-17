@@ -28,7 +28,7 @@ function TripCard (props) {
          <ul className='list-group list-group-flush'>
             <li className='list-group-item'>
                <div className='badge rounded-pill'>{owner.id === user.id ? 'organizer' : 'traveler'}</div>
-               <div className='badge rounded-pill ms-2'>{trip_status.name}</div>
+               <div className={'badge rounded-pill ms-2 ' + (trip_status.name.includes('voting') ? 'bg-warning' : null)}>{trip_status.name}</div>
             </li>
          </ul>
       </div> 

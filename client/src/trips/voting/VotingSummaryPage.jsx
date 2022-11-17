@@ -35,7 +35,7 @@ function VotingSummaryPage (props) {
          !proposals ||
          !activities    ) return <></>
    return (
-      <div>
+      <div className='container'>
          <h2>voting summary for {trip.name}</h2>
          <ProposalVotesTable proposals={proposals}/>
          {!!trip.winning_proposal_id ? null: <ReleaseResultsBtn trip={trip} />}

@@ -54,13 +54,23 @@ function ActivityVotingContainer (props) {
             >pending...</button>
       )
    }
+
+   const NotOpenBtn = () => {
+      return (
+         <button
+            type='button'
+            className='btn btn-secondary'
+            disabled={true}
+            >unavailable</button>
+      )
+   }
    
    return (
       <div>
          <h3>activity voting</h3>
          {trip['activity_voting_is_open?']
             ? traveler.has_voted_for_activities ? <SubmittedBtn /> : <VoteBtn />
-            : traveler.has_voted_for_activities ? <PendingBtn /> : null
+            : traveler.has_voted_for_activities ? <PendingBtn /> : <NotOpenBtn />
          }
          {user.id === (trip.owner_id || trip.owner.id) ? <VotingAdminContainer /> : null}
       </div>

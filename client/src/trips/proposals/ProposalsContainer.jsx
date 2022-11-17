@@ -42,7 +42,7 @@ function ProposalsContainer (props) {
 
    return (
       <div className='container'>
-         <h3>Proposals</h3>
+         <h3>Destinations</h3>
          <div className='row'>
             {cards}
          </div>

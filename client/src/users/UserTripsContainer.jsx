@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import TripCard from '../components/cards/TripCard'
+import UserInvitesContainer from './UserInvitesContainer'
 
 function UserTripsContainer (props) {
    const trips = useSelector(state => state.trips)
@@ -16,6 +17,7 @@ function UserTripsContainer (props) {
 
    return (
       <div className='container'>
+         <UserInvitesContainer />
          <h2 className='page-header'>my trips</h2>
          <div className='page-content'>
             <div className='row'>

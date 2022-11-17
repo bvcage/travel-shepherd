@@ -72,9 +72,11 @@ const PlacesAutocomplete = ({ destination, onSelectPlace }) => {
             />
             <label>location</label>
          </div>
-         <div className='dropdown-list'>
-            {status === 'OK' ? results : null}
-         </div>
+         { status === 'OK'
+            ?  <div className='dropdown-list'>
+                  {results}
+               </div> 
+            :  null }
       </div>
    )
 }
